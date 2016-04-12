@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @testing.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @testing.content %>
+</p>
+
+<%= link_to 'Edit', edit_testing_path(@testing) %> |
+<%= link_to 'Back', testings_path %>
