@@ -1,0 +1,2 @@
+module AccountSummariesHelper
+end

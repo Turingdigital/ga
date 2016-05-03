@@ -46,12 +46,18 @@ group :development do
 end
 
 gem 'devise', :git => 'https://github.com/plataformatec/devise.git'
- # gem "omniauth"
+# gem "omniauth"
  # gem "omniauth-github"
  # gem "omniauth-twitter"
 gem "omniauth-google-oauth2" # see https://github.com/zquestz/omniauth-google-oauth2
 gem "legato"
 
+gem 'google-api-client', '0.9'
+gem 'signet'
+
 gem 'rails_admin'
 gem 'cancan'
 gem 'rails-i18n'
+
+gem 'dalli' #為了使用memched來存session
+gem 'redis' #為了使用redis來讓Google Oauth2存Token

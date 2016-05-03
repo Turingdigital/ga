@@ -246,7 +246,14 @@ Devise.setup do |config|
                   ENV['GOOGLE_CLIENT_ID'],
                   ENV['GOOGLE_CLIENT_SECRET'],
                   {
-                    scope: 'email profile https://www.googleapis.com/auth/analytics.readonly',
+                    # :name => "google",
+                    access_type: 'offline',
+                    scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
+                    # scope: 'email profile https://www.googleapis.com/auth/analytics.readonly',
+                    # scope: 'email profile https://www.googleapis.com/auth/analytics.readonly',
+                    # scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
+                    # scope: 'profile analytics.readonly',
+                    # scope: 'email profile',
                     :prompt => "select_account",
                   }
 

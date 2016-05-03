@@ -1,0 +1,27 @@
+<h1>Listing Account Summaries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Jsonstring</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @account_summaries.each do |account_summary| %>
+      <tr>
+        <td><%= account_summary.user %></td>
+        <td><%= account_summary.jsonString %></td>
+        <td><%= link_to 'Show', account_summary %></td>
+        <td><%= link_to 'Edit', edit_account_summary_path(account_summary) %></td>
+        <td><%= link_to 'Destroy', account_summary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Account summary', new_account_summary_path %>

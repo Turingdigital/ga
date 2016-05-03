@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @account_summary.user %>
+</p>
+
+<p>
+  <strong>Jsonstring:</strong>
+  <%= @account_summary.jsonString %>
+</p>
+
+<%= link_to 'Edit', edit_account_summary_path(@account_summary) %> |
+<%= link_to 'Back', account_summaries_path %>

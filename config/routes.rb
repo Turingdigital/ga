@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :account_summaries
+  namespace :user do
+    resources :users do
+      collection do
+        get :noga
+      end
+    end
+  end
   resources :testings
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -7,10 +15,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'testings#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
+  get 'oauth/ga_callback' => 'oauth#ga_callback'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
