@@ -1,5 +1,17 @@
 class AccountSummariesController < ApplicationController
-  before_action :set_account_summary, only: [:show, :edit, :update, :destroy]
+  before_action :set_account_summary, only: [:show, :edit, :update, :destroy, :setup_profile]
+  before_action :set_profile, only: [:setup_profiles]
+
+  def default_profile?
+    return !self.default_profile.nil?
+  end
+
+  def setup_profile
+    @account_summary.default_profile = params[:profile]
+    @account_summary.save
+    redirect_to action: :index
+    # byebug
+  end
 
   # GET /account_summaries
   # GET /account_summaries.json

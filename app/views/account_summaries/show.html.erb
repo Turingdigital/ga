@@ -1,14 +1,55 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<%= form_tag "/account_summaries/setup_profile", :class => "form-horizontal" do %>
+<%#= form_for @account_summary, :class => "form-horizontal" do %>
+  <fieldset>
+    <legend>選擇要分析的GA專案</legend>
+
+    <div class="form-group">
+      <label for="select" class="col-lg-2 control-label">帳戶</label>
+      <div class="col-lg-10">
+        <select class="form-control" name="item" id="item"></select>
+        <br />
+      </div>
+      <label for="select" class="col-lg-2 control-label">資源</label>
+      <div class="col-lg-10">
+        <select class="form-control" name="web_property" id="web_property"></select>
+        <br />
+      </div>
+      <label for="select" class="col-lg-2 control-label">資料檢視</label>
+      <div class="col-lg-10">
+        <select class="form-control" name="profile" id="profile"></select>
+      </div>
+    </div>
+    <%= javascript_tag do %>
+      window.account_summary = <%= @account_summary.jsonString.html_safe %>;
+    <% end %>
+
+    <%= hidden_field_tag 'id', @account_summary.id %>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
+        <%= submit_tag "Submit", :class => "btn btn-primary"%>
+        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+
+<!-- <p>
   <strong>User:</strong>
-  <%= @account_summary.user.email %>
+  <%#= @account_summary.user.email %>
 </p>
 
 <p>
   <strong>Jsonstring:</strong>
-  <%= @account_summary.jsonString %>
+  <%#= @account_summary.jsonString %>
 </p>
 
-<%= link_to 'Edit', edit_account_summary_path(@account_summary) %> |
-<%= link_to 'Back', account_summaries_path %>
+<p>
+  <strong>Default Profile:</strong>
+  <%#= @account_summary.default_profile %>
+</p> -->
+
+<%#= link_to 'Edit', edit_account_summary_path(@account_summary) %> <!-- | -->
+<%#= link_to 'Back', account_summaries_path %>

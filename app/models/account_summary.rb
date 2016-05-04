@@ -1,6 +1,10 @@
 class AccountSummary < ActiveRecord::Base
   belongs_to :user
 
+  def hash
+    return JSON.parse self.jsonString
+  end
+
   class << self
     def fetch user
       analytics = Analytics.new user
@@ -9,3 +13,5 @@ class AccountSummary < ActiveRecord::Base
     end
   end
 end
+
+result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "http://www.google.com/"}'`

@@ -5,7 +5,9 @@ class User::UsersController < ApplicationController
     # @user.fetch_account_summary(code)
     # redirect_to @user.account_summary ? @user.account_summary : {action: :noga}
 
-    if @user.account_summary
+    if @user.account_summary.default_profile?
+      # redirect_to @user.account_summary
+    elsif @user.account_summary
       redirect_to @user.account_summary
     else
       @user.fetch_account_summary

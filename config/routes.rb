@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :account_summaries
+  resources :account_summaries do
+    collection do
+      post 'setup_profile'
+    end
+  end
+
   namespace :user do
     resources :users do
       collection do
