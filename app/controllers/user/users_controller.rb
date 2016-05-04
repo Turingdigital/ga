@@ -8,8 +8,12 @@ class User::UsersController < ApplicationController
     if @user.account_summary
       redirect_to @user.account_summary
     else
-      analytics = Analytics.new @user
-      redirect_to analytics.oauth_url
+      @user.fetch_account_summary
+      unless @user.account_summary
+        redirect_to action: :noga
+      else
+        redirect_to @user.account_summary
+      end
     end
 
   end

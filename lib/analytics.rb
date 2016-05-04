@@ -31,30 +31,63 @@ require 'googleauth/stores/redis_token_store'
 #     20151207  0            0         0            0.0                    0.0                 0.0
 #     20151208  2            2         1            50.0                   0.0                 0.0
 #
+
+module Authorizer
+  CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
+  CLIENT_ID = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+  SCOPE = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
+  TOKEN_STORE = Google::Auth::Stores::RedisTokenStore.new({redis: 'localhost', prefix: "ga_user_"})
+  AUTHORIZER = Google::Auth::UserAuthorizer.new(CLIENT_ID, SCOPE, TOKEN_STORE, CALLBACK_URI)
+
+  def self.credentials user_id
+    return AUTHORIZER.get_credentials(user_id)
+  end
+
+  def self.store_credentials(user_id, credentials)
+    AUTHORIZER.store_credentials(user_id, credentials)
+  end
+end
+
 class Analytics #< BaseCli
 
-  @@OOB_URI = 'http://localhost:3000/oauth/ga_callback'
-  @@CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
-  @@client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+  # @@OOB_URI = 'http://localhost:3000/oauth/ga_callback'
+  # @@CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
+  # @@client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
 
   def initialize user
-    scope = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
-
     @user = user
-    token_store = Google::Auth::Stores::RedisTokenStore.new({redis: 'localhost', prefix: "ga_user_#{@user.email}"})
-    @authorizer = Google::Auth::UserAuthorizer.new(@@client_id, scope, token_store, @@CALLBACK_URI)
-
     @analytics = Google::Apis::AnalyticsV3::AnalyticsService.new
-    @analytics.authorization = self.credentials #user_credentials_for(scope)
+    # @analytics.authorization = Authorizer.credentials(@user.email) #user_credentials_for(scope)
   end
 
-  def credentials
-    @authorizer.get_credentials(@user.email)
+  def authorize
+    @analytics.authorization = Authorizer.credentials(@user.email)
+    return @analytics.authorization ? true : false
   end
 
-  def oauth_url
-    url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
+  def reload_authorizer_store_credentials_from_model
+    # authorizer.store_credentials('isaac@adup.com.tw', cred)
+    Authorizer.store_credentials(@user.email, @user.ga_credential)
   end
+
+  def accountSummaries
+    # unless self.authorized?
+    authorize
+
+    begin
+      return @analytics.list_account_summaries
+    rescue Exception => e
+      return false
+    end
+  end
+
+  # def credentials
+  #   @authorizer.get_credentials(@user.email)
+  # end
+
+  # def oauth_url
+  #   url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
+  # end
 
   # desc 'show_visits PROFILE_ID', 'Show visists for the given analytics profile ID'
   # method_option :start, type: :string, required: true
@@ -64,11 +97,12 @@ class Analytics #< BaseCli
     metrics = %w(ga:sessions ga:users ga:newUsers ga:percentNewSessions
                  ga:sessionDuration ga:avgSessionDuration)
     sort = %w(ga:date)
-    result = @analytics.get_ga_data("ga:#{profile_id}",
-                                    _start, _end,
-                                    metrics.join(','),
-                                    dimensions: dimensions.join(','),
-                                    sort: sort.join(','))
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
 
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
@@ -83,12 +117,8 @@ class Analytics #< BaseCli
     # data
   end
 
-  def accountSummaries
-    @analytics.list_account_summaries
-  end
-
-  def oauth_url
-    url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
-  end
+  # def oauth_url
+  #   url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
+  # end
 
 end

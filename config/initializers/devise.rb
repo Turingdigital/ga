@@ -254,7 +254,8 @@ Devise.setup do |config|
                     # scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
                     # scope: 'profile analytics.readonly',
                     # scope: 'email profile',
-                    :prompt => "select_account",
+                    # :prompt => "select_account",
+                    :prompt => "consent",
                   }
 
   # ==> Warden configuration

@@ -11,7 +11,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
             #  :scope => "profile analytics.readonly",
             #  :scope => "email profile",
 
-             :prompt => "select_account",
+            #  :prompt => "select_account",
+             :prompt => "consent",
             #  :image_aspect_ratio => "square",
             #  :image_size => 50
            }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429041029) do
+ActiveRecord::Schema.define(version: 20160504025634) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 20160429041029) do
   end
 
   add_index "account_summaries", ["user_id"], name: "index_account_summaries_on_user_id"
+
+  create_table "ga_credentials", force: :cascade do |t|
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.integer  "expires_at"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "ga_credentials", ["user_id"], name: "index_ga_credentials_on_user_id"
 
   create_table "testings", force: :cascade do |t|
     t.string   "title"
