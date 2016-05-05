@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :campaign_media
+  resources :url_builders
   resources :account_summaries do
     collection do
       post 'setup_profile'
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
 
   namespace :user do
     resources :users do
+      resources :url_builders, :controller => 'user_url_builders'
       collection do
         get :noga
       end

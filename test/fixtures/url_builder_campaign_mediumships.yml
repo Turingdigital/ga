@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url_builder_id: 
+  campaign_medium_id: 
+
+two:
+  url_builder_id: 
+  campaign_medium_id: 

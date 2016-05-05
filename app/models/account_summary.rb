@@ -13,5 +13,3 @@ class AccountSummary < ActiveRecord::Base
     end
   end
 end
-
-result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "http://www.google.com/"}'`

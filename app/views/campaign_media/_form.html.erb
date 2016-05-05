@@ -1,0 +1,21 @@
+<%= form_for(@campaign_medium) do |f| %>
+  <% if @campaign_medium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@campaign_medium.errors.count, "error") %> prohibited this campaign_medium from being saved:</h2>
+
+      <ul>
+      <% @campaign_medium.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :medium %><br>
+    <%= f.text_field :medium %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

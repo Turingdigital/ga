@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Url Builders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Url</th>
+      <th>Source</th>
+      <th>Medium</th>
+      <th>Term</th>
+      <th>Content</th>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @url_builders.each do |url_builder| %>
+      <tr>
+        <td><%= url_builder.user %></td>
+        <td><%= url_builder.url %></td>
+        <td><%= url_builder.source %></td>
+        <td><%= url_builder.medium %></td>
+        <td><%= url_builder.term %></td>
+        <td><%= url_builder.content %></td>
+        <td><%= url_builder.name %></td>
+        <td><%= link_to 'Show', url_builder %></td>
+        <td><%= link_to 'Edit', edit_url_builder_path(url_builder) %></td>
+        <td><%= link_to 'Destroy', url_builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Url builder', new_url_builder_path %>

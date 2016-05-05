@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @url_builder.user %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @url_builder.url %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @url_builder.source %>
+</p>
+
+<p>
+  <strong>Medium:</strong>
+  <%= @url_builder.medium %>
+</p>
+
+<p>
+  <strong>Term:</strong>
+  <%= @url_builder.term %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @url_builder.content %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @url_builder.name %>
+</p>
+
+<%= link_to 'Edit', edit_url_builder_path(@url_builder) %> |
+<%= link_to 'Back', url_builders_path %>

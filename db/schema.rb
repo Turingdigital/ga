@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504072642) do
+ActiveRecord::Schema.define(version: 20160505032105) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,6 +22,12 @@ ActiveRecord::Schema.define(version: 20160504072642) do
   end
 
   add_index "account_summaries", ["user_id"], name: "index_account_summaries_on_user_id"
+
+  create_table "campaign_media", force: :cascade do |t|
+    t.string   "medium"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "ga_credentials", force: :cascade do |t|
     t.string   "access_token"
@@ -40,6 +46,31 @@ ActiveRecord::Schema.define(version: 20160504072642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "url_builder_campaign_mediumships", force: :cascade do |t|
+    t.integer  "url_builder_id"
+    t.integer  "campaign_medium_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "url_builder_campaign_mediumships", ["campaign_medium_id"], name: "index_url_builder_campaign_mediumships_on_campaign_medium_id"
+  add_index "url_builder_campaign_mediumships", ["url_builder_id"], name: "index_url_builder_campaign_mediumships_on_url_builder_id"
+
+  create_table "url_builders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "url"
+    t.string   "source"
+    t.string   "term"
+    t.string   "content"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+  end
+
+  add_index "url_builders", ["user_id"], name: "index_url_builders_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
