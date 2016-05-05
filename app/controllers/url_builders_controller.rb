@@ -1,5 +1,6 @@
 class UrlBuildersController < ApplicationController
   before_action :set_url_builder, only: [:show, :edit, :update, :destroy]
+  before_action :set_campaign_media, only: [:new, :edit]
 
   # GET /url_builders
   # GET /url_builders.json
@@ -24,6 +25,7 @@ class UrlBuildersController < ApplicationController
   # POST /url_builders
   # POST /url_builders.json
   def create
+    byebug
     @url_builder = UrlBuilder.new(url_builder_params)
 
     respond_to do |format|
@@ -67,8 +69,12 @@ class UrlBuildersController < ApplicationController
       @url_builder = UrlBuilder.find(params[:id])
     end
 
+    def set_campaign_media
+      @campaign_media = CampaignMedium.all
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_builder_params
-      params.require(:url_builder).permit(:user_id, :url, :source, :medium, :term, :content, :name)
+      params.require(:url_builder).permit(:user_id, :url, :source, :campaign_medium_id, :term, :content, :name)
     end
 end
