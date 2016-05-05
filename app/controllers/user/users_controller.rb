@@ -6,7 +6,8 @@ class User::UsersController < ApplicationController
     # redirect_to @user.account_summary ? @user.account_summary : {action: :noga}
 
     if @user.account_summary.default_profile?
-      redirect_to user_user_url_builders_path(@user.id)
+      redirect_to url_builders_path
+      # redirect_to @user.account_summary
     elsif @user.account_summary
       redirect_to @user.account_summary
     else
