@@ -11,33 +11,50 @@
     </div>
   <% end %>
 
+  <!-- <div class="field">
+    <%#= f.label :user_id %><br>
+    <%#= f.text_field :user_id %>
+  </div> -->
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
+    <%= f.label :url, "網站網址 *" %><br>
     <%= f.text_area :url %>
   </div>
   <div class="field">
-    <%= f.label :source %><br>
+    <%= f.label :source, "廣告活動來源 *" %><br>
     <%= f.text_field :source %>
   </div>
-  <!-- <div class="field">
-    <%#= f.label :medium %><br>
-    <%#= f.text_field :medium %>
-  </div> -->
   <div class="field">
-    <%= f.label :term %><br>
+    <%= f.label :medium, "廣告活動媒介 *" %><br>
+    <%#= f.text_field :medium %>
+    <%#= f.text_field :medium %>
+    <!-- select_tag(name, option_tags = nil, options = {}) -->
+    <%= f.select(:campaign_media) do %>
+      <% [['Google', 1], ['Yahoo', 2], ['電子報', 2]].each do |c| -%>
+        <%= content_tag(:option, c.first, value: c.last) %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :term, "廣告活動字詞" %><br>
     <%= f.text_field :term %>
   </div>
   <div class="field">
-    <%= f.label :content %><br>
+    <%= f.label :content, "廣告活動內容" %><br>
     <%= f.text_field :content %>
   </div>
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name, "廣告活動名稱 *" %><br>
     <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :start_date, "開始日期" %><br>
+    <%#= f.datetime_select :start_date %>
+    <input type="text" data-provide='datepicker' >
+  </div>
+  <div class="field">
+    <%= f.label :end_date, "結束日期" %><br>
+    <%#= f.datetime_select :start_date %>
+    <input type="text" data-provide='datepicker' >
   </div>
   <div class="actions">
     <%= f.submit %>

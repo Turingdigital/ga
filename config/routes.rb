@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :foos
   resources :campaign_media
   resources :url_builders
   resources :account_summaries do
