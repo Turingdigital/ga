@@ -19,7 +19,7 @@
   <tbody>
     <% @url_builders.each do |url_builder| %>
       <tr>
-        <td><%= url_builder.user %></td>
+        <td><%= url_builder.user.email %></td>
         <td><%= url_builder.url %></td>
         <td><%= url_builder.source %></td>
         <!-- <td><%#= url_builder.medium %></td> -->

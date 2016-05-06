@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class UrlBuilder < ActiveRecord::Base
   belongs_to :user
 
@@ -9,10 +11,7 @@ class UrlBuilder < ActiveRecord::Base
   #   result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "http://www.adup.com/"}'`
   # end
 
-  def short_url
-    result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
-    return JSON.parse(result)["id"]
-  end
+  before_save :set_short_url
 
   def builded_url
     result = url
@@ -24,4 +23,18 @@ class UrlBuilder < ActiveRecord::Base
     result += "&utm_name=#{name}" if name # 必填
     return result
   end
+
+  def fetch_and_save_short_url_analytics
+    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{ENV["GOOGLE_API_KEY"]}&shortUrl=http://goo.gl/bgaA8I&projection=FULL"
+    result = open(url).read
+    result = JSON.parse(result)
+    return result
+  end
+
+
+  private
+    def set_short_url
+      result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
+      self.short_url = JSON.parse(result)["id"]
+    end
 end

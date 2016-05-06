@@ -2,7 +2,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @url_builder.user %>
+  <%= @url_builder.user.email %>
 </p>
 
 <p>
@@ -33,6 +33,16 @@
 <p>
   <strong>Name:</strong>
   <%= @url_builder.name %>
+</p>
+
+<p>
+  <strong>長網址:</strong>
+  <%= @url_builder.builded_url %>
+</p>
+
+<p>
+  <strong>短網址:</strong>
+  <%= @url_builder.short_url %>
 </p>
 
 <%= link_to 'Edit', edit_url_builder_path(@url_builder) %> |

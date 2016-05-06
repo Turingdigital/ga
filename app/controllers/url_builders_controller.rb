@@ -5,7 +5,7 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders
   # GET /url_builders.json
   def index
-    @url_builders = UrlBuilder.all
+    @url_builders = current_user.url_builders#UrlBuilder.all
   end
 
   # GET /url_builders/1
@@ -25,8 +25,8 @@ class UrlBuildersController < ApplicationController
   # POST /url_builders
   # POST /url_builders.json
   def create
-    byebug
     @url_builder = UrlBuilder.new(url_builder_params)
+    @url_builder.user = current_user
 
     respond_to do |format|
       if @url_builder.save
