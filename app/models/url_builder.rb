@@ -31,7 +31,7 @@ class UrlBuilder < ActiveRecord::Base
     return result
   end
 
-  # private
+  private
     def set_short_url
       result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
       # result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`

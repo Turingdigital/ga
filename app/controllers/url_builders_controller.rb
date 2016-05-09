@@ -25,7 +25,11 @@ class UrlBuildersController < ApplicationController
   # POST /url_builders
   # POST /url_builders.json
   def create
-    @url_builder = UrlBuilder.new(url_builder_params)
+    params = url_builder_params
+    params["start_date"] = Date.strptime(params["start_date"], "%m/%d/%Y")
+    params["end_date"] = Date.strptime(params["end_date"], "%m/%d/%Y")
+
+    @url_builder = UrlBuilder.new(params)
     @url_builder.user = current_user
 
     respond_to do |format|
@@ -75,6 +79,6 @@ class UrlBuildersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_builder_params
-      params.require(:url_builder).permit(:user_id, :url, :source, :campaign_medium_id, :term, :content, :name)
+      params.require(:url_builder).permit(:user_id, :url, :source, :campaign_medium_id, :term, :content, :name, :start_date, :end_date)
     end
 end

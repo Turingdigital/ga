@@ -49,13 +49,17 @@
   </div>
   <div class="field">
     <%= f.label :start_date, "開始日期" %><br>
+    <input type="text" name="url_builder[start_date]" id="url_builder_start_date" data-provide='datepicker'>
     <%#= f.datetime_select :start_date %>
-    <input type="text" data-provide='datepicker' >
+    <%#= f.text_field(:start_date, :data-provide => 'datepicker') %>
+    <!-- <input type="text" data-provide='datepicker' > -->
   </div>
   <div class="field">
     <%= f.label :end_date, "結束日期" %><br>
+    <input type="text" name="url_builder[end_date]" id="url_builder_end_date" data-provide='datepicker'>
     <%#= f.datetime_select :start_date %>
-    <input type="text" data-provide='datepicker' >
+    <%#= f.text_field(:end_date, :data-provide => 'datepicker') %>
+    <!-- <input type="text" data-provide='datepicker' > -->
   </div>
   <div class="actions">
     <%= f.submit %>
