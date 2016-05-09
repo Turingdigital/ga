@@ -63,3 +63,5 @@ gem 'dalli' #為了使用memched來存session
 gem 'redis' #為了使用redis來讓Google Oauth2存Token
 
 gem 'bootstrap-datepicker-rails'
+
+gem 'rest-client',  '~>1.8.0' #用來使用Http Post
