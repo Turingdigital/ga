@@ -14,14 +14,26 @@ class UrlBuilder < ActiveRecord::Base
   before_save :set_short_url
 
   def builded_url
-    result = url
-    result += result.include?('?') ? '&' : '?'
-    result += "utm_source=#{source}" if source # 必填
-    # result += "&utm_medium=#{campaign_medium}" if campaign_medium # 必填
-    result += "&utm_term=#{term}" if term
-    result += "&utm_content=#{content}" if content
-    result += "&utm_name=#{name}" if name # 必填
-    return result
+    uri = URI.parse(url)
+    new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
+
+    new_query_ar << ["utm_source", source] if source # 必填 其實不用if
+    new_query_ar << ["utm_medium", self.campaign_medium.medium] if self.campaign_medium.medium # 必填 其實不用if
+    new_query_ar << ["utm_term", term] if term
+    new_query_ar << ["utm_content", content] if content
+    new_query_ar << ["utm_name", name] if name # 必填 其實不用if
+
+    uri.query = URI.encode_www_form(new_query_ar)
+    return uri.to_s
+
+    # result = url
+    # result += result.include?('?') ? '&' : '?'
+    # result += "utm_source=#{source}" if source # 必填
+    # # result += "&utm_medium=#{campaign_medium}" if campaign_medium # 必填
+    # result += "&utm_term=#{term}" if term
+    # result += "&utm_content=#{content}" if content
+    # result += "&utm_name=#{name}" if name # 必填
+    # return result
   end
 
   def fetch_and_save_short_url_analytics
