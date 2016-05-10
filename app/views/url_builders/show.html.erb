@@ -1,49 +1,29 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%#= notice %></p> -->
+<% ua = @url_builder.url_analytics %>
+<ul>
+  <li>短網址：<%= ua['id'] %></li>
+  <li>長網址：<%= ua['longUrl'] %></li>
+  <li>
+    Full Time統計
+    <%= render "url_analytics", url_analytics:  ua['analytics']['allTime'] %>
+  </li>
+  <li>
+    月統計
+    <%= render "url_analytics", url_analytics:  ua['analytics']['month'] %>
+  </li>
+  <li>
+    週統計
+    <%= render "url_analytics", url_analytics:  ua['analytics']['week'] %>
+  </li>
+  <li>
+    日統計
+    <%= render "url_analytics", url_analytics:  ua['analytics']['day'] %>
+  </li>
+  <li>
+    兩小時統計
+    <%= render "url_analytics", url_analytics:  ua['analytics']['twoHours'] %>
+  </li>
+</ul>
 
-<p>
-  <strong>User:</strong>
-  <%= @url_builder.user.email %>
-</p>
-
-<p>
-  <strong>Url:</strong>
-  <%= @url_builder.url %>
-</p>
-
-<p>
-  <strong>Source:</strong>
-  <%= @url_builder.source %>
-</p>
-
-<!-- <p>
-  <strong>Medium:</strong>
-  <%#= @url_builder.medium %>
-</p> -->
-
-<p>
-  <strong>Term:</strong>
-  <%= @url_builder.term %>
-</p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @url_builder.content %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @url_builder.name %>
-</p>
-
-<p>
-  <strong>長網址:</strong>
-  <%= @url_builder.builded_url %>
-</p>
-
-<p>
-  <strong>短網址:</strong>
-  <%= @url_builder.short_url %>
-</p>
-
-<%= link_to 'Edit', edit_url_builder_path(@url_builder) %> |
+<%#= link_to 'Edit', edit_url_builder_path(@url_builder) %><!-- | -->
 <%= link_to 'Back', url_builders_path %>

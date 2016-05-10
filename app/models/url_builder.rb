@@ -36,11 +36,119 @@ class UrlBuilder < ActiveRecord::Base
     # return result
   end
 
+  # TODO: 儲存在Redis裡面 不反覆抓取
   def fetch_and_save_short_url_analytics
-    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{ENV["GOOGLE_API_KEY"]}&shortUrl=http://goo.gl/bgaA8I&projection=FULL"
+    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{ENV["GOOGLE_API_KEY"]}&shortUrl=#{self.short_url}&projection=FULL"
     result = open(url).read
     result = JSON.parse(result)
     return result
+  end
+
+  # TODO: 先去看Redis裡面有沒有
+  def url_analytics
+    # @url_analytics_result ||= JSON.parse '{
+    #  "kind": "urlshortener#url",
+    #  "id": "http://goo.gl/bgaA8I",
+    #  "longUrl": "http://localhost:3000/url_builders?mytest=test&utm_source=_builders?mytest=test&utm_term=_builders?mytest=test&utm_content=_builders?mytest=test&utm_name=_builders?mytest=test",
+    #  "status": "OK",
+    #  "created": "2016-05-05T08:05:25.355+00:00",
+    #  "analytics": {
+    #   "allTime": {
+    #    "shortUrlClicks": "2",
+    #    "longUrlClicks": "2",
+    #    "referrers": [
+    #     {
+    #      "count": "2",
+    #      "id": "unknown"
+    #     }
+    #    ],
+    #    "countries": [
+    #     {
+    #      "count": "2",
+    #      "id": "TW"
+    #     }
+    #    ],
+    #    "browsers": [
+    #     {
+    #      "count": "2",
+    #      "id": "Chrome"
+    #     }
+    #    ],
+    #    "platforms": [
+    #     {
+    #      "count": "2",
+    #      "id": "Macintosh"
+    #     }
+    #    ]
+    #   },
+    #   "month": {
+    #    "shortUrlClicks": "2",
+    #    "longUrlClicks": "2",
+    #    "referrers": [
+    #     {
+    #      "count": "2",
+    #      "id": "unknown"
+    #     }
+    #    ],
+    #    "countries": [
+    #     {
+    #      "count": "2",
+    #      "id": "TW"
+    #     }
+    #    ],
+    #    "browsers": [
+    #     {
+    #      "count": "2",
+    #      "id": "Chrome"
+    #     }
+    #    ],
+    #    "platforms": [
+    #     {
+    #      "count": "2",
+    #      "id": "Macintosh"
+    #     }
+    #    ]
+    #   },
+    #   "week": {
+    #    "shortUrlClicks": "2",
+    #    "longUrlClicks": "2",
+    #    "referrers": [
+    #     {
+    #      "count": "2",
+    #      "id": "unknown"
+    #     }
+    #    ],
+    #    "countries": [
+    #     {
+    #      "count": "2",
+    #      "id": "TW"
+    #     }
+    #    ],
+    #    "browsers": [
+    #     {
+    #      "count": "2",
+    #      "id": "Chrome"
+    #     }
+    #    ],
+    #    "platforms": [
+    #     {
+    #      "count": "2",
+    #      "id": "Macintosh"
+    #     }
+    #    ]
+    #   },
+    #   "day": {
+    #    "shortUrlClicks": "0",
+    #    "longUrlClicks": "0"
+    #   },
+    #   "twoHours": {
+    #    "shortUrlClicks": "0",
+    #    "longUrlClicks": "0"
+    #   }
+    #  }
+    # }'
+    # return @url_analytics_result
+    return fetch_and_save_short_url_analytics
   end
 
   private

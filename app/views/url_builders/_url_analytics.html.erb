@@ -1,0 +1,24 @@
+<ul>
+   <li>短網址點擊數:<%= url_analytics['shortUrlClicks'] %></li>
+   <li>長網址點擊數:<%= url_analytics['longUrlClicks'] %></li>
+   <% ['referrers', 'countries', 'browsers', 'platforms'].each do |traget| %>
+     <% next unless url_analytics[traget] %>
+     <li><%= traget %>點擊數:
+       <ul>
+         <% url_analytics[traget].each do |obj| %>
+          <li><%= obj['id'] %>: <%= obj['count'] %></li>
+         <% end %>
+       </ul>
+     </li>
+   <% end %>
+
+   <!-- <li>countries點擊數:
+
+   </li>
+   <li>browsers點擊數:
+
+   </li>
+   <li>platforms點擊數:
+
+   </li> -->
+</ul>
