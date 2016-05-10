@@ -2,34 +2,62 @@
 
 <h1>Listing Url Builders</h1>
 
-<table>
+<div>
+  <label>顯示欄位:</label>
+  <form id="url_builder_checkbox">
+    <input type="checkbox" value="url_builder_name" checked=""><%= t("url_builder.name") %>
+    <input type="checkbox" value="url_builder_url"><%= t("url_builder.url") %>
+    <input type="checkbox" value="url_builder_long"><%= t("url_builder.long") %>
+    <input type="checkbox" value="url_builder_short" checked=""><%= t("url_builder.short") %>
+    <input type="checkbox" value="url_builder_source" checked=""><%= t("url_builder.source") %>
+    <input type="checkbox" value="url_builder_medium" checked=""><%= t("url_builder.medium") %>
+    <input type="checkbox" value="url_builder_term"><%= t("url_builder.term") %>
+    <input type="checkbox" value="url_builder_content"><%= t("url_builder.content") %><br>
+    <input type="checkbox" value="url_builder_start_date"><%= t("url_builder.start_date") %>
+    <input type="checkbox" value="url_builder_end_date"><%= t("url_builder.end_date") %>
+    <input type="checkbox" value="url_builder_created_at"><%= t("url_builder.created_at") %>
+    <input type="checkbox" value="url_builder_updated_at"><%= t("url_builder.updated_at") %>
+  </form>
+</div>
+
+<table class="table table-striped table-hover " id="url_builder_table">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Url</th>
-      <th>Source</th>
-      <th>Medium</th>
-      <th>Term</th>
-      <th>Content</th>
-      <th>Name</th>
+      <th class="url_builder_name hide_show"><%= t("url_builder.name") %></th>
+      <th class="url_builder_url hide_show"><%= t("url_builder.url") %></th>
+      <th class="url_builder_long hide_show"><%= t("url_builder.long") %></th>
+      <th class="url_builder_short hide_show"><%= t("url_builder.short") %></th>
+      <th class="url_builder_source hide_show"><%= t("url_builder.source") %></th>
+      <th class="url_builder_medium hide_show"><%= t("url_builder.medium") %></th>
+      <th class="url_builder_term hide_show"><%= t("url_builder.term") %></th>
+      <th class="url_builder_content hide_show"><%= t("url_builder.content") %></th>
+      <th class="url_builder_start_date hide_show"><%= t("url_builder.start_date") %></th>
+      <th class="url_builder_end_date hide_show"><%= t("url_builder.end_date") %></th>
+      <th class="url_builder_created_at hide_show"><%= t("url_builder.created_at") %></th>
+      <th class="url_builder_updated_at hide_show"><%= t("url_builder.updated_at") %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @url_builders.each do |url_builder| %>
-      <tr>
-        <td><%= url_builder.user.email %></td>
-        <td><%= url_builder.url %></td>
-        <td><%= url_builder.source %></td>
-        <!-- <td><%#= url_builder.medium %></td> -->
-        <td><%= url_builder.term %></td>
-        <td><%= url_builder.content %></td>
-        <td><%= url_builder.name %></td>
-        <td><%= link_to 'Show', url_builder %></td>
-        <td><%= link_to 'Edit', edit_url_builder_path(url_builder) %></td>
-        <td><%= link_to 'Destroy', url_builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td class="url_builder_name hide_show"><%= url_builder.name %></td>
+      <td class="url_builder_url hide_show"><%= url_builder.url %></td>
+      <td class="url_builder_long hide_show"><%= url_builder.builded_url %></td>
+      <td class="url_builder_short hide_show"><%= url_builder.short_url %></td>
+      <td class="url_builder_source hide_show"><%= url_builder.source %></td>
+      <td class="url_builder_medium hide_show"><%= url_builder.campaign_medium.medium %></td>
+      <td class="url_builder_term hide_show"><%= url_builder.term %></td>
+      <td class="url_builder_content hide_show"><%= url_builder.content %></td>
+      <td class="url_builder_start_date hide_show"><%= url_builder.start_date ? url_builder.start_date.strftime("%Y/%m/%d") : '-'  %></td>
+      <td class="url_builder_end_date hide_show"><%= url_builder.end_date ? url_builder.end_date.strftime("%Y/%m/%d") : '-'  %></td>
+      <td class="url_builder_created_at hide_show"><%= url_builder.created_at ? url_builder.created_at.strftime("%Y/%m/%d %H:%M:%S") : '-'  %></td>
+      <td class="url_builder_updated_at hide_show"><%= url_builder.updated_at ? url_builder.updated_at.strftime("%Y/%m/%d %H:%M:%S") : '-'  %></td>
+      <!-- <td><%#= link_to 'Show', url_builder %></td> -->
+      <td><%= link_to '分析', url_builder %></td>
+      <td><%= link_to '編輯', edit_url_builder_path(url_builder) %></td>
+      <td><%= link_to '刪除', url_builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>
@@ -37,3 +65,22 @@
 <br>
 
 <%= link_to 'New Url builder', new_url_builder_path %>
+
+<%= javascript_tag do %>
+
+  $(function(){
+    function hide_show(){
+      $(".hide_show").hide();
+      $(".hide_show").hide();
+      $('#url_builder_checkbox :checked').each(function(){
+        $("."+$(this).val()).show();
+      });
+    }
+
+    hide_show();
+
+    $('#url_builder_checkbox').change(function () {
+      hide_show();
+    });
+  });
+<% end %>
