@@ -3,7 +3,7 @@
 # Rails.application.config.session_store :cookie_store, key: '_ga_session'
 # Rails.application.config.session_store :mem_cache_store
 Rails.application.config.session_store :redis_session_store, {
-  key: 'your_session_key',
+  key: 'session_key',
   redis: {
     db: 2,
     expire_after: 120.minutes,

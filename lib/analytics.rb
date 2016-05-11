@@ -36,7 +36,9 @@ module Authorizer
   CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
   CLIENT_ID = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
   SCOPE = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
-  TOKEN_STORE = Google::Auth::Stores::RedisTokenStore.new({redis: 'localhost', prefix: "ga_user_"})
+  # ref https://github.com/redis/redis-rb
+  # redis = Redis.new(:host => "10.0.1.1", :port => 6380, :db => 0, :path => "/tmp/redis.sock", :password => "mysecret")
+  TOKEN_STORE = Google::Auth::Stores::RedisTokenStore.new({prefix: "ga:user:", host: "127.0.0.1", port: 6379})
   AUTHORIZER = Google::Auth::UserAuthorizer.new(CLIENT_ID, SCOPE, TOKEN_STORE, CALLBACK_URI)
 
   def self.credentials user_id
