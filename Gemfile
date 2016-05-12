@@ -68,3 +68,4 @@ gem 'bootstrap-datepicker-rails'
 gem 'rest-client',  '~>1.8.0' #用來使用Http Post
 
 # gem "rspec-rails", "~> 3.4.4"
+gem 'mysql2'
