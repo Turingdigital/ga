@@ -6,6 +6,6 @@ namespace :foo do
   # task :rebuild => ["db:drop", "db:setup", :fake]
 
   task :foo => :environment do
-    p Analytics
+    Foo.create(title: "Test Data", start_date: DateTime.now)
   end
 end
