@@ -27,6 +27,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
+  username: root
+  password: cand00
   database: mysql_production
   pool: 5
   host: <%= ENV["MYSQL_PORT_3306_TCP_ADDR"] %> #localhost
