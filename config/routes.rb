@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :foos
   resources :campaign_media
-  resources :url_builders
+  resources :url_builders do
+    collection do
+      get 'schedule'
+    end
+  end
   resources :account_summaries do
     collection do
       post 'setup_profile'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505074604) do
+ActiveRecord::Schema.define(version: 20160513092607) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 20160505074604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "url_analytics", force: :cascade do |t|
+    t.text     "json"
+    t.integer  "url_builder_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "url_analytics", ["url_builder_id"], name: "index_url_analytics_on_url_builder_id"
 
   create_table "url_builder_campaign_mediumships", force: :cascade do |t|
     t.integer  "url_builder_id"

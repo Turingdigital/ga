@@ -2,6 +2,11 @@ class UrlBuildersController < ApplicationController
   before_action :set_url_builder, only: [:show, :edit, :update, :destroy]
   before_action :set_campaign_media, only: [:new, :edit]
 
+  def schedule
+    render :text => "ok"
+    UrlBuilder.fetch_and_save_short_url_analytics_all
+  end
+
   # GET /url_builders
   # GET /url_builders.json
   def index
