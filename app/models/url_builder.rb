@@ -37,7 +37,10 @@ class UrlBuilder < ActiveRecord::Base
     # return result
   end
 
-  # TODO: 儲存在Redis裡面 不反覆抓取
+  def short_url_info
+    return "#{short_url}.info"
+  end
+
   def self.fetch_and_save_short_url_analytics_all
     self.find_in_batches.with_index do |group, batch|
       # puts "Processing group ##{batch}"

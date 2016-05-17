@@ -16,6 +16,7 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders/1
   # GET /url_builders/1.json
   def show
+    redirect_to @url_builder.short_url_info
   end
 
   # GET /url_builders/new
