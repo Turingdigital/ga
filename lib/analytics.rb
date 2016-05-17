@@ -95,6 +95,8 @@ class Analytics #< BaseCli
   # method_option :start, type: :string, required: true
   # method_option :end, type: :string, required: true
   def show_visits(profile_id, _start, _end)
+    authorize
+
     dimensions = %w(ga:date)
     metrics = %w(ga:sessions ga:users ga:newUsers ga:percentNewSessions
                  ga:sessionDuration ga:avgSessionDuration)
@@ -105,7 +107,27 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
+    return result
+    # result = @analytics.get_ga_data("ga:#{profile_id}",
+    #                                _start,
+    #                                _end,
+    #                                metrics.join(','),
+    #                                dimensions: dimensions.join(','),
+    #                                sort: sort.join(','))
 
+    # data = []
+    # data.push(result.column_headers.map { |h| h.name })
+    # data.push(*result.rows)
+    # data
+  end
+
+  def get_realtime_data(profile_id)
+    authorize
+
+    dimensions = %w(ga:date)
+    metrics = %w(rt:activeUsers)
+    result = @analytics.get_realtime_data("ga:#{profile_id}", metrics.join(','))
+    return result
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
     #                                _end,
