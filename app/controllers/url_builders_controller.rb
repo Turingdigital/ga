@@ -2,6 +2,8 @@ class UrlBuildersController < ApplicationController
   before_action :set_url_builder, only: [:show, :edit, :update, :destroy]
   before_action :set_campaign_media, only: [:new, :edit]
 
+  before_action :authorize, only: [:show, :edit, :new, :index]
+
   def schedule
     render :text => "ok"
     UrlBuilder.fetch_and_save_short_url_analytics_all
@@ -86,5 +88,9 @@ class UrlBuildersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def url_builder_params
       params.require(:url_builder).permit(:user_id, :url, :source, :campaign_medium_id, :term, :content, :name, :start_date, :end_date)
+    end
+
+    def authorize
+      redirect_to root_path unless current_user
     end
 end
