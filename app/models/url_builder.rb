@@ -14,6 +14,17 @@ class UrlBuilder < ActiveRecord::Base
 
   before_save :set_short_url
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      ccn = csv_column_names
+      csv << ccn #column_names
+      ccn.delete("campaign_medium")
+      all.each do |product|
+        csv << (product.attributes.values_at(*ccn) << product.campaign_medium.medium)
+      end
+    end
+  end
+
   def builded_url
     uri = URI.parse(url)
     new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
@@ -176,5 +187,14 @@ class UrlBuilder < ActiveRecord::Base
       result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
       # result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
       self.short_url = JSON.parse(result)["id"]
+    end
+
+    def self.csv_column_names
+      cn = column_names
+      cn.delete("id")
+      cn.delete("user_id")
+      cn.delete("campaign_medium_id")
+      cn << "campaign_medium"
+      return cn
     end
 end

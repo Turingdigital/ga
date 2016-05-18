@@ -13,6 +13,11 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders.json
   def index
     @url_builders = current_user.url_builders#UrlBuilder.all
+    respond_to do |format|
+      format.html
+      format.csv { send_data @url_builders.to_csv }
+      # format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end
   end
 
   # GET /url_builders/1
