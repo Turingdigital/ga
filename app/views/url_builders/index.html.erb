@@ -44,7 +44,7 @@
       <td class="url_builder_name hide_show"><%= url_builder.name %></td>
       <td class="url_builder_url hide_show"><%= url_builder.url %></td>
       <td class="url_builder_long hide_show"><%= url_builder.builded_url %></td>
-      <td class="url_builder_short hide_show"><%= url_builder.short_url %></td>
+      <td class="url_builder_short hide_show"><%= link_to url_builder.short_url, url_builder.short_url, target: "_blank" %></td>
       <td class="url_builder_source hide_show"><%= url_builder.source %></td>
       <td class="url_builder_medium hide_show"><%= url_builder.campaign_medium.medium %></td>
       <td class="url_builder_term hide_show"><%= url_builder.term %></td>
@@ -56,6 +56,7 @@
       <!-- <td><%#= link_to 'Show', url_builder %></td> -->
       <td><%= link_to '分析', url_builder %></td>
       <td><%= link_to '編輯', edit_url_builder_path(url_builder) %></td>
+      <td><%= link_to '複製', "/url_builders/duplicate/#{url_builder.id}", method: :post %></td>
       <td><%= link_to '刪除', url_builder, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>

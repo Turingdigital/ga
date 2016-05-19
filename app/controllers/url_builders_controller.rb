@@ -1,5 +1,5 @@
 class UrlBuildersController < ApplicationController
-  before_action :set_url_builder, only: [:show, :edit, :update, :destroy]
+  before_action :set_url_builder, only: [:show, :edit, :update, :destroy, :duplicate]
   before_action :set_campaign_media, only: [:new, :edit]
 
   before_action :authorize, only: [:show, :edit, :new, :index]
@@ -9,10 +9,15 @@ class UrlBuildersController < ApplicationController
     UrlBuilder.fetch_and_save_short_url_analytics_all
   end
 
+  def duplicate
+    @url_builder.dup.save
+    redirect_to action: :index, notice: '複製完成，在最新的一筆'
+  end
+
   # GET /url_builders
   # GET /url_builders.json
   def index
-    @url_builders = current_user.url_builders#UrlBuilder.all
+    @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
     respond_to do |format|
       format.html
       format.csv { send_data @url_builders.to_csv }
@@ -61,7 +66,8 @@ class UrlBuildersController < ApplicationController
   def update
     respond_to do |format|
       if @url_builder.update(url_builder_params)
-        format.html { redirect_to @url_builder, notice: 'Url builder was successfully updated.' }
+        # format.html { redirect_to @url_builder, notice: 'Url builder was successfully updated.' }
+        format.html { redirect_to action: :index, notice: 'Url builder was successfully updated.' }
         format.json { render :show, status: :ok, location: @url_builder }
       else
         format.html { render :edit }

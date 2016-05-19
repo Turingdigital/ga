@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :url_builders do
     collection do
       get 'schedule'
+      post 'duplicate/:id', action: :duplicate
     end
   end
   resources :account_summaries do
@@ -33,6 +34,8 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'oauth/ga_callback' => 'oauth#ga_callback'
+
+  get 'dashboard' => 'dashboard#index'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
