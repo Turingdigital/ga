@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_one :account_summary
   has_one :ga_credential
+  has_one :goal
   has_many :url_builders
 
   def fetch_account_summary
