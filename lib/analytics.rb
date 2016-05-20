@@ -128,6 +128,7 @@ class Analytics #< BaseCli
     webPropertyId = '~all' unless options[:webPropertyId]
     profileId     = '~all' unless options[:profileId]
     result = @analytics.list_goals(accountId, webPropertyId, profileId)
+    return result
   end
 
   def get_realtime_data(profile_id)

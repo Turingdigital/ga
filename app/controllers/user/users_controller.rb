@@ -4,6 +4,7 @@ class User::UsersController < ApplicationController
   def show
 
     if @user.account_summary
+      Goal.create_by_user_than_fetch_and_save @user if @user.goal.nil?
       redirect_to (@user.account_summary.default_profile? ? url_builders_path : @user.account_summary)
     else
       @user.fetch_account_summary
