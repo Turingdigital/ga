@@ -8,6 +8,12 @@ class AccountSummariesController < ApplicationController
 
   def setup_profile
     @account_summary.default_profile = params[:profile]
+
+    # 前端尚未比對是從哪個profile_id來的goal_id
+    goal_id = params[:id]
+    # 尚未可以儲存預設的轉換目標
+    # 考慮使用者可以在報表頁面切換，不像profile直接預設
+
     @account_summary.save
     redirect_to action: :index
     # byebug
