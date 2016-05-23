@@ -22,6 +22,7 @@ class AccountSummariesController < ApplicationController
   # GET /account_summaries/1
   # GET /account_summaries/1.json
   def show
+    @goal_json = current_user.goal.json
   end
 
   # GET /account_summaries/new
