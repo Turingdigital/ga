@@ -121,6 +121,20 @@ class Analytics #< BaseCli
     # data
   end
 
+  # def get_users(profile_id, _start, _end)
+  #   authorize
+  #
+  #   metrics = %w(ga:users)
+  #   dimensions = %w(ga:date ga:hour)
+  #   result = @analytics.get_ga_data(
+  #                         "ga:#{profile_id}",
+  #                         _start, _end,
+  #                         metrics.join(','),
+  #                         dimensions: dimensions.join(','),
+  #                         sort: sort.join(','))
+  #   return result;
+  # end
+
   def list_goals options={} #accountId, webPropertyId, profileId
     authorize
 
