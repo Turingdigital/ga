@@ -1,6 +1,7 @@
 class AccountSummariesController < ApplicationController
   before_action :set_account_summary, only: [:show, :edit, :update, :destroy, :setup_profile]
   before_action :set_profile, only: [:setup_profiles]
+  before_action :check_user_signed_in
 
   def default_profile?
     return !self.default_profile.nil?
@@ -89,5 +90,9 @@ class AccountSummariesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def account_summary_params
       params.require(:account_summary).permit(:user_id, :jsonString)
+    end
+
+    def check_user_signed_in
+      redirect_to root_path unless user_signed_in?
     end
 end
