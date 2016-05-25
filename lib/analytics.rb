@@ -124,7 +124,9 @@ class Analytics #< BaseCli
   def get_event_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 
-    dimensions = %w(ga:date)
+
+
+    dimensions = %w(ga:eventCategory ga:eventAction ga:eventLabel)
     metrics = %w(ga:sessions)
     result = @analytics.get_ga_data(
                           "ga:#{profile_id}",
