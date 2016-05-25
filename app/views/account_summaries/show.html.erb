@@ -3,7 +3,7 @@
 <%= form_tag "/account_summaries/setup_profile", :class => "form-horizontal" do %>
 <%#= form_for @account_summary, :class => "form-horizontal" do %>
   <fieldset>
-    <legend>選擇要分析的GA專案</legend>
+    <legend>選擇預設設定檔</legend>
 
     <div class="form-group">
       <label for="select" class="col-lg-2 control-label">帳戶</label>
@@ -88,7 +88,6 @@ $(function(){
   var account_summary = <%= @account_summary.jsonString.html_safe %>;
   var goal = <%= @goal_json.html_safe %>;
   append_options("goal", goal.items);
-  console.log(goal);
 
   init_options(account_summary);
 
