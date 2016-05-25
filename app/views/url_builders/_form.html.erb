@@ -68,8 +68,10 @@
   </div>
   <div class="actions">
     <%#= f.submit %>
-    <input type="submit" name="commit" value="Update Url builder" id="datepicker_submit">
+    <!-- <input type="submit" name="commit" value="Update Url builder" id="datepicker_submit"> -->
     <%#= f.submit, id: 'create_post' %>
+    <%= f.submit %>
+
   </div>
 <% end %>
 
@@ -80,10 +82,10 @@ function check_date_valid(){
   var dEnd = new Date($("#url_builder_end_date").val());
   if(dStart > dEnd) {
     $("#datepicker_warning").show();
-    $("#datepicker_submit").prop( "disabled", true );
+    $('input[type="submit"][name="commit"]').prop( "disabled", true );
   } else {
     $("#datepicker_warning").hide();
-    $("#datepicker_submit").prop( "disabled", false);
+    $('input[type="submit"][name="commit"]').prop( "disabled", false);
   }
   // console.log(dStart);
   // console.log(dEnd);

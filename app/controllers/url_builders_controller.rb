@@ -52,7 +52,7 @@ class UrlBuildersController < ApplicationController
 
     respond_to do |format|
       if @url_builder.save
-        format.html { redirect_to @url_builder, notice: 'Url builder was successfully created.' }
+        format.html { redirect_to action: :index, notice: 'Url builder was successfully created.' }
         format.json { render :show, status: :created, location: @url_builder }
       else
         format.html { render :new }
