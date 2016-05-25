@@ -103,6 +103,8 @@ class UrlBuildersController < ApplicationController
 
     def authorize
       redirect_to root_path unless user_signed_in?
-      redirect_to(account_summary_url(current_user.account_summary), flash: {alert: "你尚未設定預設設定檔"}) if current_user.account_summary.default_profile.nil?
+      if current_user.account_summary.default_profile.nil?
+        redirect_to(account_summary_url(current_user.account_summary), flash: {alert: "你尚未設定預設設定檔"})
+      end
     end
 end
