@@ -18,9 +18,9 @@ class UrlBuilder < ActiveRecord::Base
     CSV.generate(options) do |csv|
       ccn = csv_column_names
       csv << ccn #column_names
-      ccn.delete("campaign_medium")
+      ccn.delete("medium")
       all.each do |product|
-        csv << (product.attributes.values_at(*ccn) << product.campaign_medium.medium)
+        csv << (product.attributes.values_at(*ccn).insert(2, product.campaign_medium.medium))
       end
     end
   end
@@ -194,7 +194,7 @@ class UrlBuilder < ActiveRecord::Base
       cn.delete("id")
       cn.delete("user_id")
       cn.delete("campaign_medium_id")
-      cn << "campaign_medium"
+      cn.insert(2, "medium")
       return cn
     end
 end
