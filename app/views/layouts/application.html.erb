@@ -31,7 +31,7 @@
 <div class="container">
     <div class="row">
       <div class="col-sm-3 col-md-3">
-        <%= render "layouts/sidebar" if current_user %>
+        <%= render "layouts/sidebar" if user_signed_in? && current_user.account_summary && current_user.account_summary.default_profile %>
       </div>
 
       <div class="col-sm-9 col-md-9">

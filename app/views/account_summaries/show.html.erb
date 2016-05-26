@@ -19,10 +19,10 @@
         <select class="form-control" name="profile" id="profile"></select>
       </div>
 
-      <label for="select" class="col-lg-2 control-label">轉換目標</label>
+      <!-- <label for="select" class="col-lg-2 control-label">轉換目標</label>
       <div class="col-lg-10">
         <select class="form-control" name="goal" id="goal"></select>
-      </div>
+      </div> -->
     </div>
 
     <%= hidden_field_tag 'id', @account_summary.id %>
@@ -84,8 +84,8 @@ function init_options(account_summary){
 $(function(){
   // var account_summary = window.account_summary;
   var account_summary = <%= @account_summary.jsonString.html_safe %>;
-  var goal = <%= @goal_json.html_safe %>;
-  append_options("goal", goal.items);
+  // var goal = <%#= @goal_json.html_safe %>;
+  // append_options("goal", goal.items);
 
   init_options(account_summary);
 
