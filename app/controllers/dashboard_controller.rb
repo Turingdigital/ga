@@ -13,13 +13,14 @@ class DashboardController < ApplicationController
 
     # 測試2
     @event_sessions = @analytics.get_event_sessions(profile_id)
-    if @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
+    if @event_sessions.rows && @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
       @warring[:event_sessions] = @event_sessions.rows[0]
     end
 
   end
 
   def authorize
+    edirect_to root_path unless user_signed_in?
     if current_user.account_summary.default_profile.nil?
       redirect_to(account_summary_url(current_user.account_summary), flash: {alert: "你尚未設定預設設定檔"})
     end

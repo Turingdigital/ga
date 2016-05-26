@@ -5,7 +5,7 @@ UTM
 <% end %>
 <% if @warring[:event_sessions].nil? %>
   測試用（沒有做的功能 事件，電商，目標）：<br>
-  <%= @event_sessions.rows[0].to_s %>
+  <%#= @event_sessions.rows[0].to_s %>
 <% else %>
   你有以下沒有做的功能 事件，電商，目標：<br>
   <%= @warring[:event_sessions].to_s %>
