@@ -36,7 +36,15 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
-          <li><a href="#"><%= current_user.email %></a></li>
+          <li>
+            <a href="#">
+              <%= current_user.email %>
+              <% if(current_user.account_summary && current_user.account_summary.default_profile) %>
+                <br>- GA:<%= current_user.account_summary.default_profile %>
+              <% end %>
+            </a>
+          </li>
+          <li><a href="#"></a></li>
           <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
           <%
             # client = OAuth2::Client.new(

@@ -16,7 +16,7 @@ class AccountSummariesController < ApplicationController
     # 考慮使用者可以在報表頁面切換，不像profile直接預設
 
     @account_summary.save
-    redirect_to action: :index
+    redirect_to dashboard_path #action: :index
     # byebug
   end
 
