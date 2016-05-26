@@ -17,6 +17,9 @@ class DashboardController < ApplicationController
       @warring[:event_sessions] = @event_sessions.rows[0]
     end
 
+    # 測試3
+    @campaign_sessions = @analytics.get_campaign_sessions(profile_id)
+
   end
 
   def authorize

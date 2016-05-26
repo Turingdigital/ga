@@ -10,3 +10,6 @@ UTM
   你有以下沒有做的功能 事件，電商，目標：<br>
   <%= @warring[:event_sessions].to_s %>
 <% end %>
+<br>
+<p>測試用，根據UTM所建立的資料，抓取GA的結果：</p>
+<%= @campaign_sessions.to_h.to_json %>
