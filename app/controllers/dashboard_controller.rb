@@ -23,7 +23,7 @@ class DashboardController < ApplicationController
   end
 
   def authorize
-    edirect_to root_path unless user_signed_in?
+    redirect_to root_path unless user_signed_in?
     if current_user.account_summary.default_profile.nil?
       redirect_to(account_summary_url(current_user.account_summary), flash: {alert: "你尚未設定預設設定檔"})
     end
