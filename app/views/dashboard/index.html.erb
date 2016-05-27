@@ -10,6 +10,39 @@ UTM
   你有以下沒有做的功能 事件，電商，目標：<br>
   <%= @warring[:event_sessions].to_s %>
 <% end %>
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>事件設定預警系統</h4>
+  <p>你有以下事件設置並無Google Analytics資料產生</p>
+  <ul>
+    <li>測試1</li>
+    <li>測試2</li>
+    <li>測試3</li>
+  </ul>
+  <p>raw data待切版顯示：<br><%= @event_sessions.to_h.to_json %></p>
+</div>
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>活動設定預警系統</h4>
+  <p>你有以下活動設置在UTM並無Google Analytics資料產生</p>
+  <ul>
+    <li>測試1</li>
+    <li>測試2</li>
+    <li>測試3</li>
+  </ul>
+  <p>raw data待切版顯示：<br><%= @campaign_sessions.to_h.to_json %></p>
+</div>
+
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>其他錯誤</h4>
+  <ul>
+    <li>測試1</li>
+    <li>測試2</li>
+    <li>測試3</li>
+  </ul>
+</div>
+
 <br>
-<p>測試用，根據UTM所建立的資料，抓取GA的結果：</p>
-<%= @campaign_sessions.to_h.to_json %>
+<!-- <p>測試用，根據UTM所建立的資料，抓取GA的結果：</p> -->
+<%#= @campaign_sessions.to_h.to_json %>
