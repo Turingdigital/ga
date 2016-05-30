@@ -44,8 +44,7 @@ class UrlBuildersController < ApplicationController
   # POST /url_builders.json
   def create
     params = url_builder_params
-    params["start_date"] = Date.strptime(params["start_date"], "%m/%d/%Y")
-    params["end_date"] = Date.strptime(params["end_date"], "%m/%d/%Y")
+    parse_params_date params
 
     @url_builder = UrlBuilder.new(params)
     @url_builder.user = current_user
@@ -64,8 +63,11 @@ class UrlBuildersController < ApplicationController
   # PATCH/PUT /url_builders/1
   # PATCH/PUT /url_builders/1.json
   def update
+    params = url_builder_params
+    parse_params_date params
+
     respond_to do |format|
-      if @url_builder.update(url_builder_params)
+      if @url_builder.update(params)
         # format.html { redirect_to @url_builder, notice: 'Url builder was successfully updated.' }
         format.html { redirect_to action: :index, notice: 'Url builder was successfully updated.' }
         format.json { render :show, status: :ok, location: @url_builder }
@@ -87,6 +89,12 @@ class UrlBuildersController < ApplicationController
   end
 
   private
+
+    def parse_params_date params
+      params["start_date"] = Date.strptime(params["start_date"], "%m/%d/%Y")
+      params["end_date"] = Date.strptime(params["end_date"], "%m/%d/%Y")
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_url_builder
       @url_builder = UrlBuilder.find(params[:id])
