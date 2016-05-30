@@ -50,8 +50,8 @@
   <div class="field">
     <%= f.label :start_date, "開始日期" %><br>
     <input type="text" name="url_builder[start_date]" id="url_builder_start_date"
-           data-provide='datepicker'
-           value="<%= @url_builder.start_date.strftime('%m/%d/%Y') if @url_builder.start_date%>">
+           data-provide='datepicker' data-date-format="yyyy-mm-dd"
+           value="<%= @url_builder.start_date.strftime('%Y-%m-%d') if @url_builder.start_date%>">
     <%#= f.datetime_select :start_date %>
     <%#= f.text_field(:start_date, :data-provide => 'datepicker') %>
     <!-- <input type="text" data-provide='datepicker' > -->
@@ -59,8 +59,8 @@
   <div class="field">
     <%= f.label :end_date, "結束日期" %><br>
     <input type="text" name="url_builder[end_date]" id="url_builder_end_date"
-           data-provide='datepicker'
-           value="<%= @url_builder.end_date.strftime('%m/%d/%Y') if @url_builder.end_date %>">
+           data-provide='datepicker' data-date-format="yyyy-mm-dd"
+           value="<%= @url_builder.end_date.strftime('%Y-%m-%d') if @url_builder.end_date %>">
     <p id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</p>
     <%#= f.datetime_select :start_date %>
     <%#= f.text_field(:end_date, :data-provide => 'datepicker') %>
