@@ -17,11 +17,11 @@
   </div> -->
   <div class="field">
     <%= f.label :url, "網站網址 *" %><br>
-    <%= f.text_area :url, cols: "60", rows: "1" %>
+    <%= f.text_area :url, cols: "60", rows: "1", :required => true %>
   </div>
   <div class="field">
     <%= f.label :source, "廣告活動來源 *" %><br>
-    <%= f.text_field :source, size: "61" %>
+    <%= f.text_field :source, size: "61", :required => true %>
   </div>
   <div class="field">
     <%= f.label :medium, "廣告活動媒介 *" %><br>
@@ -37,7 +37,7 @@
   </div>
   <div class="field">
     <%= f.label :name, "廣告活動名稱 *" %><br>
-    <%= f.text_field :name, size: "61" %>
+    <%= f.text_field :name, size: "61", :required => true %>
   </div>
   <div class="field">
     <%= f.label :term, "廣告活動字詞" %><br>

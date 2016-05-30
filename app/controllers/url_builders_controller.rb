@@ -91,8 +91,8 @@ class UrlBuildersController < ApplicationController
   private
 
     def parse_params_date params
-      params["start_date"] = Date.strptime(params["start_date"], "%Y-%m-%d")
-      params["end_date"] = Date.strptime(params["end_date"], "%Y-%m-%d")
+      params["start_date"] = Date.strptime(params["start_date"], "%Y-%m-%d") unless params["start_date"]==""
+      params["end_date"] = Date.strptime(params["end_date"], "%Y-%m-%d") unless params["end_date"]==""
     end
 
     # Use callbacks to share common setup or constraints between actions.
