@@ -11,7 +11,7 @@ class AccountSummariesController < ApplicationController
     @account_summary.default_profile = params[:profile]
 
     # 前端尚未比對是從哪個profile_id來的goal_id
-    goal_id = params[:id]
+    # goal_id = params[:id]
     # 尚未可以儲存預設的轉換目標
     # 考慮使用者可以在報表頁面切換，不像profile直接預設
 
@@ -29,7 +29,7 @@ class AccountSummariesController < ApplicationController
   # GET /account_summaries/1
   # GET /account_summaries/1.json
   def show
-    @goal_json = current_user.goal.json
+    # @goal_json = current_user.goal.json
   end
 
   # GET /account_summaries/new
