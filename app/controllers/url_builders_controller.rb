@@ -20,7 +20,7 @@ class UrlBuildersController < ApplicationController
     @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
     respond_to do |format|
       format.html
-      format.csv { send_data @url_builders.to_csv }
+      format.csv # { send_data @url_builders.to_csv }
       # format.xls # { send_data @products.to_csv(col_sep: "\t") }
     end
   end
