@@ -1,2 +1,19 @@
-"Monitorix","Monitorix","Monitorix"
-"Monitorix","Monitorix","Monitorix"
+<%= ["流水號","媒體","客戶名","廣告內容","位置/規格-鏈接至",
+
+"活動地址URL",
+"*來源utm_source","*媒介utm_medium","*活動名稱utm_campaign",
+"搜索關鍵字utm_term","內容utm_content",
+
+"最終URL",
+"短網址區",
+"短網址點擊成效","Google Analytics 報表成效","差異值"].join(',') %>
+<% cnt=0; @url_builders.each do |ub| %>
+<%= [cnt+=1,"媒體","客戶名","廣告內容","位置/規格-鏈接至",
+    ub.url,
+    ub.source,ub.campaign_medium.medium,ub.name,
+    ub.term,ub.content,
+
+    ub.builded_url,
+    ub.short_url,
+    "短網址點擊成效","Google Analytics 報表成效","差異值"].join(',')%>
+<% end %>
