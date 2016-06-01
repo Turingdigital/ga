@@ -15,15 +15,19 @@ class DashboardController < ApplicationController
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
 
+    #TODO: 太肥大 重構
     warring ={}
     @event_sessions = @analytics.get_event_sessions(profile_id)
     if @event_sessions.rows && @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
-      @warring[:event_sessions] = @event_sessions.rows[0]
+      # @warring[:event_sessions] = @event_sessions.rows[0]
+      @event_sessions.rows[0].each do |row|
+        @warring[:event_sessions] << row if row[-1].to_i == 0
+      end
     end
 
     @campaign_sessions = @analytics.get_campaign_sessions(profile_id)
 
-    return warring
+    return {}#warring
   end
 
   def authorize
