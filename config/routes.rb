@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :url_builders do
     collection do
       get 'schedule'
+      get 'csv_utf8'
       post 'duplicate/:id', action: :duplicate
     end
   end

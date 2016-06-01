@@ -20,10 +20,18 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders.json
   def index
     @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
+    ic = Iconv.new("big5", "utf-8")
     respond_to do |format|
       format.html
-      format.csv {send_data(send_csv(@url_builders))} #{ send_data @url_builders.to_csv }
+      format.csv {send_data(ic.iconv(send_csv(@url_builders)))} #{ send_data @url_builders.to_csv }
       # format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end
+  end
+
+  def csv_utf8
+    @url_builders = current_user.url_builders.order(id: :desc)
+    respond_to do |format|
+      format.csv {send_data(send_csv(@url_builders))}
     end
   end
 
@@ -52,8 +60,7 @@ class UrlBuildersController < ApplicationController
           "短網址點擊成效","Google Analytics 報表成效","差異值"]
       end
     end
-    ic = Iconv.new("big5", "utf-8")
-    return ic.iconv(csv_string)
+    return csv_string
   end
 
   # GET /url_builders/1
