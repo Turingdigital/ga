@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525032402) do
+ActiveRecord::Schema.define(version: 20160601102416) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -98,6 +98,8 @@ ActiveRecord::Schema.define(version: 20160525032402) do
   end
 
   add_index "url_builders", ["campaign_medium_id"], name: "index_url_builders_on_campaign_medium_id"
+  add_index "url_builders", ["end_date"], name: "index_url_builders_on_end_date"
+  add_index "url_builders", ["start_date"], name: "index_url_builders_on_start_date"
   add_index "url_builders", ["user_id"], name: "index_url_builders_on_user_id"
 
   create_table "users", force: :cascade do |t|
