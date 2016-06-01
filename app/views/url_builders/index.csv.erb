@@ -1,19 +1,19 @@
-<%= ["æµæ°´è™Ÿ","åª’é«”","å®¢æˆ¶å","å»£å‘Šå…§å®¹","ä½ç½®/è¦æ ¼-éˆæŽ¥è‡³",
+<%= ["¬y¤ô¸¹","´CÅé","«È¤á¦W","¼s§i¤º®e","¦ì¸m/³W®æ-Ãì±µ¦Ü",
 
-"æ´»å‹•åœ°å€URL",
-"*ä¾†æºutm_source","*åª’ä»‹utm_medium","*æ´»å‹•åç¨±utm_campaign",
-"æœç´¢é—œéµå­—utm_term","å…§å®¹utm_content",
+"¬¡°Ê¦a§}URL",
+"*¨Ó·½utm_source","*´C¤¶utm_medium","*¬¡°Ê¦WºÙutm_campaign",
+"·j¯ÁÃöÁä¦rutm_term","¤º®eutm_content",
 
-"æœ€çµ‚URL",
-"çŸ­ç¶²å€å€",
-"çŸ­ç¶²å€é»žæ“Šæˆæ•ˆ","Google Analytics å ±è¡¨æˆæ•ˆ","å·®ç•°å€¼"].join(',') %>
+"³Ì²×URL",
+"µuºô§}°Ï",
+"µuºô§}ÂIÀ»¦¨®Ä","Google Analytics ³øªí¦¨®Ä","®t²§­È"].join(',') %>
 <% cnt=0; @url_builders.each do |ub| %>
-<%= [cnt+=1,"åª’é«”","å®¢æˆ¶å","å»£å‘Šå…§å®¹","ä½ç½®/è¦æ ¼-éˆæŽ¥è‡³",
+<%= [cnt+=1,"´CÅé","«È¤á¦W","¼s§i¤º®e","¦ì¸m/³W®æ-Ãì±µ¦Ü",
     ub.url,
     ub.source,ub.campaign_medium.medium,ub.name,
     ub.term,ub.content,
 
     ub.builded_url,
     ub.short_url,
-    "çŸ­ç¶²å€é»žæ“Šæˆæ•ˆ","Google Analytics å ±è¡¨æˆæ•ˆ","å·®ç•°å€¼"].join(',')%>
+    "µuºô§}ÂIÀ»¦¨®Ä","Google Analytics ³øªí¦¨®Ä","®t²§­È"].join(',')%>
 <% end %>
