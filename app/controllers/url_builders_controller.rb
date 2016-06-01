@@ -27,6 +27,7 @@ class UrlBuildersController < ApplicationController
     end
   end
 
+  # TODO: 這邊先Drity Hack，需重構到Model裡面
   def send_csv url_builders
     csv_string = CSV.generate() do |csv|
       csv << ["流水號","媒體","客戶名","廣告內容","位置/規格-鏈接至",
