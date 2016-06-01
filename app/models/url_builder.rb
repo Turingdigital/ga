@@ -15,14 +15,15 @@ class UrlBuilder < ActiveRecord::Base
   before_save :set_short_url
 
   def self.to_csv(options = {})
-    CSV.generate(options) do |csv|
-      ccn = csv_column_names
-      csv << ccn #column_names
-      ccn.delete("medium")
-      all.each do |product|
-        csv << (product.attributes.values_at(*ccn).insert(2, product.campaign_medium.medium))
-      end
-    end
+    # CSV.generate(options) do |csv|
+    #   ccn = csv_column_names
+    #   csv << ccn #column_names
+    #   ccn.delete("medium")
+    #   all.each do |product|
+    #     csv << (product.attributes.values_at(*ccn).insert(2, product.campaign_medium.medium))
+    #   end
+    # end
+    
   end
 
   def builded_url

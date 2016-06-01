@@ -20,9 +20,36 @@ class UrlBuildersController < ApplicationController
     @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
     respond_to do |format|
       format.html
-      format.csv # { send_data @url_builders.to_csv }
+      format.csv {send_data(send_csv(@url_builders).force_encoding("Big5"))} #{ send_data @url_builders.to_csv }
       # format.xls # { send_data @products.to_csv(col_sep: "\t") }
     end
+  end
+
+  def send_csv url_builders
+    csv_string = CSV.generate() do |csv|
+      csv << ["流水號","媒體","客戶名","廣告內容","位置/規格-鏈接至",
+
+      "活動地址URL",
+      "*來源utm_source","*媒介utm_medium","*活動名稱utm_campaign",
+      "搜索關鍵字utm_term","內容utm_content",
+
+      "最終URL",
+      "短網址區",
+      "短網址點擊成效","Google Analytics 報表成效","差異值"]
+
+      cnt=0
+      csv_string = url_builders.each do |ub|
+        csv << [cnt+=1,"媒體","客戶名","廣告內容","位置/規格-鏈接至",
+          ub.url,
+          ub.source,ub.campaign_medium.medium,ub.name,
+          ub.term,ub.content,
+
+          ub.builded_url,
+          ub.short_url,
+          "短網址點擊成效","Google Analytics 報表成效","差異值"]
+      end
+    end
+    return csv_string
   end
 
   # GET /url_builders/1
