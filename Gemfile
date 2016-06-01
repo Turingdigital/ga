@@ -72,3 +72,5 @@ gem 'mysql2'
 
 # gem 'whenever'
 # gem 'rufus-scheduler'
+
+gem 'iconv'

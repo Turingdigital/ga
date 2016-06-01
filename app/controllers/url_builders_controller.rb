@@ -1,3 +1,5 @@
+require 'iconv'
+
 class UrlBuildersController < ApplicationController
   before_action :set_url_builder, only: [:show, :edit, :update, :destroy, :duplicate]
   before_action :set_campaign_media, only: [:new, :edit]
@@ -20,7 +22,7 @@ class UrlBuildersController < ApplicationController
     @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
     respond_to do |format|
       format.html
-      format.csv {send_data(send_csv(@url_builders).force_encoding("Big5"))} #{ send_data @url_builders.to_csv }
+      format.csv {send_data(send_csv(@url_builders))} #{ send_data @url_builders.to_csv }
       # format.xls # { send_data @products.to_csv(col_sep: "\t") }
     end
   end
@@ -49,7 +51,8 @@ class UrlBuildersController < ApplicationController
           "短網址點擊成效","Google Analytics 報表成效","差異值"]
       end
     end
-    return csv_string
+    ic = Iconv.new("big5", "utf-8")
+    return ic.iconv(csv_string)
   end
 
   # GET /url_builders/1
