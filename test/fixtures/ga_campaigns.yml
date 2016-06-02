@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  source: MyString
+  medium: MyString
+  date: 2016-06-02
+  sessions: 1
+  user_id: 
+
+two:
+  source: MyString
+  medium: MyString
+  date: 2016-06-02
+  sessions: 1
+  user_id: 

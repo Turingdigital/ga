@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160601102416) do
+ActiveRecord::Schema.define(version: 20160602101106) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -35,6 +35,21 @@ ActiveRecord::Schema.define(version: 20160601102416) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "ga_campaigns", force: :cascade do |t|
+    t.string   "source"
+    t.string   "medium"
+    t.date     "date"
+    t.integer  "sessions"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "ga_campaigns", ["date"], name: "index_ga_campaigns_on_date"
+  add_index "ga_campaigns", ["medium"], name: "index_ga_campaigns_on_medium"
+  add_index "ga_campaigns", ["source"], name: "index_ga_campaigns_on_source"
+  add_index "ga_campaigns", ["user_id"], name: "index_ga_campaigns_on_user_id"
 
   create_table "ga_credentials", force: :cascade do |t|
     t.string   "access_token"
