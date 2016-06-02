@@ -32,7 +32,7 @@ class DashboardController < ApplicationController
     # 1. 取資料時，就不取回重複日期
     # 2. 儲存時，不儲存重複日期
     GaCampaign.create(@campaign_sessions.rows.map{|row|
-      row={source: row[0], medium: row[1], date: row[2], sessions: row[3]}
+      row={source: row[0], medium: row[1], date: row[2], sessions: row[3], user:current_user}
     })
     return warring
   end
