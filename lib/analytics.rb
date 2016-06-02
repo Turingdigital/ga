@@ -126,7 +126,7 @@ class Analytics #< BaseCli
 
 
 
-    dimensions = %w(ga:source ga:medium)
+    dimensions = %w(ga:source ga:medium ga:date)
     metrics = %w(ga:sessions)
     result = @analytics.get_ga_data(
                           "ga:#{profile_id}",
