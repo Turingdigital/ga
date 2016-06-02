@@ -40,6 +40,9 @@ class UrlBuilder < ActiveRecord::Base
     return uri.to_s
   end
 
+  def self.check_campaign_sessions_is_zero user
+  end
+
   def short_url_info
     return "#{short_url}.info"
   end

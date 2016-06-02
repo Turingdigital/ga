@@ -34,6 +34,7 @@ class DashboardController < ApplicationController
     GaCampaign.create(@campaign_sessions.rows.map{|row|
       row={source: row[0], medium: row[1], date: row[2], sessions: row[3], user:current_user}
     })
+    UrlBuilder.check_campaign_sessions_is_zero current_user
     return warring
   end
 
