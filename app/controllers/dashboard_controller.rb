@@ -25,9 +25,16 @@ class DashboardController < ApplicationController
       end
     end
 
+    #TODO: Dirty Hack, 先有功能就好，日後重構
     @campaign_sessions = @analytics.get_campaign_sessions(profile_id)
 
-    return {}#warring
+    #TODO: 錯誤，全塞進去，
+    # 1. 取資料時，就不取回重複日期
+    # 2. 儲存時，不儲存重複日期
+    GaCampaign.create(@campaign_sessions.rows.map{|row|
+      row={source: row[0], medium: row[1], date: row[2], sessions: row[3]}
+    })
+    return warring
   end
 
   def authorize
