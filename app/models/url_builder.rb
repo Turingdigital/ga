@@ -23,7 +23,7 @@ class UrlBuilder < ActiveRecord::Base
     #     csv << (product.attributes.values_at(*ccn).insert(2, product.campaign_medium.medium))
     #   end
     # end
-    
+
   end
 
   def builded_url
@@ -38,15 +38,6 @@ class UrlBuilder < ActiveRecord::Base
 
     uri.query = URI.encode_www_form(new_query_ar)
     return uri.to_s
-
-    # result = url
-    # result += result.include?('?') ? '&' : '?'
-    # result += "utm_source=#{source}" if source # 必填
-    # # result += "&utm_medium=#{campaign_medium}" if campaign_medium # 必填
-    # result += "&utm_term=#{term}" if term
-    # result += "&utm_content=#{content}" if content
-    # result += "&utm_name=#{name}" if name # 必填
-    # return result
   end
 
   def short_url_info
