@@ -44,7 +44,14 @@ class DashboardController < ApplicationController
       UrlBuilder.check_campaign_sessions_is_zero current_user
     end
 
+    user_ga_campaigns = GaCampaign.where(user: current_user).where(['date >= ?', Date.today-7])
     user_url_builders = UrlBuilder.where(user: current_user).where(['end_date >= ?', Date.today])
+
+    #TODO: 迫不得已的 Dirty Hack
+    user_url_builders.each do |ub|
+      user_ga_campaigns.each do |ugc|
+      end
+    end
 
     return warring
   end
