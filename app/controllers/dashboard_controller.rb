@@ -44,6 +44,8 @@ class DashboardController < ApplicationController
       UrlBuilder.check_campaign_sessions_is_zero current_user
     end
 
+    user_url_builders = UrlBuilder.where(user: current_user).where(['end_date >= ?', Date.today])
+
     return warring
   end
 
