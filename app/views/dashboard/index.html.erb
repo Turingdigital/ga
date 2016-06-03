@@ -25,7 +25,7 @@ UTM
   <% else %>
     <ul>
       <% @warring[:event_sessions].each do |event_session| %>
-      <li><% event_session..join('|') %></li>
+      <li><% event_session.join('|') %></li>
       <% end %>
     </ul>
   <% end %>
@@ -35,12 +35,17 @@ UTM
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <h4>活動設定預警系統</h4>
   <p>你有以下活動設置在UTM並無Google Analytics資料產生</p>
-  <ul>
-    <li>測試1</li>
-    <li>測試2</li>
-    <li>測試3</li>
-  </ul>
-  <p>raw data待切版顯示：<br><%= @campaign_sessions.to_h.to_json %></p>
+  <% if @warring[:campaign_sessions].nil? %>
+    <ul>
+      <li>無</li>
+    </ul>
+  <% else %>
+    <ul>
+      <% @warring[:campaign_sessions].each do |event_session| %>
+      <li><% event_session.join('|') %></li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 
 <div class="alert alert-dismissible alert-danger">
