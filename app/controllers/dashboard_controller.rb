@@ -44,7 +44,6 @@ class DashboardController < ApplicationController
       UrlBuilder.check_campaign_sessions_is_zero current_user
     end
 
-    zero_campaign_sessions = UrlBuilder.check_campaign_sessions_is_zero current_user
     return warring
   end
 
