@@ -50,6 +50,7 @@ class DashboardController < ApplicationController
     #TODO: 迫不得已的 Dirty Hack
     user_url_builders.each do |ub|
       user_ga_campaigns.each do |ugc|
+        warring[:campaign_sessions] << "#{ub.url},#{ub.source},#{ub.campaign_medium.medium}"
       end
     end
 
