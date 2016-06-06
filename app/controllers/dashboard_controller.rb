@@ -28,14 +28,14 @@ class DashboardController < ApplicationController
     #TODO: Dirty Hack, 先有功能就好，日後重構
     user_ga_campaigns = GaCampaign.where(user: current_user)
     _start = "7daysAgo"
-    max_date = (Date.today -7)
+    max_date = (Date.today-7)
     if user_ga_campaigns.size > 0
       max_date = GaCampaign.where(user: current_user).maximum(:date)
-      _start = "#{(Date.today-max_date.day).to_i}daysAgo"
+      _start = "#{(Date.today-max_date).to_i}daysAgo"
     end
 
     #TODO: 這個IF條件也是Dirty Hack
-    if((max_date-Date.today).to_i > 0) # 當最大日期不是今天才要抓
+    if((Date.today-max_date).to_i > 0) # 當最大日期不是今天才要抓
       @campaign_sessions = @analytics.get_campaign_sessions(profile_id, _start, "yesterday")
       #TODO: 做法錯誤，不能全塞進去，
       # 1. 取資料時，就不取回重複日期
@@ -43,7 +43,6 @@ class DashboardController < ApplicationController
       GaCampaign.create(@campaign_sessions.rows.map{|row|
         row={source: row[0], medium: row[1], date: row[2], sessions: row[3], user:current_user}
       })
-      UrlBuilder.check_campaign_sessions_is_zero current_user
     end
 
     user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 0).where(['date >= ?', Date.today-7])
