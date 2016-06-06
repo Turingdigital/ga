@@ -17,11 +17,13 @@ class DashboardController < ApplicationController
 
     #TODO: 太肥大 重構
     warring ={}
+    warring[:event_sessions] = []
     @event_sessions = @analytics.get_event_sessions(profile_id)
-    if @event_sessions.rows && @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
+    # if @event_sessions.rows && @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
+    if @event_sessions.rows
       # @warring[:event_sessions] = @event_sessions.rows[0]
-      @event_sessions.rows[0].each do |row|
-        @warring[:event_sessions] << row if row[-1].to_i == 0
+      @event_sessions.rows.each do |row|
+        warring[:event_sessions] << row if row[-1].to_i == 0
       end
     end
 
@@ -48,6 +50,7 @@ class DashboardController < ApplicationController
     user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 0).where(['date >= ?', Date.today-7])
     user_url_builders = UrlBuilder.where(user: current_user).where(['end_date >= ?', Date.today])
 
+    warring[:campaign_sessions] = []
     #TODO: 迫不得已的 Dirty Hack
     user_url_builders.each do |ub|
       user_ga_campaigns.each do |ugc|
