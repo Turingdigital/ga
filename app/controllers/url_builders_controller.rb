@@ -33,8 +33,6 @@ class UrlBuildersController < ApplicationController
     if false && File.exist?(Rails.root + file_name)
       send_file(Rails.root +file_name, :type => "application/xlsx")
     else
-      @url_builders = current_user.url_builders.order(id: :desc)
-
       workbook = WriteXLSX.new(Rails.root + file_name)
       worksheet = workbook.add_worksheet
 
@@ -61,6 +59,42 @@ class UrlBuildersController < ApplicationController
       ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
         worksheet.write(0, i+13, x)
       }
+
+      @url_builders = current_user.url_builders.order(id: :desc)
+      row = 1
+      @url_builders.each do |ub|
+        col = 0
+        worksheet.write(row, col, row)
+        col += 1
+        4.times {
+          worksheet.write(row, col, "-")
+          col += 1
+        }
+        worksheet.write(row, col, ub.url)
+        col+=1
+        worksheet.write(row, col, ub.source)
+        col+=1
+        worksheet.write(row, col, ub.campaign_medium.medium)
+        col+=1
+        worksheet.write(row, col, ub.name)
+        col+=1
+        worksheet.write(row, col, ub.term)
+        col+=1
+        worksheet.write(row, col, ub.content)
+        col+=1
+
+        worksheet.write(row, col, ub.builded_url)
+        col+=1
+        worksheet.write(row, col, ub.short_url)
+        col+=1
+
+        3.times {
+          worksheet.write(row, col, "-")
+          col += 1
+        }
+
+        row += 1
+      end
       workbook.close
     end
   end
