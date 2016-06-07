@@ -50,8 +50,14 @@
                   <tr>
                       <td>
                           <span class="glyphicon glyphicon-flash text-success"></span>
-                          <%= link_to "下載(Big5", url_builders_path(format: "csv") %>
+                          <%= link_to "下載CSV(Big5", url_builders_path(format: "csv") %>
                           |<%= link_to "UTF8)", csv_utf8_url_builders_path(format: "csv") %>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <span class="glyphicon glyphicon-pencil text-primary"></span>
+                          <%= link_to "下載Excel", excel_url_builders_path%>
                       </td>
                   </tr>
                   <!-- <tr>
