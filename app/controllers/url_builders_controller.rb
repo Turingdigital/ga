@@ -29,9 +29,40 @@ class UrlBuildersController < ApplicationController
   end
 
   def excel
-    "#{User.first.email}_#{Date.today.to_s}.xlsx"
-    @url_builders = current_user.url_builders.order(id: :desc)
+    file_name = "#{User.first.email}_#{Date.today.to_s}.xlsx"
+    if false && File.exist?(Rails.root + file_name)
+      send_file(Rails.root +file_name, :type => "application/xlsx")
+    else
+      @url_builders = current_user.url_builders.order(id: :desc)
 
+      workbook = WriteXLSX.new(Rails.root + file_name)
+      worksheet = workbook.add_worksheet
+
+      worksheet.write(0, 0, "流水號")
+
+      format23 = workbook.add_format(:bg_color => 23)
+      ["媒體","客戶名","廣告內容","位置/規格-鏈接至"].map.with_index{ |x, i|
+        worksheet.write(0, i+1, x, format23)
+      }
+
+      format17 = workbook.add_format(:bg_color => 17)
+      ["活動地址URL",
+      "*來源utm_source","*媒介utm_medium","*活動名稱utm_campaign",
+      "搜索關鍵字utm_term","內容utm_content"].map.with_index{ |x, i|
+        worksheet.write(0, i+5, x, format17)
+      }
+
+      format11 = workbook.add_format(:bg_color => 11)
+      worksheet.write(0, 11, "最終URL", format11)
+
+      format12 = workbook.add_format(:bg_color => 12)
+      worksheet.write(0, 12, "短網址區", format12)
+
+      ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
+        worksheet.write(0, i+13, x)
+      }
+      workbook.close
+    end
   end
 
   def csv_utf8
