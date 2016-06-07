@@ -28,6 +28,12 @@ class UrlBuildersController < ApplicationController
     end
   end
 
+  def excel
+    "#{User.first.email}_#{Date.today.to_s}.xlsx"
+    @url_builders = current_user.url_builders.order(id: :desc)
+
+  end
+
   def csv_utf8
     @url_builders = current_user.url_builders.order(id: :desc)
     respond_to do |format|
