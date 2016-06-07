@@ -28,6 +28,77 @@ class UrlBuildersController < ApplicationController
     end
   end
 
+  def excel
+    file_name = "#{User.first.email}_#{Date.today.to_s}.xlsx"
+    if false && File.exist?(Rails.root + file_name)
+      send_file(Rails.root +file_name, :type => "application/xlsx")
+    else
+      workbook = WriteXLSX.new(Rails.root + file_name)
+      worksheet = workbook.add_worksheet
+
+      worksheet.write(0, 0, "流水號")
+
+      format23 = workbook.add_format(:bg_color => 23)
+      ["媒體","客戶名","廣告內容","位置/規格-鏈接至"].map.with_index{ |x, i|
+        worksheet.write(0, i+1, x, format23)
+      }
+
+      format17 = workbook.add_format(:bg_color => 17)
+      ["活動地址URL",
+      "*來源utm_source","*媒介utm_medium","*活動名稱utm_campaign",
+      "搜索關鍵字utm_term","內容utm_content"].map.with_index{ |x, i|
+        worksheet.write(0, i+5, x, format17)
+      }
+
+      format11 = workbook.add_format(:bg_color => 11)
+      worksheet.write(0, 11, "最終URL", format11)
+
+      format12 = workbook.add_format(:bg_color => 12)
+      worksheet.write(0, 12, "短網址區", format12)
+
+      ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
+        worksheet.write(0, i+13, x)
+      }
+
+      @url_builders = current_user.url_builders.order(id: :desc)
+      row = 1
+      @url_builders.each do |ub|
+        col = 0
+        worksheet.write(row, col, row)
+        col += 1
+        4.times {
+          worksheet.write(row, col, "-")
+          col += 1
+        }
+        worksheet.write(row, col, ub.url)
+        col+=1
+        worksheet.write(row, col, ub.source)
+        col+=1
+        worksheet.write(row, col, ub.campaign_medium.medium)
+        col+=1
+        worksheet.write(row, col, ub.name)
+        col+=1
+        worksheet.write(row, col, ub.term)
+        col+=1
+        worksheet.write(row, col, ub.content)
+        col+=1
+
+        worksheet.write(row, col, ub.builded_url)
+        col+=1
+        worksheet.write(row, col, ub.short_url)
+        col+=1
+
+        3.times {
+          worksheet.write(row, col, "-")
+          col += 1
+        }
+
+        row += 1
+      end
+      workbook.close
+    end
+  end
+
   def csv_utf8
     @url_builders = current_user.url_builders.order(id: :desc)
     respond_to do |format|

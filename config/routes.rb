@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     collection do
       get 'schedule'
       get 'csv_utf8'
+      get 'excel'
       post 'duplicate/:id', action: :duplicate
     end
   end

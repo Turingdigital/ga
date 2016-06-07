@@ -74,3 +74,4 @@ gem 'mysql2'
 # gem 'rufus-scheduler'
 
 gem 'iconv'
+gem 'write_xlsx', '~> 0.83.0'
