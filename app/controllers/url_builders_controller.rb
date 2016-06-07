@@ -31,7 +31,7 @@ class UrlBuildersController < ApplicationController
   def excel
     file_name = "#{User.first.email}_#{Date.today.to_s}.xlsx"
     if false && File.exist?(Rails.root + "public/" + file_name)
-      send_file(Rails.root + "public/" + file_name, :type => "application/xlsx")
+      redirect_to("http://td.turingdigital.com.tw/#{file_name}")
     else
       workbook = WriteXLSX.new(Rails.root + "public/" + file_name)
       worksheet = workbook.add_worksheet
@@ -98,7 +98,7 @@ class UrlBuildersController < ApplicationController
       workbook.close
 
       #TODO: 偵測Excel檔是否成功，是否使用遞迴傳送檔案，不像現在重複程式碼
-      send_file(Rails.root + "public/" + file_name, :type => "application/xlsx")
+      redirect_to("http://td.turingdigital.com.tw/#{file_name}")
     end
   end
 
