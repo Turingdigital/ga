@@ -121,6 +121,22 @@ class Analytics #< BaseCli
     # data
   end
 
+  def get_visits(profile_id, _start, _end)
+    authorize
+
+    dimensions = %w(ga:date)
+    metrics = %w(ga:sessions ga:users ga:newUsers ga:percentNewSessions
+                 ga:sessionDuration ga:avgSessionDuration)
+    sort = %w(ga:date)
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+    return result
+  end
+  
   def get_campaign_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 
