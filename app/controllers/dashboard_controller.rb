@@ -12,6 +12,11 @@ class DashboardController < ApplicationController
     @analytics = Analytics.new current_user
     profile_id = current_user.account_summary.default_profile
 
+    ###
+    @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
+    byebug
+    ###
+
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
 
