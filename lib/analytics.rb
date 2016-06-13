@@ -134,6 +134,7 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
+    
     return result
   end
 

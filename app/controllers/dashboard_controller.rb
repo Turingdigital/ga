@@ -13,7 +13,7 @@ class DashboardController < ApplicationController
     profile_id = current_user.account_summary.default_profile
 
     ###
-    # @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
+    @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
     ###
 
     ###
