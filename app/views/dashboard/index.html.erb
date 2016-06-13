@@ -14,39 +14,7 @@ UTM
 <% end %>
 <% end %>
 
-<div class="alert alert-dismissible alert-warning">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>事件設定預警系統</h4>
-  <p>你有以下事件設置並無Google Analytics資料產生</p>
-  <% if @warring[:event_sessions].empty? %>
-    <ul>
-      <li>無</li>
-    </ul>
-  <% else %>
-    <ul>
-      <% @warring[:event_sessions].each do |event_session| %>
-      <li><%= event_session.join('|') %></li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
-
-<div class="alert alert-dismissible alert-warning">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>活動設定預警系統</h4>
-  <p>你有以下活動設置在UTM並無Google Analytics資料產生</p>
-  <% if @warring[:campaign_sessions].empty? %>
-    <ul>
-      <li>無</li>
-    </ul>
-  <% else %>
-    <ul>
-      <% @warring[:campaign_sessions].each do |campaign_session| %>
-      <li><%= campaign_session.join('|') %></li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
+<%= render :partial => "warring" %>
 
 <!-- <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
