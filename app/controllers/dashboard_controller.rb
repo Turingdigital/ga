@@ -19,9 +19,9 @@ class DashboardController < ApplicationController
     ###
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
-    byebug
+    @act_users = @act_users.rows.first.first
     ###
-    
+
     #TODO: 太肥大 重構
     warring ={}
     warring[:event_sessions] = []
