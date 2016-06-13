@@ -136,7 +136,7 @@ class Analytics #< BaseCli
                           sort: sort.join(','))
     return result
   end
-  
+
   def get_campaign_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 

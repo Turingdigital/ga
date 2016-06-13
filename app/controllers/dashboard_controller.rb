@@ -13,13 +13,15 @@ class DashboardController < ApplicationController
     profile_id = current_user.account_summary.default_profile
 
     ###
-    @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
-    byebug
+    # @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
     ###
 
+    ###
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
-
+    byebug
+    ###
+    
     #TODO: 太肥大 重構
     warring ={}
     warring[:event_sessions] = []
