@@ -19,7 +19,7 @@ class DashboardController < ApplicationController
     ###
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
-    @act_users = @act_users.rows.first.first
+    @act_users = @act_users.totals_for_all_results["rt:activeUsers"]
     ###
 
     #TODO: 太肥大 重構
