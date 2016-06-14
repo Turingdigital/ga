@@ -51,7 +51,7 @@ class DashboardController < ApplicationController
       # 2. 儲存時，不儲存重複日期
       GaCampaign.create(@campaign_sessions.rows.map{|row|
         row={source: row[0], medium: row[1], date: row[2], sessions: row[3], user:current_user}
-      })
+      }) if @campaign_sessions.rows # 要寫入Log紀錄 Bug
     end
 
     user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 0).where(['date >= ?', Date.today-7])
