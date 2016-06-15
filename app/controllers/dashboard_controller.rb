@@ -14,7 +14,6 @@ class DashboardController < ApplicationController
 
     ###
     @visits = @analytics.get_visits(profile_id, "7daysAgo", "yesterday")
-    byebug
     ###
 
     ###
