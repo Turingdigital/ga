@@ -42,3 +42,5 @@ bower.json
 .byebug_history
 
 /public/*.xlsx
+
+/google_auth_stores

@@ -14,7 +14,8 @@
 
 require 'google/apis/analytics_v3'
 require 'googleauth'
-require 'googleauth/stores/redis_token_store'
+
+require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googleauth/stores/redis_token_store'
 
 # Examples for the Google Analytics APIs
 #
@@ -38,7 +39,11 @@ module Authorizer
   SCOPE = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
   # ref https://github.com/redis/redis-rb
   # redis = Redis.new(:host => "10.0.1.1", :port => 6380, :db => 0, :path => "/tmp/redis.sock", :password => "mysecret")
-  TOKEN_STORE = Google::Auth::Stores::RedisTokenStore.new({prefix: "ga:user:", host: ENV["REDIS_PORT_6379_TCP_ADDR"], port: ENV["REDIS_PORT_6379_TCP_PORT"]})
+
+  TOKEN_STORE = Rails.env.development? ?
+    Google::Auth::Stores::FileTokenStore.new(:file => Rails.root+"google_auth_stores") :
+    Google::Auth::Stores::RedisTokenStore.new({prefix: "ga:user:", host: ENV["REDIS_PORT_6379_TCP_ADDR"], port: ENV["REDIS_PORT_6379_TCP_PORT"]})
+
   AUTHORIZER = Google::Auth::UserAuthorizer.new(CLIENT_ID, SCOPE, TOKEN_STORE, CALLBACK_URI)
 
   def self.credentials user_id
@@ -134,7 +139,7 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    
+
     return result
   end
 
