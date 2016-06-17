@@ -29,7 +29,7 @@ class UrlBuildersController < ApplicationController
   end
 
   def excel
-    file_name = "#{User.first.email}_#{Date.today.to_s}.xlsx"
+    file_name = "TD_Url_Builders_#{Date.today.to_s}.xlsx"
     if false && File.exist?(Rails.root + "public/" + file_name)
       # redirect_to("http://td.turingdigital.com.tw/#{file_name}")
       send_file(Rails.root + "public/" + file_name, :type => "application/xlsx")
