@@ -20,6 +20,10 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders.json
   def index
     @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
+
+    #TODO 每天取一次就好 不要每次都取
+    @url_builders.each(&:fetch_and_save_short_url_analytics)
+
     ic = Iconv.new("big5", "utf-8")
     respond_to do |format|
       format.html

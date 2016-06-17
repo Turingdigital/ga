@@ -55,7 +55,7 @@ class UrlBuilder < ActiveRecord::Base
   def fetch_and_save_short_url_analytics
     url = "https://www.googleapis.com/urlshortener/v1/url?key=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}&shortUrl=#{self.short_url}&projection=FULL"
     result = open(url).read
-    result = JSON.parse(result)
+    # result = JSON.parse(result)
     ua = UrlAnalytic.create(json: result, url_builder: self)
     # self.url_analytics.create(json: result)
     return ua.json
