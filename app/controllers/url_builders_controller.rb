@@ -37,40 +37,47 @@ class UrlBuildersController < ApplicationController
       workbook = WriteXLSX.new(Rails.root + "public/" + file_name)
       worksheet = workbook.add_worksheet
 
-      worksheet.write(0, 0, "流水號")
+      # worksheet.write(0, 0, "流水號")
 
-      format23 = workbook.add_format(:bg_color => 23)
-      ["媒體","客戶名","廣告內容","位置/規格-鏈接至"].map.with_index{ |x, i|
-        worksheet.write(0, i+1, x, format23)
-      }
+      column_pos = 0
+
+      # format23 = workbook.add_format(:bg_color => 23)
+      # ["媒體","客戶名","廣告內容","位置/規格-鏈接至"].map.with_index{ |x, i|
+      #   worksheet.write(0, column_pos, x, format23)
+      #   column_pos += 1
+      # }
 
       format17 = workbook.add_format(:bg_color => 17)
       ["活動地址URL",
       "*來源utm_source","*媒介utm_medium","*活動名稱utm_campaign",
       "搜索關鍵字utm_term","內容utm_content"].map.with_index{ |x, i|
-        worksheet.write(0, i+5, x, format17)
+        worksheet.write(0, column_pos, x, format17)
+        column_pos += 1
       }
 
       format11 = workbook.add_format(:bg_color => 11)
-      worksheet.write(0, 11, "最終URL", format11)
+      worksheet.write(0, column_pos, "最終URL", format11)
+      column_pos += 1
 
       format12 = workbook.add_format(:bg_color => 12)
-      worksheet.write(0, 12, "短網址區", format12)
+      worksheet.write(0, column_pos, "短網址區", format12)
+      column_pos += 1
 
       ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
-        worksheet.write(0, i+13, x)
+        worksheet.write(0, column_pos, x)
+        column_pos += 1
       }
 
       @url_builders = current_user.url_builders.order(id: :desc)
       row = 1
       @url_builders.each do |ub|
         col = 0
-        worksheet.write(row, col, row)
-        col += 1
-        4.times {
-          worksheet.write(row, col, "-")
-          col += 1
-        }
+        # worksheet.write(row, col, row)
+        # col += 1
+        # 4.times {
+        #   worksheet.write(row, col, "-")
+        #   col += 1
+        # }
         worksheet.write(row, col, ub.url)
         col+=1
         worksheet.write(row, col, ub.source)
