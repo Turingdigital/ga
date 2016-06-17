@@ -54,15 +54,20 @@ class DashboardController < ApplicationController
       }) if @campaign_sessions.rows #TODO if false 要寫入Log紀錄 Bug
     end
 
-    user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 0).where(['date >= ?', Date.today-7])
     user_url_builders = UrlBuilder.where(user: current_user).where(['end_date >= ?', Date.today])
 
     warring[:campaign_sessions] = []
+    user_url_builders.each do |ub|
+      warring[:campaign_sessions] << ["無此Source", ub.source] if GaCampaign.where(user: current_user, source: ub.source).empty?
+    end
+
     #TODO: 迫不得已的 Dirty Hack
     user_url_builders.each do |ub|
-      user_ga_campaigns.each do |ugc|
-        warring[:campaign_sessions] << [ub.url, ub.source, ub.campaign_medium.medium]
-      end
+      user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 1, source: ub.source, medium: ub.campaign_medium.medium).where(['date >= ?', Date.today-7]).order(date: :desc)
+      warring[:campaign_sessions] << ["此設定近七日出現sessions數為0", ub.url, ub.source, ub.campaign_medium.medium]
+      # user_ga_campaigns.each do |ugc|
+      #   warring[:campaign_sessions] << ["此設定近七日出現sessions數為0", ub.url, ub.source, ub.campaign_medium.medium]
+      # end
     end
 
     return warring
