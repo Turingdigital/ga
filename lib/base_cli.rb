@@ -24,7 +24,7 @@ class BaseCli
 
   @@OOB_URI = 'http://localhost:3000/users/auth/google_oauth2/ga_callback'
   @@CALLBACK_URI = 'http://localhost:3000/users/auth/google_oauth2/ga_callback'
-  @@client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+  @@client_id = Google::Auth::ClientId.new('782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com', '2dZLlxRKmeSqT5QmAl6tOPXC')
 
   def initialize scope, user
     @user = user
@@ -65,7 +65,7 @@ class BaseCli
   # def user_credentials_for(scope)
   #   # FileUtils.mkdir_p(File.dirname(token_store_path))
   #
-  #   # if ENV['GOOGLE_CLIENT_ID']
+  #   # if '782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com'
   #
   #   # else
   #     # client_id = Google::Auth::ClientId.from_file(client_secrets_path)

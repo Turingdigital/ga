@@ -23,9 +23,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       ###
       # scope = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
-      # client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+      # client_id = Google::Auth::ClientId.new('782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com', '2dZLlxRKmeSqT5QmAl6tOPXC')
       # cred = CredentialsWemee.new(
-      #   ENV['GOOGLE_CLIENT_ID'],
+      #   '782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com',
       #   request.env["omniauth.auth"].credentials.token,
       #   request.env["omniauth.auth"].credentials.refresh_token,
       #   scope,

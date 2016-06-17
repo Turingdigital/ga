@@ -35,7 +35,7 @@ require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googlea
 
 module Authorizer
   CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
-  CLIENT_ID = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+  CLIENT_ID = Google::Auth::ClientId.new('782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com', '2dZLlxRKmeSqT5QmAl6tOPXC')
   SCOPE = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
   # ref https://github.com/redis/redis-rb
   # redis = Redis.new(:host => "10.0.1.1", :port => 6380, :db => 0, :path => "/tmp/redis.sock", :password => "mysecret")
@@ -59,7 +59,7 @@ class Analytics #< BaseCli
 
   # @@OOB_URI = 'http://localhost:3000/oauth/ga_callback'
   # @@CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
-  # @@client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+  # @@client_id = Google::Auth::ClientId.new('782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com', '2dZLlxRKmeSqT5QmAl6tOPXC')
 
   def initialize user
     @user = user

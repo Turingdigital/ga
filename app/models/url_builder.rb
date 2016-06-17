@@ -9,7 +9,7 @@ class UrlBuilder < ActiveRecord::Base
   belongs_to :campaign_medium
 
   # def url_shouter
-  #   result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "http://www.adup.com/"}'`
+  #   result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'} -H 'Content-Type: application/json' -d '{"longUrl": "http://www.adup.com/"}'`
   # end
 
   before_save :set_short_url
@@ -53,7 +53,7 @@ class UrlBuilder < ActiveRecord::Base
 
   # TODO: 順便儲存在Redis裡面 不反覆抓取
   def fetch_and_save_short_url_analytics
-    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{ENV["GOOGLE_API_KEY"]}&shortUrl=#{self.short_url}&projection=FULL"
+    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}&shortUrl=#{self.short_url}&projection=FULL"
     result = open(url).read
     result = JSON.parse(result)
     ua = UrlAnalytic.create(json: result, url_builder: self)
@@ -176,8 +176,8 @@ class UrlBuilder < ActiveRecord::Base
 
   private
     def set_short_url # 只是set 不會儲存
-      result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
-      # result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{ENV["GOOGLE_API_KEY"]} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
+      result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
+      # result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
       self.short_url = JSON.parse(result)["id"]
     end
 

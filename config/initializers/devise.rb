@@ -244,8 +244,8 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :google_oauth2,
-                  ENV['GOOGLE_CLIENT_ID'],
-                  ENV['GOOGLE_CLIENT_SECRET'],
+                  '782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com',
+                  '2dZLlxRKmeSqT5QmAl6tOPXC',
                   {
                     # :name => "google",
                     access_type: 'offline',

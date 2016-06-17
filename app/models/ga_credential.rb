@@ -4,7 +4,7 @@ class GaCredential < ActiveRecord::Base
   belongs_to :user
 
   def client_id
-    return ENV['GOOGLE_CLIENT_ID']
+    return '782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com'
   end
 
   def scope
