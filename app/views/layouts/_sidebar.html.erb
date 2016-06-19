@@ -1,222 +1,181 @@
 
-<div class="panel-group" id="accordion">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseDashboard">
-              <span class="glyphicon glyphicon-file"></span>
-              Dashboard
-            </a>
-        </h4>
-    </div>
-    <div id="collapseDashboard" class="panel-collapse collapse in">
-        <div class="panel-body">
-            <table class="table">
-              <tr>
-                  <td>
-                      <span class="glyphicon glyphicon-tasks text-primary"></span>
-                      <%= link_to "總覽", dashboard_path%>
-                  </td>
-              </tr>
-            </table>
-        </div>
-    </div>
-  </div>
+            <!-- BEGIN SIDEBAR -->
+            <div class="page-sidebar-wrapper">
+                <!-- BEGIN SIDEBAR -->
+                <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                <div class="page-sidebar navbar-collapse collapse">
+                    <!-- BEGIN SIDEBAR MENU -->
+                    <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                    <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                    <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                    <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                    <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                    <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                        <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                        <li class="sidebar-toggler-wrapper hide">
+                            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                            <div class="sidebar-toggler"> </div>
+                            <!-- END SIDEBAR TOGGLER BUTTON -->
+                        </li>
+                        <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+                        <li class="sidebar-search-wrapper">
+                            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+                            <!-- DOC: Apply "sidebar-search-bordered" class the below search form to have bordered search box -->
+                            <!-- DOC: Apply "sidebar-search-bordered sidebar-search-solid" class the below search form to have bordered & solid search box -->
+                            <form class="sidebar-search  " action="page_general_search_3.html" method="POST" style="display:none">
+                                <a href="javascript:;" class="remove">
+                                    <i class="icon-close"></i>
+                                </a>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <span class="input-group-btn">
+                                        <a href="javascript:;" class="btn submit">
+                                            <i class="icon-magnifier"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </form>
+                            <!-- END RESPONSIVE QUICK SEARCH FORM -->
+                        </li>
 
-  <div class="panel panel-default">
-      <div class="panel-heading">
-          <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseUrlBuilders">
-                <span class="glyphicon glyphicon-folder-close"></span>
-                UTM管理器
-              </a>
-          </h4>
-      </div>
-      <div id="collapseUrlBuilders" class="panel-collapse collapse">
-          <div class="panel-body">
-              <table class="table">
-                <tr>
-                    <td>
-                        <span class="glyphicon glyphicon-tasks text-primary"></span>
-                        <%= link_to "總覽", url_builders_path%>
-                    </td>
-                </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-pencil text-primary"></span>
-                          <%= link_to "新增", new_url_builder_path%>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-flash text-success"></span>
-                          <%= link_to "下載CSV(Big5", url_builders_path(format: "csv") %>
-                          |<%= link_to "UTF8)", csv_utf8_url_builders_path(format: "csv") %>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-pencil text-primary"></span>
-                          <%= link_to "下載Excel", excel_url_builders_path%>
-                      </td>
-                  </tr>
-                  <!-- <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-file text-info"></span>
-                          <a href="http://www.jquery2dotnet.com">Newsletters</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-comment text-success"></span>
-                          <a href="http://www.jquery2dotnet.com">Comments</a>
-                          <span class="badge">42</span>
-                      </td>
-                  </tr> -->
-              </table>
-          </div>
-      </div>
-  </div>
 
-  <div class="panel panel-default">
-      <div class="panel-heading">
-          <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseGA">
-                <span class="glyphicon glyphicon-th"></span>
-                Google Analytics
-              </a>
-          </h4>
-      </div>
-      <div id="collapseGA" class="panel-collapse collapse">
-          <div class="panel-body">
-              <table class="table">
-                <tr>
-                    <td>
-                        <span class="glyphicon glyphicon-tasks text-primary"></span>
-                        <%= link_to "總覽", "#" %>
-                    </td>
-                </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-pencil text-primary"></span>
-                          <%= link_to "加值分析", "#" %>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-flash text-success"></span>
-                          <%= link_to "切換帳戶", current_user.account_summary %>
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-  </div>
 
-  <!-- <div class="panel panel-default">
-      <div class="panel-heading">
-          <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span class="glyphicon glyphicon-th">
-              </span>Modules</a>
-          </h4>
-      </div>
-      <div id="collapseTwo" class="panel-collapse collapse">
-          <div class="panel-body">
-              <table class="table">
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Orders</a> <span class="label label-success">$ 320</span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Invoices</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Shipments</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Tex</a>
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-  </div>
-  <div class="panel panel-default">
-      <div class="panel-heading">
-          <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><span class="glyphicon glyphicon-user">
-              </span>Account</a>
-          </h4>
-      </div>
-      <div id="collapseThree" class="panel-collapse collapse">
-          <div class="panel-body">
-              <table class="table">
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Change Password</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Notifications</a> <span class="label label-info">5</span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <a href="http://www.jquery2dotnet.com">Import/Export</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-trash text-danger"></span><a href="http://www.jquery2dotnet.com" class="text-danger">
-                              Delete Account</a>
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-  </div>
-  <div class="panel panel-default">
-      <div class="panel-heading">
-          <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><span class="glyphicon glyphicon-file">
-              </span>Reports</a>
-          </h4>
-      </div>
-      <div id="collapseFour" class="panel-collapse collapse">
-          <div class="panel-body">
-              <table class="table">
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-usd"></span><a href="http://www.jquery2dotnet.com">Sales</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-user"></span><a href="http://www.jquery2dotnet.com">Customers</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-tasks"></span><a href="http://www.jquery2dotnet.com">Products</a>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <span class="glyphicon glyphicon-shopping-cart"></span><a href="http://www.jquery2dotnet.com">Shopping Cart</a>
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-  </div> -->
-</div>
+
+
+
+                        <li class="nav-item start active open">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">Dashboard</span>
+                                <span class="selected"></span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+
+                                <li class="nav-item start active">
+                                    <a href="/dashboard" class="nav-link ">
+                                        <i class="icon-bar-chart"></i>
+                                        <span class="title">總覽</span>
+                                        <span class="selected"></span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item  ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">UTM管理器</span>
+                                <span class=""></span>
+                                <span class="arrow"></span>
+                            </a>
+
+                            <ul class="sub-menu">
+
+                                <li class="nav-item  ">
+                                    <a href="/url_builders" class="nav-link ">
+                                        <span class="title">總覽</span>
+                                    </a>
+                                </li>                                
+                               
+                                <li class="nav-item  ">
+                                    <a href="/url_builders/new" class="nav-link ">
+                                        <span class="title">新增</span>
+                                    </a>
+                                </li>  
+
+                                <li class="nav-item  ">
+                                  <%= link_to "下載CSV(Big5)", url_builders_path(format: "csv") %>
+                                  
+                                </li>          
+
+                                <li class="nav-item  ">
+                                 
+                                  <%= link_to "下載CSV(UTF8)", csv_utf8_url_builders_path(format: "csv") %>
+                                </li>          
+
+                                <li class="nav-item  ">
+                                  <%= link_to "下載Excel", excel_url_builders_path%>
+                                </li>                                
+
+                            </ul>
+                        </li>
+
+
+
+                        <li class="nav-item  ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">Google Analytics</span>
+                                <span class=""></span>
+                                <span class="arrow"></span>
+                            </a>
+
+                            <ul class="sub-menu">
+
+                                <li class="nav-item  ">
+                                    <a href="#" class="nav-link ">
+                                        <span class="title">總覽</span>
+                                    </a>
+                                </li>                                
+                               
+                                <li class="nav-item  ">
+                                    <a href="#" class="nav-link ">
+                                        <span class="title">加值分析</span>
+                                    </a>
+                                </li>  
+
+                                <li class="nav-item  ">
+                                  <%= link_to "切換帳戶", current_user.account_summary %>
+                                </li>          
+
+                                
+
+                            </ul>
+                        </li>
+
+                      <!--
+
+
+                        <li class="heading">
+                            <h3 class="uppercase">Features</h3>
+                        </li>
+  
+                        <li class="nav-item  ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-settings"></i>
+                                <span class="title">Form Stuff</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                    <a href="form_controls.html" class="nav-link ">
+                                        <span class="title">Bootstrap Form
+                                            <br>Controls</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+
+                      -->
+
+
+                        
+
+                    </ul>
+                    <!-- END SIDEBAR MENU -->
+                    <!-- END SIDEBAR MENU -->
+                </div>
+                <!-- END SIDEBAR -->
+            </div>
+            <!-- END SIDEBAR -->
+
 
 <%= javascript_tag do %>
   $("#accordion .panel-collapse.collapse").removeClass("in");
@@ -229,4 +188,4 @@
 
   if("<%= params['controller'] %>" == 'dashboard')
     $("#collapseDashboard").addClass("in");
-<% end %>
+<% end %>            
