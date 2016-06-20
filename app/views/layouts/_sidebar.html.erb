@@ -80,27 +80,32 @@
                                     <a href="/url_builders" class="nav-link ">
                                         <span class="title">總覽</span>
                                     </a>
-                                </li>                                
-                               
+                                </li>
+
                                 <li class="nav-item  ">
                                     <a href="/url_builders/new" class="nav-link ">
                                         <span class="title">新增</span>
                                     </a>
-                                </li>  
+                                </li>
+
+                                <li class="nav-item  ">
+                                  <%= link_to "匯入", import_example_url_builders_path %>
+
+                                </li>
 
                                 <li class="nav-item  ">
                                   <%= link_to "下載CSV(Big5)", url_builders_path(format: "csv") %>
-                                  
-                                </li>          
+
+                                </li>
 
                                 <li class="nav-item  ">
-                                 
+
                                   <%= link_to "下載CSV(UTF8)", csv_utf8_url_builders_path(format: "csv") %>
-                                </li>          
+                                </li>
 
                                 <li class="nav-item  ">
                                   <%= link_to "下載Excel", excel_url_builders_path%>
-                                </li>                                
+                                </li>
 
                             </ul>
                         </li>
@@ -121,19 +126,19 @@
                                     <a href="#" class="nav-link ">
                                         <span class="title">總覽</span>
                                     </a>
-                                </li>                                
-                               
+                                </li>
+
                                 <li class="nav-item  ">
                                     <a href="#" class="nav-link ">
                                         <span class="title">加值分析</span>
                                     </a>
-                                </li>  
+                                </li>
 
                                 <li class="nav-item  ">
                                   <%= link_to "切換帳戶", current_user.account_summary %>
-                                </li>          
+                                </li>
 
-                                
+
 
                             </ul>
                         </li>
@@ -144,7 +149,7 @@
                         <li class="heading">
                             <h3 class="uppercase">Features</h3>
                         </li>
-  
+
                         <li class="nav-item  ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-settings"></i>
@@ -166,7 +171,7 @@
                       -->
 
 
-                        
+
 
                     </ul>
                     <!-- END SIDEBAR MENU -->
@@ -188,4 +193,4 @@
 
   if("<%= params['controller'] %>" == 'dashboard')
     $("#collapseDashboard").addClass("in");
-<% end %>            
+<% end %>

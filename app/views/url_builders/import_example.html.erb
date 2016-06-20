@@ -1,0 +1,7 @@
+<p>請下載範例檔，填入資料後，匯入檔案<p>
+<%= link_to '下載範例', "#{root_path}example.csv" %>
+<%#= link_to '匯入檔案', "#{root_path}example.csv" %>
+<br/><%= form_tag import_url_builders_path, multipart: true do %>
+  <%= file_field_tag :file, :required => true %>
+  <%= submit_tag "匯入" %>
+<% end %>

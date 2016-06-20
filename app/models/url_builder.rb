@@ -14,6 +14,23 @@ class UrlBuilder < ActiveRecord::Base
 
   before_save :set_short_url
 
+  def self.import file, user
+    CSV.foreach(file.path, headers: true) do |row|
+      cm = CampaignMedium.where(medium: row[2]).first
+      UrlBuilder.create!(
+        url: row[0],
+        source: row[1],
+        campaign_medium: cm,
+        name: row[3],
+        term: row[4],
+        content: row[5],
+        start_date: row[6],
+        end_date: row[7],
+        user: user
+      )
+    end
+  end
+
   def self.to_csv(options = {})
     # CSV.generate(options) do |csv|
     #   ccn = csv_column_names
