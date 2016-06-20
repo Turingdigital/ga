@@ -4,7 +4,7 @@
   <title>圖靈數位分析小幫手</title>
 
   <%#= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <!--<%= stylesheet_link_tag    'application', media: 'all' %>--><%# 停用data-turbolinks-track %>
+  <%#= stylesheet_link_tag    'application', media: 'all' %><%# 停用data-turbolinks-track %>
 
   <%#= stylesheet_link_tag    'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cerulean/bootstrap.min.css',
                              media: 'all',
@@ -19,7 +19,7 @@
 
 <!-- 似乎是jQuery衝突了... -->
 
-  <!--<%= javascript_include_tag 'application' %><%# 停用data-turbolinks-track %>-->
+  <%= javascript_include_tag 'application' %><%# 停用data-turbolinks-track %>
 
 <!---->
 
@@ -36,7 +36,7 @@
   <!--Fuyuki Add (Start)-->
 
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta content="width=device-width, initial-scale=1" name="viewport" />  
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
   <!-- BEGIN GLOBAL MANDATORY STYLES -->
   <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
   <link href="/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -59,7 +59,7 @@
   <link href="/assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
   <link href="/assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
   <link href="/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
-  <!-- END THEME LAYOUT STYLES -->  
+  <!-- END THEME LAYOUT STYLES -->
 
   <!--Fuyuki Add (End)-->
 
@@ -126,7 +126,7 @@
                     <!-- BEGIN DASHBOARD STATS 1-->
 
                     <div class="row">
-                    
+
                       <% if false %>
                         <% if notice %>
                           <p class="notice"><%= notice %></p>
@@ -149,7 +149,7 @@
                     <div class="clearfix"></div>
 
                     <!-- END DASHBOARD STATS 1-->
-                    
+
 
 
 
@@ -173,7 +173,7 @@
 
   <!--[if lt IE 9]>
     <script src="/assets/global/plugins/respond.min.js"></script>
-    <script src="/assets/global/plugins/excanvas.min.js"></script> 
+    <script src="/assets/global/plugins/excanvas.min.js"></script>
   <![endif]-->
 
   <!-- BEGIN CORE PLUGINS -->
@@ -228,7 +228,7 @@
   <script src="/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
   <script src="/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
   <script src="/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-  <!-- END THEME LAYOUT SCRIPTS -->  
+  <!-- END THEME LAYOUT SCRIPTS -->
 
 
   <%= javascript_include_tag  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js' %>
