@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602101106) do
+ActiveRecord::Schema.define(version: 20160620091831) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,7 +27,10 @@ ActiveRecord::Schema.define(version: 20160602101106) do
     t.string   "medium"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
+
+  add_index "campaign_media", ["user_id"], name: "index_campaign_media_on_user_id"
 
   create_table "foos", force: :cascade do |t|
     t.string   "title"
