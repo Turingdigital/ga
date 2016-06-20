@@ -16,6 +16,14 @@ class UrlBuildersController < ApplicationController
     redirect_to action: :index, notice: '複製完成，在最新的一筆'
   end
 
+  def import_example
+  end
+
+  def import
+    UrlBuilder.import(params[:file], current_user)
+    redirect_to action: "index", notice: "匯入完成"
+  end
+
   # GET /url_builders
   # GET /url_builders.json
   def index
