@@ -29,7 +29,7 @@
     <%#= f.text_field :medium %>
     <%#= f.text_field :medium %>
     <!-- select_tag(name, option_tags = nil, options = {}) -->
-    <%= f.select(:campaign_medium_id, [], {}, {class: "bs-select form-control", "data-live-search" => "true"}) do %>
+    <%= f.select(:campaign_medium_id, [], {}, {class: "bs-select form-control", "data-live-search" => "true", "data-size" => "6"}) do %>
       <%# [['Google', 1], ['Yahoo', 2], ['電子報', 2]].each do |c| -%>
       <% @campaign_media.each do |medium| -%>
         <%= content_tag(:option, medium.medium, value: medium.id) %>
