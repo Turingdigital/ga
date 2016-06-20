@@ -166,6 +166,14 @@ class UrlBuildersController < ApplicationController
 
   # GET /url_builders/new
   def new
+    target = @campaign_media.where(user: current_user)
+    unless target.empty?
+      target = target.order(created_at: :desc).first
+      @campaign_media.delete target
+      @campaign_media = @campaign_media.to_a
+      @campaign_media.unshift target
+    end
+
     @url_builder = UrlBuilder.new
   end
 

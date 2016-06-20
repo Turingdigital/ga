@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_one :goal
   has_many :url_builders
   has_many :ga_campaigns
+  has_many :campaign_media
 
   def fetch_account_summary
     # return self.account_summary ? self.account_summary : AccountSummary.fetch(self, code)

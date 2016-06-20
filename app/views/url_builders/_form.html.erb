@@ -1,3 +1,25 @@
+<script>
+function setCookie(cname, cvalue) {
+    var d = new Date();
+    d.setTime(d.getTime() + (1*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
+</script>
 <%= form_for(@url_builder) do |f| %>
   <% if @url_builder.errors.any? %>
     <div id="error_explanation">
@@ -17,11 +39,11 @@
   </div> -->
   <div class="field">
     <%= f.label :url, "網站網址 *" %><br>
-    <%= f.text_area :url, cols: "60", rows: "1", :required => true %>
+    <%= f.text_area :url, cols: "60", rows: "1", :required => true, onchange: "onChange('url_builder_url')".html_safe %>
   </div>
   <div class="field">
     <%= f.label :source, "廣告活動來源 *" %><br>
-    <%= f.text_field :source, size: "61", :required => true %>
+    <%= f.text_field :source, size: "61", :required => true, onchange: "onChange('url_builder_source')".html_safe %>
   </div>
   <div class="field">
     <%= f.label :medium, "廣告活動媒介 *" %><br>
@@ -35,23 +57,40 @@
         <%= content_tag(:option, medium.medium, value: medium.id) %>
       <% end %>
     <% end %>
+    <script>
+      function customize(){
+        var medium = prompt("請輸入自訂的廣告活動媒介名稱", "廣告活動媒介");
+        if (medium != null && medium != "") {
+          $.post("/campaign_media.json", {campaign_medium: {medium: medium}}, function(data, status){
+            if(status == "success"){
+              location.reload();
+            }else{
+              alert("加入失敗");
+            }
+          });
+        } else {
+          alert("沒有輸入自訂的廣告活動媒介名稱");
+        }
+      }
+    </script>
+    <button type="button" onclick="customize();">自訂</button>
   </div>
   <div class="field">
-    <%= f.label :name, "廣告活動名稱 *" %><br>
-    <%= f.text_field :name, size: "61", :required => true %>
+    <%= f.label :name, "廣告活動名稱 *"%><br>
+    <%= f.text_field :name, size: "61", :required => true, onchange: "onChange('url_builder_name')".html_safe %>
   </div>
   <div class="field">
     <%= f.label :term, "廣告活動字詞" %><br>
-    <%= f.text_field :term, size: "61" %>
+    <%= f.text_field :term, size: "61", onchange: "onChange('url_builder_term')".html_safe %>
   </div>
   <div class="field">
     <%= f.label :content, "廣告活動內容" %><br>
-    <%= f.text_field :content, size: "61" %>
+    <%= f.text_field :content, size: "61", onchange: "onChange('url_builder_content')".html_safe %>
   </div>
   <div class="field">
     <%= f.label :start_date, "開始日期" %><br>
     <input type="text" name="url_builder[start_date]" id="url_builder_start_date"
-           data-provide='datepicker' data-date-format="yyyy-mm-dd"
+           data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_start_date')"
            value="<%= @url_builder.start_date.strftime('%Y-%m-%d') if @url_builder.start_date%>">
     <%#= f.datetime_select :start_date %>
     <%#= f.text_field(:start_date, :data-provide => 'datepicker') %>
@@ -60,7 +99,7 @@
   <div class="field">
     <%= f.label :end_date, "結束日期" %><br>
     <input type="text" name="url_builder[end_date]" id="url_builder_end_date"
-           data-provide='datepicker' data-date-format="yyyy-mm-dd"
+           data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_end_date')"
            value="<%= @url_builder.end_date.strftime('%Y-%m-%d') if @url_builder.end_date %>">
     <p id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</p>
     <%#= f.datetime_select :start_date %>
@@ -77,6 +116,18 @@
 <% end %>
 
 <script>
+["url_builder_url", "url_builder_source", "url_builder_name", "url_builder_term",
+ "url_builder_content", "url_builder_start_date", "url_builder_end_date",].forEach(function(item, index){
+   $("#"+item).val(getCookie(item));
+})
+
+function onChange(e){
+  console.log("Set: " + e +" ,value: " + $("#"+e).val());
+  setCookie(e, $("#"+e).val())
+}
+// $( "textarea, input" ).blur(function(e) {
+//   alert( "Handler for .blur() called." + $(e.target).value() );
+// });
 
 function check_date_valid(){
   var dStart = new Date($("#url_builder_start_date").val());

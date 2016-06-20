@@ -24,15 +24,27 @@ class CampaignMediaController < ApplicationController
   # POST /campaign_media
   # POST /campaign_media.json
   def create
-    @campaign_medium = CampaignMedium.new(campaign_medium_params)
+    # @campaign_medium = CampaignMedium.find_or_create_by(campaign_medium_params) # = CampaignMedium.new(campaign_medium_params)
+    @campaign_medium = CampaignMedium.where(campaign_medium_params)
 
-    respond_to do |format|
-      if @campaign_medium.save
+    if @campaign_medium.empty?
+      @campaign_medium = CampaignMedium.new(campaign_medium_params)
+      @campaign_medium.user = current_user
+      respond_to do |format|
+        if @campaign_medium.save
+          format.html { redirect_to @campaign_medium, notice: 'Campaign medium was successfully created.' }
+          format.json { render :show, status: :created, location: @campaign_medium }
+        else
+          format.html { render :new }
+          @campaign_medium = CampaignMedium.new(campaign_medium_params)
+          format.json { render json: @campaign_medium.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      @campaign_medium = @campaign_medium.first
+      respond_to do |format|
         format.html { redirect_to @campaign_medium, notice: 'Campaign medium was successfully created.' }
         format.json { render :show, status: :created, location: @campaign_medium }
-      else
-        format.html { render :new }
-        format.json { render json: @campaign_medium.errors, status: :unprocessable_entity }
       end
     end
   end
