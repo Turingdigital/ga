@@ -16,7 +16,8 @@ class UrlBuilder < ActiveRecord::Base
 
   def self.import file, user
     CSV.foreach(file.path, headers: true) do |row|
-      cm = CampaignMedium.where(medium: row[2]).first
+      cm = CampaignMedium.where(medium: row[2])
+      cm = cm.empty? CampaignMedium.where(medium: "none").first : cm.first
       UrlBuilder.create!(
         url: row[0],
         source: row[1],
