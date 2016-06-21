@@ -1,7 +1,54 @@
-<p>請下載範例檔，填入資料後，匯入檔案<p>
+<!-- <p>請下載範例檔，填入資料後，匯入檔案<p>
 <%= link_to '下載範例', "#{root_path}example.csv" %>
 <%#= link_to '匯入檔案', "#{root_path}example.csv" %>
 <br/><%= form_tag import_url_builders_path, multipart: true do %>
   <%= file_field_tag :file, :required => true %>
   <%= submit_tag "匯入" %>
 <% end %>
+
+ -->
+
+<div class="mt-element-step">
+    
+    <div class="row step-no-background-thin">
+        <div class="col-md-4 mt-step-col" style="width:20%">
+            <div class=" mt-step-number font-grey-cascade">1</div>
+            <div class="mt-step-title uppercase font-grey-cascade">下載範例檔</div>
+            <div class="mt-step-content font-grey-cascade">&nbsp; <%= link_to 'Download Link', "#{root_path}example.csv" %></div>
+        </div>
+        <div class="col-md-4 mt-step-col error" style="width:25%">
+            <div class="mt-step-number bg-white font-grey">2</div>
+            <div class="mt-step-title uppercase font-grey-cascade">填入資料</div>
+            <div class="mt-step-content font-grey-cascade">依照範例格式填入資料</div>
+        </div>
+        <%= form_tag import_url_builders_path, multipart: true do %>
+        <div class="col-md-4 mt-step-col done" style="width:55%">
+            <div class="mt-step-number bg-white font-grey">3</div>
+            <div class="mt-step-title uppercase font-grey-cascade" style="margin-top:4px;">
+            	<!-- 匯入 -->
+            	
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span class="btn green btn-file">
+                        <span class="fileinput-new">選擇檔案</span>
+                        <span class="fileinput-exists">更改</span>
+
+                        <input type="file" name="..." required> </span>
+                    <span class="fileinput-filename" style="font-size:7px;"> </span> &nbsp;
+                    <a href="javascript:;" class="close fileinput-exists" data-dismiss="fileinput"> </a>
+                    <!-- <button type="button" class="btn blue btnImport">Blue</button> -->
+					<%= button_tag(type: "submit", class: "btn blue") do %>
+					    匯入
+					<% end %>
+                </div>
+                
+            </div>
+            <div class="mt-step-content font-grey-cascade"></div>
+        </div>
+        <% end %>
+    </div>
+</div>
+
+                                           
+                                    
+ <link href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput2.css" rel="stylesheet" type="text/css" />
+ <script src="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput2.js" type="text/javascript"></script>
