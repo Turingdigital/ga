@@ -45,12 +45,12 @@
 
 
 
-                        <li class="nav-item start active open">
+                        <li class="nav-item nav-dashboard start active open">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-home"></i>
                                 <span class="title">Dashboard</span>
                                 <span class=""></span>
-                                <span class="arrow"></span>
+                                <span class="arrow open"></span>
                             </a>
                             <ul class="sub-menu">
 
@@ -66,7 +66,7 @@
                         </li>
 
 
-                        <li class="nav-item  ">
+                        <li class="nav-item nav-url_builders ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-home"></i>
                                 <span class="title">UTM管理器</span>
@@ -112,7 +112,7 @@
 
 
 
-                        <li class="nav-item  ">
+                        <li class="nav-item nav-account_summaries ">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-home"></i>
                                 <span class="title">Google Analytics</span>
@@ -183,14 +183,26 @@
 
 
 <%= javascript_tag do %>
-  $("#accordion .panel-collapse.collapse").removeClass("in");
+  $(".nav-item").removeClass("open");
+  $(".nav-item").find('.sub-menu').hide();
+  $(".nav-item").find('.arrow').removeClass('open');
 
-  if("<%= params['controller'] %>" == 'account_summaries')
-    $("#collapseGA").addClass("in");
+  if("<%= params['controller'] %>" == 'account_summaries'){
+    $(".nav-account_summaries").addClass("open");
+    $(".nav-account_summaries").find('.sub-menu').show();
+    $(".nav-account_summaries").find('.arrow').addClass('open');
+  }
 
-  if("<%= params['controller'] %>" == 'url_builders')
-    $("#collapseUrlBuilders").addClass("in");
+  if("<%= params['controller'] %>" == 'url_builders'){
+    $(".nav-url_builders").addClass("open");
+    $(".nav-url_builders").find('.sub-menu').show();
+    $(".nav-url_builders").find('.arrow').addClass('open');
+  } 
 
-  if("<%= params['controller'] %>" == 'dashboard')
-    $("#collapseDashboard").addClass("in");
+  if("<%= params['controller'] %>" == 'dashboard'){
+    $(".nav-dashboard").addClass("open");
+    $(".nav-dashboard").find('.sub-menu').show();
+    $(".nav-dashboard").find('.arrow').addClass('open');
+  }
+  
 <% end %>
