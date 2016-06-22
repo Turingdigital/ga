@@ -194,9 +194,18 @@ class UrlBuilder < ActiveRecord::Base
 
   private
     def set_short_url # 只是set 不會儲存
-      result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
+      uri = URI(url)
+      if uri.host == "goo.gl"
+        self.short_url = "http://#{uri.host}#{uri.path}"
+      else
+        begin
+          result = RestClient.post( "https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}", {"longUrl": "#{builded_url}"}.to_json, :content_type => :json, :accept => :json )
+          self.short_url = JSON.parse(result)["id"]
+        rescue Exception
+          #TODO: 記錄錯誤原因
+        end
+      end
       # result = `curl https://www.googleapis.com/urlshortener/v1/url\?key\=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'} -H 'Content-Type: application/json' -d '{"longUrl": "#{builded_url}"}'`
-      self.short_url = JSON.parse(result)["id"]
     end
 
     def self.csv_column_names
