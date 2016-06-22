@@ -44,3 +44,5 @@ bower.json
 /public/*.xlsx
 
 /google_auth_stores
+
+/config/database.yml
