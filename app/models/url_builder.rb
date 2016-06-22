@@ -15,7 +15,7 @@ class UrlBuilder < ActiveRecord::Base
   before_save :set_short_url
 
   def self.import file, user
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, headers: true, :encoding => 'big5') do |row|
       cm = CampaignMedium.where(medium: row[2])
       cm = cm.empty? ? cm.create(medium: row[2], user: user) : cm.first
       UrlBuilder.create!(
