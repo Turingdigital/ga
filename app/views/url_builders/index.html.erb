@@ -47,7 +47,7 @@
       <td class="url_builder_long hide_show"><%= url_builder.builded_url %></td>
       <td class="url_builder_short hide_show"><%= link_to url_builder.short_url, url_builder.short_url, target: "_blank" %></td>
       <td class="url_builder_source hide_show"><%= url_builder.source %></td>
-      <td class="url_builder_source hide_show"><%= url_builder.url_analytics.nil? ? "0" : url_builder.url_analytics.last.allTime_shortUrlClicks %></td>
+      <td class="url_builder_source hide_show"><%= (url_builder.url_analytics.nil? || url_builder.url_analytics.last.nil?) ? "0" : url_builder.url_analytics.last.allTime_shortUrlClicks %></td>
       <td class="url_builder_medium hide_show"><%= url_builder.campaign_medium.medium %></td>
       <td class="url_builder_term hide_show"><%= url_builder.term %></td>
       <td class="url_builder_content hide_show"><%= url_builder.content %></td>
