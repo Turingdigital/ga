@@ -27,7 +27,8 @@ class UrlBuilder < ActiveRecord::Base
         content: row[5],
         start_date: row[6],
         end_date: row[7],
-        user: user
+        user: user,
+        profile: user.account_summary.default_profile
       )
     end
   end
