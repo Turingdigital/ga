@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620091831) do
+ActiveRecord::Schema.define(version: 20160623073653) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20160620091831) do
     t.datetime "end_date"
     t.integer  "campaign_medium_id"
     t.string   "short_url"
+    t.integer  "profile"
   end
 
   add_index "url_builders", ["campaign_medium_id"], name: "index_url_builders_on_campaign_medium_id"
