@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'excel'
       get 'import_example'
       post 'import'
+      post 'import_url'
       post 'duplicate/:id', action: :duplicate
     end
   end

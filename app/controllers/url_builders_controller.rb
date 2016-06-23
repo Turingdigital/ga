@@ -24,6 +24,40 @@ class UrlBuildersController < ApplicationController
     redirect_to action: "index", notice: "匯入完成"
   end
 
+  def import_url
+    urls = params[:urls][0]
+    urls.delete! "\n"
+    urls.delete! "\r"
+    urls = urls.split(',')
+    urls.each{ |url|
+      ub = UrlBuilder.new
+      ub.user = current_user
+      ub.profile = current_user.account_summary.default_profile
+      ub.url = url
+      uri = URI(url)
+      querys = URI::decode_www_form(uri.query).to_h
+      ub.source = querys["utm_source"]
+
+      campaign_medium = CampaignMedium.where(medium: querys["utm_medium"])
+      if campaign_medium.empty?
+        campaign_medium = CampaignMedium.new
+        campaign_medium.medium = querys["utm_medium"]
+        campaign_medium.user = current_user
+        campaign_medium.save
+      else
+        campaign_medium = campaign_medium.first
+      end
+      ub.campaign_medium = campaign_medium
+
+      ub.name = querys["utm_campaign"]
+
+      ub.start_date = Date.new(2016,6,13)
+      ub.end_date = Date.new(2016,7,1)
+      ub.save
+    }
+    redirect_to action: "index", notice: "匯入完成"
+  end
+
   # GET /url_builders
   # GET /url_builders.json
   def index
