@@ -60,12 +60,14 @@
 
 <div>
   <p>如果你已經有UTM的網址了，只是想匯入本系統做管理，請直接在此貼上，使用逗號分格，範例：</p>
-  <p>http://turingdigital.com.tw/utm_source=s&utm_medium=m&utm_campaign=c,<br/>
-  <p>http://turingdigital.com.tw/utm_source=s&utm_medium=m&utm_campaign=d,<br/>
-  <p>http://turingdigital.com.tw/utm_source=s&utm_medium=m&utm_campaign=e</p>
+  <p>http://turingdigital.com.tw/?utm_source=s&utm_medium=m&utm_campaign=c,<br/>
+  <p>http://turingdigital.com.tw/?utm_source=s&utm_medium=m&utm_campaign=d,<br/>
+  <p>http://turingdigital.com.tw/?utm_source=s&utm_medium=m&utm_campaign=e</p>
   <%= form_tag import_url_url_builders_path do %>
       <%= text_area 'urls', nil, rows: 10, cols: 100 %>
-      <%= submit_tag %>
+      <%= button_tag(type: "submit", class: "btn blue") do %>
+          匯入
+      <% end %>
   <% end %>
 </div>
 
