@@ -49,14 +49,6 @@
 </div>
 
 <div class="well well-lg" id="processing">匯入中</div>
-<script>
-  $("#processing").hide();
-  $("button[name='button']").click(function(){
-    if($("input[type='hidden'][value=''][name='']").size() >= 1){
-      $("#processing").show();
-    }
-  });
-</script>
 
 <div>
   <p>如果你已經有UTM的網址了，只是想匯入本系統做管理，請直接在此貼上，使用逗號分格，範例：</p>
@@ -70,6 +62,15 @@
       <% end %>
   <% end %>
 </div>
+
+<script>
+  $("#processing").hide();
+  $("button[name='button']").click(function(){
+    if($("input[type='hidden'][value=''][name='']").size() >= 1){
+      $("#processing").show();
+    }
+  });
+</script>
 
  <link href="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput2.css" rel="stylesheet" type="text/css" />
  <script src="/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput2.js" type="text/javascript"></script>
