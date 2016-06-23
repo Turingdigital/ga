@@ -32,18 +32,6 @@ class UrlBuilder < ActiveRecord::Base
     end
   end
 
-  def self.to_csv(options = {})
-    # CSV.generate(options) do |csv|
-    #   ccn = csv_column_names
-    #   csv << ccn #column_names
-    #   ccn.delete("medium")
-    #   all.each do |product|
-    #     csv << (product.attributes.values_at(*ccn).insert(2, product.campaign_medium.medium))
-    #   end
-    # end
-
-  end
-
   def builded_url
     uri = URI.parse(url)
     new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
@@ -78,119 +66,6 @@ class UrlBuilder < ActiveRecord::Base
     # self.url_analytics.create(json: result)
     return ua.json
   end
-
-  # def url_analytics
-    # name_trans || read_attribute(:url_analytics)
-    # read_attribute(:url_analytics)
-  # end
-  # TODO: 先去看Redis裡面有沒有
-  # def url_analytics
-    # @url_analytics_result ||= JSON.parse '{
-    #  "kind": "urlshortener#url",
-    #  "id": "http://goo.gl/bgaA8I",
-    #  "longUrl": "http://localhost:3000/url_builders?mytest=test&utm_source=_builders?mytest=test&utm_term=_builders?mytest=test&utm_content=_builders?mytest=test&utm_name=_builders?mytest=test",
-    #  "status": "OK",
-    #  "created": "2016-05-05T08:05:25.355+00:00",
-    #  "analytics": {
-    #   "allTime": {
-    #    "shortUrlClicks": "2",
-    #    "longUrlClicks": "2",
-    #    "referrers": [
-    #     {
-    #      "count": "2",
-    #      "id": "unknown"
-    #     }
-    #    ],
-    #    "countries": [
-    #     {
-    #      "count": "2",
-    #      "id": "TW"
-    #     }
-    #    ],
-    #    "browsers": [
-    #     {
-    #      "count": "2",
-    #      "id": "Chrome"
-    #     }
-    #    ],
-    #    "platforms": [
-    #     {
-    #      "count": "2",
-    #      "id": "Macintosh"
-    #     }
-    #    ]
-    #   },
-    #   "month": {
-    #    "shortUrlClicks": "2",
-    #    "longUrlClicks": "2",
-    #    "referrers": [
-    #     {
-    #      "count": "2",
-    #      "id": "unknown"
-    #     }
-    #    ],
-    #    "countries": [
-    #     {
-    #      "count": "2",
-    #      "id": "TW"
-    #     }
-    #    ],
-    #    "browsers": [
-    #     {
-    #      "count": "2",
-    #      "id": "Chrome"
-    #     }
-    #    ],
-    #    "platforms": [
-    #     {
-    #      "count": "2",
-    #      "id": "Macintosh"
-    #     }
-    #    ]
-    #   },
-    #   "week": {
-    #    "shortUrlClicks": "2",
-    #    "longUrlClicks": "2",
-    #    "referrers": [
-    #     {
-    #      "count": "2",
-    #      "id": "unknown"
-    #     }
-    #    ],
-    #    "countries": [
-    #     {
-    #      "count": "2",
-    #      "id": "TW"
-    #     }
-    #    ],
-    #    "browsers": [
-    #     {
-    #      "count": "2",
-    #      "id": "Chrome"
-    #     }
-    #    ],
-    #    "platforms": [
-    #     {
-    #      "count": "2",
-    #      "id": "Macintosh"
-    #     }
-    #    ]
-    #   },
-    #   "day": {
-    #    "shortUrlClicks": "0",
-    #    "longUrlClicks": "0"
-    #   },
-    #   "twoHours": {
-    #    "shortUrlClicks": "0",
-    #    "longUrlClicks": "0"
-    #   }
-    #  }
-    # }'
-    # return @url_analytics_result
-
-
-    # return fetch_and_save_short_url_analytics
-  # end
 
   private
     def set_short_url # 只是set 不會儲存
