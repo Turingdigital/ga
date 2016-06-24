@@ -203,12 +203,12 @@ class UrlBuildersController < ApplicationController
 
   # GET /url_builders/new
   def new
-    user_campaign_media = @campaign_media.where(user: current_user)
+    user_campaign_media = @campaign_media.where(user: current_user).order(created_at: :desc)
     unless user_campaign_media.empty?
-      user_campaign_media = user_campaign_media.order(created_at: :desc).first
-      @campaign_media.delete user_campaign_media
+      user_campaign_medium = user_campaign_media.first
+      @campaign_media.delete user_campaign_medium
       @campaign_media = @campaign_media.to_a
-      @campaign_media.unshift user_campaign_media
+      @campaign_media.unshift user_campaign_medium
     end
 
     @url_builder = UrlBuilder.new
