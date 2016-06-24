@@ -226,7 +226,7 @@ class UrlBuildersController < ApplicationController
 
     @url_builder = UrlBuilder.new(params)
     @url_builder.user = current_user
-    @url_builder.profile = user.account_summary.default_profile
+    @url_builder.profile = current_user.account_summary.default_profile
 
     respond_to do |format|
       if @url_builder.save
