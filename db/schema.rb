@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627063621) do
+ActiveRecord::Schema.define(version: 20160627080958) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
     t.text     "jsonString"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "default_profile"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "default_profile"
+    t.string   "default_item"
+    t.string   "default_web_property"
   end
 
   add_index "account_summaries", ["user_id"], name: "index_account_summaries_on_user_id"
