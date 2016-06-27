@@ -119,8 +119,9 @@ function getCookie(cname) {
 ["url_builder_url", "url_builder_source", "url_builder_name", "url_builder_term",
  "url_builder_content", "url_builder_start_date", "url_builder_end_date",].forEach(function(item, index){
    var cookie_content = getCookie(item);
+   console.log(cookie_content);
    if(cookie_content)
-    $("#"+item).val();
+    $("#"+item).val(cookie_content);
 })
 
 function onChange(e){
