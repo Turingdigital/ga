@@ -104,6 +104,18 @@ $(function(){
     var profiles = selected_web_property.profiles;
     reset_profile_options(profiles);
   });
+
+  <% if !@item_id.nil? && !@web_property_id.nil? && !@profile_id.nil? %>
+    var item_id = "<%= @item_id %>";
+    var web_property_id = "<%= @web_property_id %>";
+    var profile_id = "<%= @profile_id %>";
+
+    $("#item [value='"+ item_id +"']").prop('selected', true);
+    $("#web_property [value='"+ web_property_id +"']").prop('selected', true);
+    $("#profile [value='"+ profile_id +"']").prop('selected', true);
+  <% end %>
+
+
 });
 
 <% end %>

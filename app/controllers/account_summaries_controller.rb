@@ -8,7 +8,9 @@ class AccountSummariesController < ApplicationController
   end
 
   def setup_profile
-    @account_summary.default_profile = params[:profile]
+    @account_summary.default_item         = params[:item]
+    @account_summary.default_web_property = params[:web_property]
+    @account_summary.default_profile      = params[:profile]
 
     # 前端尚未比對是從哪個profile_id來的goal_id
     # goal_id = params[:id]
@@ -29,6 +31,9 @@ class AccountSummariesController < ApplicationController
   # GET /account_summaries/1
   # GET /account_summaries/1.json
   def show
+    @item_id         = current_user.account_summary.default_item
+    @web_property_id = current_user.account_summary.default_web_property
+    @profile_id = current_user.account_summary.default_profile
     AccountSummary.re_fetch current_user
     # @goal_json = current_user.goal.json
   end
