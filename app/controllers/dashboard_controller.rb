@@ -63,8 +63,8 @@ class DashboardController < ApplicationController
 
     #TODO: 迫不得已的 Dirty Hack
     user_url_builders.each do |ub|
-      user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 1, source: ub.source, medium: ub.campaign_medium.medium).where(['date >= ?', Date.today-7]).order(date: :desc)
-      warring[:campaign_sessions] << ["此設定近七日出現sessions數為0", ub.url, ub.source, ub.campaign_medium.medium]
+      user_ga_campaigns = GaCampaign.where(user: current_user, sessions: 0, source: ub.source, medium: ub.campaign_medium.medium).where(['date >= ?', Date.today-7]).order(date: :desc)
+      warring[:campaign_sessions] << ["此設定近七日出現sessions數為0", ub.url, ub.source, ub.campaign_medium.medium] unless user_ga_campaigns.empty?
       # user_ga_campaigns.each do |ugc|
       #   warring[:campaign_sessions] << ["此設定近七日出現sessions數為0", ub.url, ub.source, ub.campaign_medium.medium]
       # end
