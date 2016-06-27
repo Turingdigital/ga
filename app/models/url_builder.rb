@@ -5,7 +5,7 @@ class UrlBuilder < ActiveRecord::Base
 
   # has_many :url_builder_campaign_mediumships
   # has_many :campaign_media, :through => :url_builder_campaign_mediumships
-  has_many :url_analytics
+  has_many :url_analytics, :dependent => :destroy
   belongs_to :campaign_medium
 
   # def url_shouter
