@@ -54,7 +54,7 @@ class DashboardController < ApplicationController
       }) if @campaign_sessions.rows #TODO if false 要寫入Log紀錄 Bug
     end
 
-    user_url_builders = UrlBuilder.where(user: current_user).where(['end_date >= ?', Date.today])
+    user_url_builders = UrlBuilder.where(profile: profile_id).where(user: current_user).where(['end_date >= ?', Date.today])
 
     warring[:campaign_sessions] = []
     user_url_builders.each do |ub|
