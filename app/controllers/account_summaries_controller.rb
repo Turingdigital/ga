@@ -23,13 +23,13 @@ class AccountSummariesController < ApplicationController
   # GET /account_summaries
   # GET /account_summaries.json
   def index
-    AccountSummary.re_fetch current_user
     @account_summaries = AccountSummary.all
   end
 
   # GET /account_summaries/1
   # GET /account_summaries/1.json
   def show
+    AccountSummary.re_fetch current_user
     # @goal_json = current_user.goal.json
   end
 
