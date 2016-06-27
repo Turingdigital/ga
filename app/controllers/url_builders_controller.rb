@@ -277,7 +277,8 @@ class UrlBuildersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_url_builder
-      @url_builder = UrlBuilder.find(params[:id])
+      profile_id = current_user.account_summary.default_profile
+      @url_builder = UrlBuilder.find(params[:id], profile: profile_id)
     end
 
     def set_campaign_media
