@@ -61,7 +61,8 @@ class UrlBuildersController < ApplicationController
   # GET /url_builders
   # GET /url_builders.json
   def index
-    @url_builders = current_user.url_builders.order(id: :desc)#UrlBuilder.all
+    profile_id = current_user.account_summary.default_profile
+    @url_builders = current_user.url_builders.where(profile: profile_id).order(id: :desc)#UrlBuilder.all
 
     #TODO 每天取一次就好 不要每次都取
     # @url_builders.each(&:fetch_and_save_short_url_analytics)
@@ -277,8 +278,7 @@ class UrlBuildersController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_url_builder
-      profile_id = current_user.account_summary.default_profile
-      @url_builder = UrlBuilder.find(params[:id], profile: profile_id)
+      @url_builder = UrlBuilder.find(params[:id])
     end
 
     def set_campaign_media
