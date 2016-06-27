@@ -111,7 +111,15 @@ $(function(){
     var profile_id = "<%= @profile_id %>";
 
     $("#item [value='"+ item_id +"']").prop('selected', true);
+    var selected_item = search_obj_by_id(items, item_id);
+    web_properties = selected_item.web_properties;
+    reset_web_property_options(web_properties);
+
     $("#web_property [value='"+ web_property_id +"']").prop('selected', true);
+    var selected_web_property = search_obj_by_id(web_properties, web_property_id);
+    var profiles = selected_web_property.profiles;
+    reset_profile_options(profiles);
+
     $("#profile [value='"+ profile_id +"']").prop('selected', true);
   <% end %>
 
