@@ -37,11 +37,14 @@ class UrlBuilder < ActiveRecord::Base
     uri = URI.parse(url)
     new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
 
-    new_query_ar << ["utm_source", source] if source # 必填 其實不用if
-    new_query_ar << ["utm_medium", self.campaign_medium.medium] if self.campaign_medium.medium # 必填 其實不用if
-    new_query_ar << ["utm_term", term] if term
-    new_query_ar << ["utm_content", content] if content
-    new_query_ar << ["utm_name", name] if name # 必填 其實不用if
+    query_map = {}
+    URI.decode_www_form(uri.query).each{|q| query_map[q[0]]=q[1]}
+
+    new_query_ar << ["utm_source", source] if !query_map.has_key?("utm_source") && source # 必填 其實不用檢查source
+    new_query_ar << ["utm_medium", self.campaign_medium.medium] if !query_map.has_key?("utm_medium") && self.campaign_medium.medium # 必填 其實不用if
+    new_query_ar << ["utm_term", term] if !query_map.has_key?("utm_term") && term
+    new_query_ar << ["utm_content", content] if !query_map.has_key?("utm_content") && content
+    new_query_ar << ["utm_campaign", name] if !query_map.has_key?("utm_campaign") && name # 必填 其實不用if
 
     uri.query = URI.encode_www_form(new_query_ar)
     return uri.to_s
