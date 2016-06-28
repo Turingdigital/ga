@@ -17,6 +17,7 @@ class UrlBuildersController < ApplicationController
   end
 
   def import_example
+    @ga_setting_names = current_user.account_summary.default_ga_setting_names
   end
 
   def import

@@ -8,6 +8,14 @@
 
  -->
 
+<div>
+  <p>當前使用GA設定檔<br>
+    帳戶:<%= @ga_setting_names[:item] %><br>
+    資源:<%= @ga_setting_names[:web_property] %><br>
+    資料檢視:<%= @ga_setting_names[:profile] %><br>
+  </p>
+  <%= link_to "切換GA設定檔", current_user.account_summary %><br>
+</div>
 <div class="mt-element-step">
 
     <div class="row step-no-background-thin">
