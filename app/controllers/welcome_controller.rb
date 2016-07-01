@@ -1,4 +1,6 @@
 class WelcomeController < ApplicationController
+  layout false
+
   def index
     redirect_to user_user_path(current_user) if user_signed_in?
        #.account_summary if current_user.account_summary
