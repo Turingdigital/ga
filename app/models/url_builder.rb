@@ -38,7 +38,7 @@ class UrlBuilder < ActiveRecord::Base
     new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
 
     query_map = {}
-    if uri.query.nil?
+    unless uri.query.nil?
       URI.decode_www_form(uri.query).each{|q| query_map[q[0]]=q[1]}
     end
 
