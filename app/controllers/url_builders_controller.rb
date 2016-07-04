@@ -205,14 +205,16 @@ class UrlBuildersController < ApplicationController
 
   # GET /url_builders/new
   def new
-    user_campaign_media = @campaign_media.where(user: current_user).order(created_at: :desc)
-    unless user_campaign_media.empty?
-      user_campaign_medium = user_campaign_media.first
-      @campaign_media = @campaign_media.to_a
-      @campaign_media.delete user_campaign_medium
+    # user_campaign_media = @campaign_media.where(user: current_user).order(created_at: :desc)
 
-      @campaign_media.unshift user_campaign_medium
-    end
+    # 以在set_campaign_media中重構，不需要這麼麻煩
+    # unless user_campaign_media.empty?
+    #   user_campaign_medium = user_campaign_media.first
+    #   @campaign_media = @campaign_media.to_a
+    #   @campaign_media.delete user_campaign_medium
+    #
+    #   @campaign_media.unshift user_campaign_medium
+    # end
 
     @url_builder = UrlBuilder.new
   end
@@ -283,7 +285,13 @@ class UrlBuildersController < ApplicationController
     end
 
     def set_campaign_media
-      @campaign_media = CampaignMedium.all
+      # @campaign_media = CampaignMedium.all
+      @campaign_media == CampaignMedium.where(user: current_user).order(created_at: :desc)
+      if @campaign_media.nil?
+        @campaign_media = CampaignMedium.first(5)
+      else
+        @campaign_media << CampaignMedium.first(5)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
