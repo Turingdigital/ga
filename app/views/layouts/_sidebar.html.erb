@@ -122,7 +122,7 @@
 
                             <ul class="sub-menu">
 
-                                <li class="nav-item  ">
+                                <!-- <li class="nav-item  ">
                                     <a href="#" class="nav-link ">
                                         <span class="title">總覽</span>
                                     </a>
@@ -132,7 +132,7 @@
                                     <a href="#" class="nav-link ">
                                         <span class="title">加值分析</span>
                                     </a>
-                                </li>
+                                </li> -->
 
                                 <li class="nav-item  ">
                                   <%= link_to "切換帳戶", current_user.account_summary %>
@@ -197,12 +197,12 @@
     $(".nav-url_builders").addClass("open");
     $(".nav-url_builders").find('.sub-menu').show();
     $(".nav-url_builders").find('.arrow').addClass('open');
-  } 
+  }
 
   if("<%= params['controller'] %>" == 'dashboard'){
     $(".nav-dashboard").addClass("open");
     $(".nav-dashboard").find('.sub-menu').show();
     $(".nav-dashboard").find('.arrow').addClass('open');
   }
-  
+
 <% end %>
