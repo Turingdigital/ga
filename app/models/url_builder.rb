@@ -38,7 +38,9 @@ class UrlBuilder < ActiveRecord::Base
     new_query_ar = uri.query ? URI.decode_www_form(uri.query) : []
 
     query_map = {}
-    URI.decode_www_form(uri.query).each{|q| query_map[q[0]]=q[1]}
+    if uri.query.nil?
+      URI.decode_www_form(uri.query).each{|q| query_map[q[0]]=q[1]}
+    end
 
     new_query_ar << ["utm_source", source] if !query_map.has_key?("utm_source") && source # 必填 其實不用檢查source
     new_query_ar << ["utm_medium", self.campaign_medium.medium] if !query_map.has_key?("utm_medium") && self.campaign_medium.medium # 必填 其實不用if
