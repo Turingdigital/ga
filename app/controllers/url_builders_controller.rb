@@ -286,7 +286,7 @@ class UrlBuildersController < ApplicationController
 
     def set_campaign_media
       # @campaign_media = CampaignMedium.all
-      @campaign_media == CampaignMedium.where(user: current_user).order(created_at: :desc)
+      @campaign_media = CampaignMedium.where(user: current_user).order(created_at: :desc)
       if @campaign_media.nil?
         @campaign_media = CampaignMedium.first(5)
       else
