@@ -290,7 +290,8 @@ class UrlBuildersController < ApplicationController
       if @campaign_media.nil?
         @campaign_media = CampaignMedium.first(5)
       else
-        @campaign_media << CampaignMedium.first(5)
+        @campaign_media = @campaign_media.to_a
+        @campaign_media += CampaignMedium.first(5).to_a
       end
     end
 
