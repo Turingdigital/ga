@@ -38,14 +38,17 @@ class AccountSummary < ActiveRecord::Base
 
   private
     def find_item
-      return JSON.parse(self.jsonString)['items'].index_by{|item| item["id"]==self.default_item}[true]
+      result = JSON.parse(self.jsonString)['items'].index_by{|item| item["id"]==self.default_item}
+      return result[true].nil? ? result[false] : result[true]
     end
 
     def find_web_property_from_item item
-      return item["web_properties"].index_by{|web_property| web_property["id"]==self.default_web_property}[true]
+      result = item["web_properties"].index_by{|web_property| web_property["id"]==self.default_web_property}
+      return result[true].nil? ? result[false] : result[true]
     end
 
     def find_profile_from_web_property web_property
-      return web_property["profiles"].index_by{|profile| profile["id"]==self.default_profile}[true]
+      result = web_property["profiles"].index_by{|profile| profile["id"]==self.default_profile}
+      return result[true].nil? ? result[false] : result[true]
     end
 end
