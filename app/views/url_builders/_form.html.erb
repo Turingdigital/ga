@@ -37,15 +37,30 @@ function getCookie(cname) {
     <%#= f.label :user_id %><br>
     <%#= f.text_field :user_id %>
   </div> -->
+<!--
   <div class="field">
     <%= f.label :url, "網站網址 *" %><br>
-    <%= f.text_area :url, cols: "60", rows: "1", :required => true, onchange: "onChange('url_builder_url')".html_safe %>
+    <%= f.text_area :url, cols: "60", rows: "1", :required => true, class: "form-control" , onchange: "onChange('url_builder_url')".html_safe %>
   </div>
+-->
+  <div class="form-group form-md-line-input">
+    <%= f.label :url, "網站網址 *" %>
+    <%= f.text_area :url, cols: "60", rows: "1", :required => true, class: "form-control" , onchange: "onChange('url_builder_url')".html_safe %>
+  </div>
+
+<!--
   <div class="field">
     <%= f.label :source, "廣告活動來源 *" %><br>
     <%= f.text_field :source, size: "61", :required => true, onchange: "onChange('url_builder_source')".html_safe %>
   </div>
-  <div class="field">
+-->
+  <div class="form-group form-md-line-input">
+      <input type="text" class="form-control" name="url_builder[source]" id="url_builder_source" placeholder="" size="61" onChange="onChange('url_builder_source')" required>
+      <label for="url_builder_source">廣告活動來源 *</label>
+      <span class="help-block"></span>
+  </div>
+
+  <div class="field marginBottom20">
     <%= f.label :medium, "廣告活動媒介 *" %><br>
 
     <%#= f.text_field :medium %>
@@ -73,8 +88,14 @@ function getCookie(cname) {
         }
       }
     </script>
-    <button type="button" onclick="customize();">自訂</button>
+    <button type="button" class="btn blue" onclick="customize();">自訂</button>
   </div>
+
+
+
+
+
+<!--
   <div class="field">
     <%= f.label :name, "廣告活動名稱 *"%><br>
     <%= f.text_field :name, size: "61", :required => true, onchange: "onChange('url_builder_name')".html_safe %>
@@ -87,7 +108,31 @@ function getCookie(cname) {
     <%= f.label :content, "廣告活動內容" %><br>
     <%= f.text_field :content, size: "61", onchange: "onChange('url_builder_content')".html_safe %>
   </div>
-  <div class="field">
+-->
+
+
+  <div class="form-group form-md-line-input">
+      <input type="text" class="form-control" name="url_builder[name]" id="url_builder_name" placeholder="" size="61" onChange="onChange('url_builder_name')" required>
+      <label for="url_builder_name">廣告活動名稱 *</label>
+      <span class="help-block"></span>
+  </div>
+  <div class="form-group form-md-line-input">
+      <input type="text" class="form-control" name="url_builder[term]" id="url_builder_term" placeholder="" size="61" onChange="onChange('url_builder_term')" >
+      <label for="url_builder_term">廣告活動字詞</label>
+      <span class="help-block"></span>
+  </div>
+  <div class="form-group form-md-line-input">
+      <input type="text" class="form-control" name="url_builder[content]" id="url_builder_content" placeholder="" size="61" onChange="onChange('url_builder_content')" >
+      <label for="url_builder_content">廣告活動內容</label>
+      <span class="help-block"></span>
+  </div>  
+
+
+
+
+
+
+  <div class="field marginBottom20">
     <%= f.label :start_date, "開始日期" %><br>
     <input type="text" name="url_builder[start_date]" id="url_builder_start_date"
            data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_start_date')"
@@ -96,16 +141,48 @@ function getCookie(cname) {
     <%#= f.text_field(:start_date, :data-provide => 'datepicker') %>
     <!-- <input type="text" data-provide='datepicker' > -->
   </div>
-  <div class="field">
-    <%= f.label :end_date, "結束日期" %><br>
+  <div class="field marginBottom20">
+    <%= f.label :end_date, "結束日期" %>
+    <span id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</span>
+    <br>
     <input type="text" name="url_builder[end_date]" id="url_builder_end_date"
            data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_end_date')"
            value="<%= @url_builder.end_date.strftime('%Y-%m-%d') if @url_builder.end_date %>">
-    <p id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</p>
+    
     <%#= f.datetime_select :start_date %>
     <%#= f.text_field(:end_date, :data-provide => 'datepicker') %>
     <!-- <input type="text" data-provide='datepicker' > -->
   </div>
+
+<!--
+  <div class="col-md-4 ">
+      <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+          <input type="text" class="form-control" readonly name="datepicker" name="url_builder[start_date]" onchange="onChange('url_builder_start_date')">
+          <span class="input-group-btn">
+              <button class="btn default" type="button">
+                  <i class="fa fa-calendar"></i>
+              </button>
+          </span>
+      </div>
+      
+      <span class="help-block">開始日期</span>
+  </div>
+  <div class="col-md-4 ">
+      <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
+          <input type="text" class="form-control" readonly name="datepicker" name="url_builder[end_date]"  onchange="onChange('url_builder_end_date')">
+          <span class="input-group-btn">
+              <button class="btn default" type="button">
+                  <i class="fa fa-calendar"></i>
+              </button>
+          </span>
+      </div>
+      
+      <span class="help-block">結束日期</span>
+      <p id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</p>
+  </div>
+-->
+
+
   <div class="actions">
     <%#= f.submit %>
     <!-- <input type="submit" name="commit" value="Update Url builder" id="datepicker_submit"> -->
@@ -166,3 +243,22 @@ check_date_valid();
 <%= content_for :JS_PAGE_LEVEL_SCRIPTS do %>
    <script src="/assets/pages/scripts/components-bootstrap-select.min.js" type="text/javascript"></script>
 <% end %>
+
+
+
+
+
+<style>
+  #new_url_builder{
+    width:500px;
+  }
+
+  .field label,.form-group label{
+    color:#888;
+  }
+
+  .marginBottom20{
+    margin-bottom:35px;
+  }
+
+</style>

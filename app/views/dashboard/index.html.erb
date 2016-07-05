@@ -29,5 +29,9 @@ UTM
 <br>
 <!-- <p>測試用，根據UTM所建立的資料，抓取GA的結果：</p> -->
 <%#= @campaign_sessions.to_h.to_json %>
-
 <%= render :partial => "graphs" %>
+
+<!--↓↓ Fuyuki / 20160705 ↓↓-->
+<%= render :partial => "warningEvent" %>
+<%= render :partial => "warningCampaign" %>
+<%= render :partial => "graphs2" %>

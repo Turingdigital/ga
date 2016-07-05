@@ -9,7 +9,7 @@
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
                     <a href="/">
-                        <img src="../assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> </a>
+                        <img src="/assets/logo-305bfac8aefd4f3c12678f08bc9031578d3a874da22d267c2067688f02e4b5d3.jpg" alt="logo" class="logo-default" style="width:160px;margin:11px 0 0" /> </a>
                     <div class="menu-toggler sidebar-toggler"> </div>
                 </div>
                 <!-- END LOGO -->
@@ -68,9 +68,13 @@
 
 
                                 <% if(current_user.account_summary && current_user.account_summary.default_profile) %>
-                                  <li>- GA:<%= current_user.account_summary.default_profile %></li>
+                                <li>
+                                    <a href="#" onclick="return false;">
+                                        <i class="icon-user"></i> GA:<%= current_user.account_summary.default_profile %> </a>
+                                </li>  
                                 <% end %>
 
+                                <!--
                                 <li>
                                     <a href="#">
                                         <i class="icon-user"></i> My Profile </a>
@@ -82,7 +86,7 @@
                                         <span class="badge badge-danger"> 3 </span>
                                     </a>
                                 </li>
-
+                                -->
                                 <li class="divider"> </li>
 
                                 <li>
