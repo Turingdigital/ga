@@ -1,36 +1,3 @@
-<% if false %>
-UTM
-近期新增
-活動即將到期
-<% end %>
-
-<% if false %>
-<% if @warring[:event_sessions].nil? %>
-  測試用（沒有做的功能 事件，電商，目標）：<br>
-  <%#= @event_sessions.rows[0].to_s %>
-<% else %>
-  你有以下沒有做的功能 事件，電商，目標：<br>
-  <%= @warring[:event_sessions].to_s %>
-<% end %>
-<% end %>
-
-<%= render :partial => "warring" %>
-
-<!-- <div class="alert alert-dismissible alert-danger">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>其他錯誤</h4>
-  <ul>
-    <li>測試1</li>
-    <li>測試2</li>
-    <li>測試3</li>
-  </ul>
-</div> -->
-
-<br>
-<!-- <p>測試用，根據UTM所建立的資料，抓取GA的結果：</p> -->
-<%#= @campaign_sessions.to_h.to_json %>
-<%= render :partial => "graphs" %>
-
 <!--↓↓ Fuyuki / 20160705 ↓↓-->
 <%= render :partial => "warningEvent" %>
 <%= render :partial => "warningCampaign" %>
