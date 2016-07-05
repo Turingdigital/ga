@@ -8,8 +8,8 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="/">
-                        <img src="/assets/logo-305bfac8aefd4f3c12678f08bc9031578d3a874da22d267c2067688f02e4b5d3.jpg" alt="logo" class="logo-default" style="width:160px;margin:11px 0 0" /> </a>
+                    <a href="<%= root_path %>">
+                        <img src="<%= asset_url('logo')%>" alt="logo" class="logo-default" style="width:160px;margin:11px 0 0" /> </a>
                     <div class="menu-toggler sidebar-toggler"> </div>
                 </div>
                 <!-- END LOGO -->
@@ -71,7 +71,7 @@
                                 <li>
                                     <a href="#" onclick="return false;">
                                         <i class="icon-user"></i> GA:<%= current_user.account_summary.default_profile %> </a>
-                                </li>  
+                                </li>
                                 <% end %>
 
                                 <!--
