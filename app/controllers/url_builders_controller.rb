@@ -148,7 +148,7 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.short_url)
         col+=1
 
-        worksheet.write(row, col, JSON.parse(ub.url_analytics.last.json)["analytics"]["allTime"]["shortUrlClicks"])
+        worksheet.write(row, col, ub.url_analytics.last.allTime_shortUrlClicks)
         col += 1
 
         # 2.times {
