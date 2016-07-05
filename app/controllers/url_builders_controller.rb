@@ -114,7 +114,8 @@ class UrlBuildersController < ApplicationController
       worksheet.write(0, column_pos, "短網址區", format12)
       column_pos += 1
 
-      ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
+      # ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
+      ["短網址點擊成效"].map.with_index{ |x, i|
         worksheet.write(0, column_pos, x)
         column_pos += 1
       }
@@ -147,10 +148,13 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.short_url)
         col+=1
 
-        3.times {
-          worksheet.write(row, col, "-")
-          col += 1
-        }
+        worksheet.write(row, col, JSON.parse(ub.url_analytics.last.json)["analytics"]["allTime"]["shortUrlClicks"])
+        col += 1
+
+        # 2.times {
+        #   worksheet.write(row, col, "-")
+        #   col += 1
+        # }
 
         row += 1
       end
