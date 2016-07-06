@@ -120,7 +120,7 @@ class UrlBuildersController < ApplicationController
         column_pos += 1
       }
 
-      @url_builders = current_user.url_builders.order(id: :desc)
+      @url_builders = current_user.url_builders.where(profile: current_user.account_summary.default_profile).order(id: :desc)
       row = 1
       @url_builders.each do |ub|
         col = 0
@@ -143,7 +143,11 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.content)
         col+=1
 
-        worksheet.write(row, col, ub.builded_url)
+        if (ub.builded_url.size < 254)
+          worksheet.write(row, col, ub.builded_url)
+        else
+          worksheet.write(row, col, ub.builded_url[0..254])
+        end
         col+=1
         worksheet.write(row, col, ub.short_url)
         col+=1
