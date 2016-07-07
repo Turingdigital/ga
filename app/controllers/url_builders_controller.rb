@@ -114,8 +114,8 @@ class UrlBuildersController < ApplicationController
       worksheet.write(0, column_pos, "短網址區", format12)
       column_pos += 1
 
-      # ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
-      ["短網址點擊成效"].map.with_index{ |x, i|
+      ["短網址點擊成效","Google Analytics 報表成效","差異值"].map.with_index{ |x, i|
+      # ["短網址點擊成效"].map.with_index{ |x, i|
         worksheet.write(0, column_pos, x)
         column_pos += 1
       }
@@ -157,17 +157,27 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.short_url)
         col+=1
 
+        uaasc = 0
         if !ub.url_analytics.nil? && !ub.url_analytics.last.nil?
-          worksheet.write(row, col, ub.url_analytics.last.allTime_shortUrlClicks)
+          uaasc = ub.url_analytics.last.allTime_shortUrlClicks
+          worksheet.write(row, col, uaasc)
         else
           worksheet.write(row, col, "0")
         end
         col += 1
 
-        # 2.times {
-        #   worksheet.write(row, col, "-")
-        #   col += 1
-        # }
+        if source_medium_sessions[ub.sourceMedium].nil?
+          worksheet.write(row, col, "-")
+          col += 1
+          worksheet.write(row, col, "-")
+          col += 1
+        else
+          sms = source_medium_sessions[ub.sourceMedium]
+          worksheet.write(row, col, sms)
+          col += 1
+          worksheet.write(row, col, "#{sms.to_i - uaasc.to_i}")
+          col += 1
+        end
 
         row += 1
       end
