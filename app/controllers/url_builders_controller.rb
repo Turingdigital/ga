@@ -157,7 +157,11 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.short_url)
         col+=1
 
-        worksheet.write(row, col, ub.url_analytics.last.allTime_shortUrlClicks)
+        if !ub.url_analytics.nil? && !ub.url_analytics.last.nil?
+          worksheet.write(row, col, ub.url_analytics.last.allTime_shortUrlClicks)
+        else
+          worksheet.write(row, col, "0")
+        end
         col += 1
 
         # 2.times {
