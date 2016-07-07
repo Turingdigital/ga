@@ -120,7 +120,12 @@ class UrlBuildersController < ApplicationController
         column_pos += 1
       }
 
-      @url_builders = current_user.url_builders.where(profile: current_user.account_summary.default_profile).order(id: :desc)
+      profile_id = current_user.account_summary.default_profile
+      analytics = Analytics.new current_user
+      source_medium_sessions = analytics.get_sourceMedium_sessions(profile_id, "7daysAgo", "yesterday")
+      source_medium_sessions = convert_source_medium_sessions_to_hash(source_medium_sessions)
+
+      @url_builders = current_user.url_builders.where(profile: profile_id).order(id: :desc)
       row = 1
       @url_builders.each do |ub|
         col = 0
@@ -281,6 +286,13 @@ class UrlBuildersController < ApplicationController
   end
 
   private
+    def convert_source_medium_sessions_to_hash(source_medium_sessions)
+      result = {}
+      source_medium_sessions.each do |sms|
+        result[sms.first] = sms.last
+      end
+      return result
+    end
 
     def parse_params_date params
       params["start_date"] = Date.strptime(params["start_date"], "%Y-%m-%d") unless params["start_date"]==""
