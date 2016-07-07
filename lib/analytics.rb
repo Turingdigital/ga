@@ -161,9 +161,7 @@ class Analytics #< BaseCli
   def get_sourceMedium_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 
-
-
-    dimensions = %w(ga:source ga:medium ga:date)
+    dimensions = %w(ga:sourceMedium)
     metrics = %w(ga:sessions)
     result = @analytics.get_ga_data(
                           "ga:#{profile_id}",
