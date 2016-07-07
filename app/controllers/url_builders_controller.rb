@@ -124,9 +124,8 @@ class UrlBuildersController < ApplicationController
       analytics = Analytics.new current_user
       source_medium_sessions = analytics.get_sourceMedium_sessions(profile_id, "7daysAgo", "yesterday")
       source_medium_sessions = convert_source_medium_sessions_to_hash(source_medium_sessions)
-      byebug
 
-      @url_builders = current_user.url_builders.where(profile: profile_id).order(id: :desc)
+      @url_builders = current_user.url_builders.includes(:campaign_medium).where(profile: profile_id).order(id: :desc)
       row = 1
       @url_builders.each do |ub|
         col = 0
