@@ -14,6 +14,10 @@ class UrlBuilder < ActiveRecord::Base
 
   before_save :set_short_url
 
+  def sourceMedium
+    return "#{self.source} / #{self.campaign_medium.medium}"
+  end
+
   def self.import file, user
     CSV.foreach(file.path, headers: true, :encoding => 'big5') do |row|
       cm = CampaignMedium.where(medium: row[2])
