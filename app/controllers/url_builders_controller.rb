@@ -122,6 +122,8 @@ class UrlBuildersController < ApplicationController
 
       profile_id = current_user.account_summary.default_profile
       analytics = Analytics.new current_user
+
+      #TODO: 需要以活動日期分，每日API先存好，計算給客戶，不要突然計算
       source_medium_sessions = analytics.get_sourceMedium_sessions(profile_id, "7daysAgo", "yesterday")
       source_medium_sessions = convert_source_medium_sessions_to_hash(source_medium_sessions)
 
