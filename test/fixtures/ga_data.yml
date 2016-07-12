@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ga_label_id: 
+  profile: MyString
+  json: MyText
+
+two:
+  ga_label_id: 
+  profile: MyString
+  json: MyText
