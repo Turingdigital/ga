@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ga Labels</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ga_labels.each do |ga_label| %>
+      <tr>
+        <td><%= ga_label.name %></td>
+        <td><%= link_to 'Show', ga_label %></td>
+        <td><%= link_to 'Edit', edit_ga_label_path(ga_label) %></td>
+        <td><%= link_to 'Destroy', ga_label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ga label', new_ga_label_path %>

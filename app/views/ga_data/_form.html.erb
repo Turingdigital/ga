@@ -1,0 +1,29 @@
+<%= form_for(@ga_datum) do |f| %>
+  <% if @ga_datum.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ga_datum.errors.count, "error") %> prohibited this ga_datum from being saved:</h2>
+
+      <ul>
+      <% @ga_datum.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ga_label_id %><br>
+    <%= f.text_field :ga_label_id %>
+  </div>
+  <div class="field">
+    <%= f.label :profile %><br>
+    <%= f.text_field :profile %>
+  </div>
+  <div class="field">
+    <%= f.label :json %><br>
+    <%= f.text_area :json %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

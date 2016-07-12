@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :ga_data
+  resources :ga_labels
   resources :foos
   resources :campaign_media
   resources :url_builders do

@@ -1,0 +1,2 @@
+module GaLabelsHelper
+end

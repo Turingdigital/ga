@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ga label:</strong>
+  <%= @ga_datum.ga_label %>
+</p>
+
+<p>
+  <strong>Profile:</strong>
+  <%= @ga_datum.profile %>
+</p>
+
+<p>
+  <strong>Json:</strong>
+  <%= @ga_datum.json %>
+</p>
+
+<%= link_to 'Edit', edit_ga_datum_path(@ga_datum) %> |
+<%= link_to 'Back', ga_data_path %>

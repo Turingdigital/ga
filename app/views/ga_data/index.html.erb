@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Ga Data</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ga label</th>
+      <th>Profile</th>
+      <th>Json</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ga_data.each do |ga_datum| %>
+      <tr>
+        <td><%= ga_datum.ga_label %></td>
+        <td><%= ga_datum.profile %></td>
+        <td><%= ga_datum.json %></td>
+        <td><%= link_to 'Show', ga_datum %></td>
+        <td><%= link_to 'Edit', edit_ga_datum_path(ga_datum) %></td>
+        <td><%= link_to 'Destroy', ga_datum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ga datum', new_ga_datum_path %>
