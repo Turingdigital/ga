@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712101143) do
+ActiveRecord::Schema.define(version: 20160712102013) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -66,6 +66,23 @@ ActiveRecord::Schema.define(version: 20160712101143) do
   end
 
   add_index "ga_credentials", ["user_id"], name: "index_ga_credentials_on_user_id"
+
+  create_table "ga_data", force: :cascade do |t|
+    t.integer  "ga_label_id"
+    t.string   "profile"
+    t.text     "json"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "ga_data", ["ga_label_id"], name: "index_ga_data_on_ga_label_id"
+  add_index "ga_data", ["profile"], name: "index_ga_data_on_profile"
+
+  create_table "ga_labels", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "goals", force: :cascade do |t|
     t.integer  "user_id"

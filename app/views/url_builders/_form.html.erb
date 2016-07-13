@@ -44,7 +44,7 @@ function getCookie(cname) {
   </div>
 -->
   <div class="form-group form-md-line-input">
-    <%= f.label :url, "網站網址 *" %>
+    <%= f.label :url, "網站網址 *<br>(例如 http://td.turingdigital.com.tw)".html_safe %>
     <%= f.text_area :url, cols: "60", rows: "1", :required => true, class: "form-control" , onchange: "onChange('url_builder_url')".html_safe %>
   </div>
 
@@ -56,12 +56,13 @@ function getCookie(cname) {
 -->
   <div class="form-group form-md-line-input">
       <input type="text" class="form-control" name="url_builder[source]" id="url_builder_source" placeholder="" size="61" onChange="onChange('url_builder_source')" required>
-      <label for="url_builder_source">廣告活動來源 *</label>
+      <label for="url_builder_source">廣告活動來源 *<br>(推薦連結來源網址：Banner, CPC, Email, POST)</label>
       <span class="help-block"></span>
   </div>
 
   <div class="field marginBottom20">
-    <%= f.label :medium, "廣告活動媒介 *" %><br>
+    <%= f.label :medium, "廣告活動媒介 *<br>(行銷媒介：單次點擊出價、橫幅廣告、電子郵件)".html_safe %><br>
+
 
     <%#= f.text_field :medium %>
     <%#= f.text_field :medium %>
@@ -113,19 +114,19 @@ function getCookie(cname) {
 
   <div class="form-group form-md-line-input">
       <input type="text" class="form-control" name="url_builder[name]" id="url_builder_name" placeholder="" size="61" onChange="onChange('url_builder_name')" required>
-      <label for="url_builder_name">廣告活動名稱 *</label>
+      <label for="url_builder_name">廣告活動名稱 *<br>(產品、促銷代碼或廣告標語)</label>
       <span class="help-block"></span>
   </div>
   <div class="form-group form-md-line-input">
       <input type="text" class="form-control" name="url_builder[term]" id="url_builder_term" placeholder="" size="61" onChange="onChange('url_builder_term')" >
-      <label for="url_builder_term">廣告活動字詞</label>
+      <label for="url_builder_term">廣告活動字詞<br>(用來表示付費關鍵字)</label>
       <span class="help-block"></span>
   </div>
   <div class="form-group form-md-line-input">
       <input type="text" class="form-control" name="url_builder[content]" id="url_builder_content" placeholder="" size="61" onChange="onChange('url_builder_content')" >
-      <label for="url_builder_content">廣告活動內容</label>
+      <label for="url_builder_content">廣告活動內容<br>(用來表示不同的廣告)</label>
       <span class="help-block"></span>
-  </div>  
+  </div>
 
 
 
@@ -133,7 +134,7 @@ function getCookie(cname) {
 
 
   <div class="field marginBottom20">
-    <%= f.label :start_date, "開始日期" %><br>
+    <%= f.label :start_date, "開始日期<br>(廣告活動開始日期，例2016-07-13)".html_safe %><br>
     <input type="text" name="url_builder[start_date]" id="url_builder_start_date"
            data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_start_date')"
            value="<%= @url_builder.start_date.strftime('%Y-%m-%d') if @url_builder.start_date%>">
@@ -142,13 +143,13 @@ function getCookie(cname) {
     <!-- <input type="text" data-provide='datepicker' > -->
   </div>
   <div class="field marginBottom20">
-    <%= f.label :end_date, "結束日期" %>
+    <%= f.label :end_date, "結束日期<br>(廣告活動結束日期，例2016-08-13)".html_safe %>
     <span id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</span>
     <br>
     <input type="text" name="url_builder[end_date]" id="url_builder_end_date"
            data-provide='datepicker' data-date-format="yyyy-mm-dd" onchange="onChange('url_builder_end_date')"
            value="<%= @url_builder.end_date.strftime('%Y-%m-%d') if @url_builder.end_date %>">
-    
+
     <%#= f.datetime_select :start_date %>
     <%#= f.text_field(:end_date, :data-provide => 'datepicker') %>
     <!-- <input type="text" data-provide='datepicker' > -->
@@ -164,7 +165,7 @@ function getCookie(cname) {
               </button>
           </span>
       </div>
-      
+
       <span class="help-block">開始日期</span>
   </div>
   <div class="col-md-4 ">
@@ -176,7 +177,7 @@ function getCookie(cname) {
               </button>
           </span>
       </div>
-      
+
       <span class="help-block">結束日期</span>
       <p id="datepicker_warning" class="text-danger" hidden>結束日期不可小於開始日期</p>
   </div>
