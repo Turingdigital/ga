@@ -41,6 +41,7 @@ class DashboardController < ApplicationController
     if user_ga_campaigns.size > 0
       max_date = GaCampaign.where(user: current_user).maximum(:date)
       _start = "#{(Date.today-max_date).to_i}daysAgo"
+
     end
 
     #TODO: 這個IF條件也是Dirty Hack
@@ -54,9 +55,19 @@ class DashboardController < ApplicationController
       }) if @campaign_sessions.rows #TODO if false 要寫入Log紀錄 Bug
     end
 
+    warring[:campaign_sessions] = [] # 下面的警告先在這邊初始化
+
+    # 活動過期警告
+    # warring[:campaign_expired]
+    # 檢查過期或即將過期的UrlBuilder
+    user_url_builders = UrlBuilder.where(profile: profile_id).where(user: current_user).where(['end_date < ?', Date.today])
+    user_url_builders.each do |ub|
+      warring[:campaign_sessions] << ["活動已過期", ub.name]
+    end
+
+    # 檢查其他
     user_url_builders = UrlBuilder.where(profile: profile_id).where(user: current_user).where(['end_date >= ?', Date.today])
 
-    warring[:campaign_sessions] = []
     user_url_builders.each do |ub|
       warring[:campaign_sessions] << ["無此Source", ub.source] if GaCampaign.where(user: current_user, source: ub.source).empty?
     end
