@@ -68,7 +68,7 @@ class UrlBuildersController < ApplicationController
     #TODO 每天取一次就好 不要每次都取
     # @url_builders.each(&:fetch_and_save_short_url_analytics)
     @url_builders.each do |ub|
-      ub.fetch_and_save_short_url_analytics if ub.url_analytics.empty? && !ub.short_url.nil?
+      ub.fetch_and_save_short_url_analytics if((ub.url_analytics.empty? || ub.url_analytics.last.created_at.to_date < Date.today) && !ub.short_url.nil?)
     end
 
     ic = Iconv.new("big5", "utf-8")
