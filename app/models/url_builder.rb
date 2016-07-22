@@ -69,7 +69,7 @@ class UrlBuilder < ActiveRecord::Base
 
   # TODO: 順便儲存在Redis裡面 不反覆抓取
   def fetch_and_save_short_url_analytics
-    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}&shortUrl=#{self.short_url}&projection=FULL"
+    url = "https://www.googleapis.com/urlshortener/v1/url?key=#{'AIzaSyD2WRzzla118fiEyom6nWML5Ob19FGtTfo'}&shortUrl=#{URI.escape(self.short_url, ':/?=&')}&projection=FULL"
     result = open(url).read
     # result = JSON.parse(result)
     ua = UrlAnalytic.create(json: result, url_builder: self)
