@@ -18,3 +18,4 @@
 //= require bootstrap-datepicker
 // require underscore-min
 // require angular.min
+//= require AppMeasurement

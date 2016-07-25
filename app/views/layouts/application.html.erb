@@ -63,6 +63,12 @@
 
 </head>
 <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+  <%= javascript_tag do %>
+    s.pageName="TD:<%= params[:controller] %>:<%= params[:action] %>"
+    s.eVar1="<%= user_signed_in? ? current_user.email : "" %>"
+    var s_code=s.t();if(s_code)document.write(s_code)
+  <% end %>
+
   <%= render "layouts/header_nav" %>
 
 
