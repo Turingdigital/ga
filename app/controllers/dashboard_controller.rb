@@ -4,12 +4,33 @@ class DashboardController < ApplicationController
 
   def index
     @warring = create_warrings
+
+    @analytics = Analytics.new current_user
+    profile_id = current_user.account_summary.default_profile
+
+    @grpah1Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
+    begin
+      @grpah1Data = @grpah1Data.totals_for_all_results
+      @grpah1Data = {
+        sessions: @grpah1Data["ga:sessions"],
+        users: @grpah1Data["ga:users"],
+        pageviews: @grpah1Data["ga:pageviews"],
+        goalCompletionsAll: @grpah1Data["ga:goalCompletionsAll"]
+      }
+    rescue ExceptionName
+      @grpah1Data = {
+        sessions: 0,
+        users: 0,
+        pageviews: 0,
+        goalCompletionsAll: 0
+      }
+    end
   end
 
   private
 
   def create_warrings
-    @analytics = Analytics.new current_user
+    @analytics ||= Analytics.new current_user
     profile_id = current_user.account_summary.default_profile
 
     ###

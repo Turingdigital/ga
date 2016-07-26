@@ -1,14 +1,15 @@
 <!--<div class="row">-->
+<h3>7日內網站狀況</h3>
 <div class="row" style="margin:0">
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="dashboard-stat2 ">
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="<%= @visits.rows[-1][1] %>">0</span>
+                        <span data-counter="counterup" data-value="<%= @grpah1Data[:sessions] %>">0</span>
                         <small class="font-green-sharp"><!--$--></small>
                     </h3>
-                    <small>Session</small>
+                    <small>Sessions</small>
                 </div>
                 <div class="icon">
                     <i class="icon-pie-chart"></i>
@@ -32,9 +33,9 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-red-haze">
-                        <span data-counter="counterup" data-value="2000.3">0</span>
+                        <span data-counter="counterup" data-value="<%= @grpah1Data[:pageviews] %>">0</span>
                     </h3>
-                    <small>PageView</small>
+                    <small>PageViews</small>
                 </div>
                 <div class="icon">
                     <i class="icon-like"></i>
@@ -58,9 +59,9 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-blue-sharp">
-                        <span data-counter="counterup" data-value="3000.2"></span>
+                        <span data-counter="counterup" data-value="<%= @grpah1Data[:goalCompletionsAll] %>"></span>
                     </h3>
-                    <small>Goal 數量</small>
+                    <small>Goal Completions All</small>
                 </div>
                 <div class="icon">
                     <i class="icon-basket"></i>
@@ -84,9 +85,9 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-purple-soft">
-                        <span data-counter="counterup" data-value="4000.1"></span>
+                        <span data-counter="counterup" data-value="<%= @grpah1Data[:users] %>"></span>
                     </h3>
-                    <small>USER</small>
+                    <small>USERS</small>
                 </div>
                 <div class="icon">
                     <i class="icon-user"></i>
