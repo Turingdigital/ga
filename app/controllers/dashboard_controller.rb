@@ -43,6 +43,19 @@ class DashboardController < ApplicationController
         goalCompletionsAll: 0
       }
     end
+
+    @grpah2Data = @analytics.get_visits_all_and_new(profile_id, "183daysAgo", "yesterday")
+    @grpah2DataOldVisitors = []
+    @grpah2Data.rows.each{|obj|
+      @grpah2DataOldVisitors << [obj[0], (obj[1].to_i - obj[2].to_i).to_s ]
+    }
+    @grpah2Data.rows.map{|obj| obj.delete_at(1) }
+    @grpah2DataNewVisitors = @grpah2Data.rows
+
+
+    # Date.strptime(@grpah2Data.rows.first.first, "%Y%m%d")
+    # byebug
+
   end
 
   private

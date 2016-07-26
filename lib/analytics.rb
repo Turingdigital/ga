@@ -143,6 +143,22 @@ class Analytics #< BaseCli
     return result
   end
 
+  def get_visits_all_and_new(profile_id, _start, _end)
+    authorize
+
+    dimensions = %w(ga:yearMonth)
+    metrics = %w(ga:users ga:newUsers)
+    sort = %w(ga:yearMonth)
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+
+    return result
+  end
+
   def get_users_sessions_goalCompletionsAll_pageViews(profile_id, _start="7daysAgo", _end="yesterday")
     authorize
 
