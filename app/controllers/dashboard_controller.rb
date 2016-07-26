@@ -8,17 +8,35 @@ class DashboardController < ApplicationController
     @analytics = Analytics.new current_user
     profile_id = current_user.account_summary.default_profile
 
-    @grpah1Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
+    @grpah1Data7 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
     begin
-      @grpah1Data = @grpah1Data.totals_for_all_results
-      @grpah1Data = {
-        sessions: @grpah1Data["ga:sessions"],
-        users: @grpah1Data["ga:users"],
-        pageviews: @grpah1Data["ga:pageviews"],
-        goalCompletionsAll: @grpah1Data["ga:goalCompletionsAll"]
+      @grpah1Data7 = @grpah1Data7.totals_for_all_results
+      @grpah1Data7 = {
+        sessions: @grpah1Data7["ga:sessions"],
+        users: @grpah1Data7["ga:users"],
+        pageviews: @grpah1Data7["ga:pageviews"],
+        goalCompletionsAll: @grpah1Data7["ga:goalCompletionsAll"]
       }
     rescue ExceptionName
-      @grpah1Data = {
+      @grpah1Data7 = {
+        sessions: 0,
+        users: 0,
+        pageviews: 0,
+        goalCompletionsAll: 0
+      }
+    end
+
+    @grpah1Data30 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "30daysAgo", "yesterday")
+    begin
+      @grpah1Data30 = @grpah1Data30.totals_for_all_results
+      @grpah1Data30 = {
+        sessions: @grpah1Data30["ga:sessions"],
+        users: @grpah1Data30["ga:users"],
+        pageviews: @grpah1Data30["ga:pageviews"],
+        goalCompletionsAll: @grpah1Data30["ga:goalCompletionsAll"]
+      }
+    rescue ExceptionName
+      @grpah1Data30 = {
         sessions: 0,
         users: 0,
         pageviews: 0,
