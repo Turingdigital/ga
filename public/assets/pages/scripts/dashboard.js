@@ -746,83 +746,83 @@ var Dashboard = function() {
                 return;
             }
 
-            var chartData = [{
-                "date": "2012-01-05",
-                "distance": 480,
-                "townName": "Miami",
-                "townName2": "Miami",
-                "townSize": 10,
-                "latitude": 25.83,
-                "duration": 501
-            }, {
-                "date": "2012-01-06",
-                "distance": 386,
-                "townName": "Tallahassee",
-                "townSize": 7,
-                "latitude": 30.46,
-                "duration": 443
-            }, {
-                "date": "2012-01-07",
-                "distance": 348,
-                "townName": "New Orleans",
-                "townSize": 10,
-                "latitude": 29.94,
-                "duration": 405
-            }, {
-                "date": "2012-01-08",
-                "distance": 238,
-                "townName": "Houston",
-                "townName2": "Houston",
-                "townSize": 16,
-                "latitude": 29.76,
-                "duration": 309
-            }, {
-                "date": "2012-01-09",
-                "distance": 218,
-                "townName": "Dalas",
-                "townSize": 17,
-                "latitude": 32.8,
-                "duration": 287
-            }, {
-                "date": "2012-01-10",
-                "distance": 349,
-                "townName": "Oklahoma City",
-                "townSize": 11,
-                "latitude": 35.49,
-                "duration": 485
-            }, {
-                "date": "2012-01-11",
-                "distance": 603,
-                "townName": "Kansas City",
-                "townSize": 10,
-                "latitude": 39.1,
-                "duration": 890
-            }, {
-                "date": "2012-01-12",
-                "distance": 534,
-                "townName": "Denver",
-                "townName2": "Denver",
-                "townSize": 18,
-                "latitude": 39.74,
-                "duration": 810
-            }, {
-                "date": "2012-01-13",
-                "townName": "Salt Lake City",
-                "townSize": 12,
-                "distance": 425,
-                "duration": 670,
-                "latitude": 40.75,
-                "alpha": 0.4
-            }, {
-                "date": "2012-01-14",
-                "latitude": 36.1,
-                "duration": 470,
-                "townName": "Las Vegas",
-                "townName2": "Las Vegas",
-                "bulletClass": "lastBullet"
-            }, {
-                "date": "2012-01-15"
-            }];
+            // var chartData = [{
+            //     "date": "2012-01-05",
+            //     "distance": 480,
+            //     "townName": "Miami",
+            //     "townName2": "Miami",
+            //     "townSize": 10,
+            //     "latitude": 25.83,
+            //     "duration": 501
+            // }, {
+            //     "date": "2012-01-06",
+            //     "distance": 386,
+            //     "townName": "Tallahassee",
+            //     "townSize": 7,
+            //     "latitude": 30.46,
+            //     "duration": 443
+            // }, {
+            //     "date": "2012-01-07",
+            //     "distance": 348,
+            //     "townName": "New Orleans",
+            //     "townSize": 10,
+            //     "latitude": 29.94,
+            //     "duration": 405
+            // }, {
+            //     "date": "2012-01-08",
+            //     "distance": 238,
+            //     "townName": "Houston",
+            //     "townName2": "Houston",
+            //     "townSize": 16,
+            //     "latitude": 29.76,
+            //     "duration": 309
+            // }, {
+            //     "date": "2012-01-09",
+            //     "distance": 218,
+            //     "townName": "Dalas",
+            //     "townSize": 17,
+            //     "latitude": 32.8,
+            //     "duration": 287
+            // }, {
+            //     "date": "2012-01-10",
+            //     "distance": 349,
+            //     "townName": "Oklahoma City",
+            //     "townSize": 11,
+            //     "latitude": 35.49,
+            //     "duration": 485
+            // }, {
+            //     "date": "2012-01-11",
+            //     "distance": 603,
+            //     "townName": "Kansas City",
+            //     "townSize": 10,
+            //     "latitude": 39.1,
+            //     "duration": 890
+            // }, {
+            //     "date": "2012-01-12",
+            //     "distance": 534,
+            //     "townName": "Denver",
+            //     "townName2": "Denver",
+            //     "townSize": 18,
+            //     "latitude": 39.74,
+            //     "duration": 810
+            // }, {
+            //     "date": "2012-01-13",
+            //     "townName": "Salt Lake City",
+            //     "townSize": 12,
+            //     "distance": 425,
+            //     "duration": 670,
+            //     "latitude": 40.75,
+            //     "alpha": 0.4
+            // }, {
+            //     "date": "2012-01-14",
+            //     "latitude": 36.1,
+            //     "duration": 470,
+            //     "townName": "Las Vegas",
+            //     "townName2": "Las Vegas",
+            //     "bulletClass": "lastBullet"
+            // }, {
+            //     "date": "2012-01-15"
+            // }];
             var chart = AmCharts.makeChart("dashboard_amchart_1", {
                 type: "serial",
                 fontSize: 12,
@@ -838,7 +838,7 @@ var Dashboard = function() {
                 categoryField: "date",
                 categoryAxis: {
                     parseDates: true,
-                    minPeriod: "DD",
+                    minPeriod: "WW",
                     autoGridCount: false,
                     gridCount: 50,
                     gridAlpha: 0.1,
@@ -859,54 +859,78 @@ var Dashboard = function() {
                     }]
                 },
 
+    //             valueAxes: [{
+    //     "id":"v1",
+    //     // "axisColor": "#FF6600",
+    //     axisAlpha: 0,
+    //     // "axisThickness": 2,
+    //     "axisAlpha": 1,
+    //     "position": "left"
+    // }, {
+    //     "id":"v2",
+    //     // "axisColor": "#FCD202",
+    //     axisAlpha: 0,
+    //     // "axisThickness": 2,
+    //     "axisAlpha": 1,
+    //     "position": "right"
+    // }, {
+    //     "id":"v3",
+    //     // "axisColor": "#B0DE09",
+    //     axisAlpha: 0,
+    //     // "axisThickness": 2,
+    //     "gridAlpha": 0,
+    //     // "offset": 50,
+    //     "axisAlpha": 1,
+    //     "position": "left"
+    // }],
                 valueAxes: [{
                     id: "a1",
-                    title: "distance",
+                    // title: "Users",
                     gridAlpha: 0,
                     axisAlpha: 0
                 }, {
-                    id: "a2",
+                    id: "v2",
                     position: "right",
                     gridAlpha: 0,
                     axisAlpha: 0,
                     labelsEnabled: false
                 }, {
-                    id: "a3",
-                    title: "duration",
+                    id: "v3",
+                    // title: "Page Views",
                     position: "right",
                     gridAlpha: 0,
                     axisAlpha: 0,
                     inside: true,
-                    duration: "mm",
-                    durationUnits: {
-                        DD: "d. ",
-                        hh: "h ",
-                        mm: "min",
-                        ss: ""
-                    }
+                    // duration: "mm",
+                    // durationUnits: {
+                    //     DD: "d. ",
+                    //     hh: "h ",
+                    //     mm: "min",
+                    //     ss: ""
+                    // }
                 }],
                 graphs: [{
                     id: "g1",
                     valueField: "distance",
-                    title: "distance",
+                    title: "Users",
                     type: "column",
                     fillAlphas: 0.7,
                     valueAxis: "a1",
-                    balloonText: "[[value]] miles",
-                    legendValueText: "[[value]] mi",
-                    legendPeriodValueText: "total: [[value.sum]] mi",
+                    balloonText: "[[value]] Users",
+                    legendValueText: "[[value]]",
+                    legendPeriodValueText: "[[value.sum]]",
                     lineColor: "#08a3cc",
                     alphaField: "alpha",
                 }, {
                     id: "g2",
                     valueField: "latitude",
                     classNameField: "bulletClass",
-                    title: "latitude/city",
+                    title: "預測Page View",
                     type: "line",
                     valueAxis: "a2",
                     lineColor: "#786c56",
                     lineThickness: 1,
-                    legendValueText: "[[description]]/[[value]]",
+                    legendValueText: "[[value]]",
                     descriptionField: "townName",
                     bullet: "round",
                     bulletSizeField: "townSize",
@@ -916,18 +940,19 @@ var Dashboard = function() {
                     bulletColor: "#89c4f4",
                     labelText: "[[townName2]]",
                     labelPosition: "right",
-                    balloonText: "latitude:[[value]]",
+                    // labelPosition: "left",
+                    balloonText: "[[value]] Page Views",
                     showBalloon: true,
                     animationPlayed: true,
                 }, {
                     id: "g3",
-                    title: "duration",
+                    title: "實際Page View",
                     valueField: "duration",
                     type: "line",
                     valueAxis: "a3",
                     lineAlpha: 0.8,
                     lineColor: "#e26a6a",
-                    balloonText: "[[value]]",
+                    balloonText: "[[value]] Page Views",
                     lineThickness: 1,
                     legendValueText: "[[value]]",
                     bullet: "square",

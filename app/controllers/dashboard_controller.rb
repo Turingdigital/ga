@@ -56,6 +56,36 @@ class DashboardController < ApplicationController
     # Date.strptime(@grpah2Data.rows.first.first, "%Y%m%d")
     # byebug
 
+    # nthWeek ga:sessions ga:users ga:pageviews ga:goalCompletionsAll
+    @grpah3Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, "49daysAgo", "yesterday").rows
+    now = Date.today
+    sum_latitude = 0
+    @grpah3Data = @grpah3Data.map{|obj|
+      sum_latitude += obj[3].to_i;
+      {
+        "date" => "#{now-7*obj[0].to_i}",
+        "distance" => obj[2], # Users
+        "latitude" => obj[3], # Predicated Page Views
+        "duration" => obj[3]  # Page Views
+        # "distance" => 10,
+        # "latitude" => 20,
+        # "duration" => 30,
+      }
+    }.reverse
+    @grpah3Data.last["bulletClass"] = "lastBullet"
+    @grpah3Data.last["latitude"] = (sum_latitude.to_f/@grpah3Data.size).to_s
+    @grpah3Data << {
+      "date" => "#{now+7}"
+    }
+    # var chartData = [{
+    #     "date": "2012-01-05",
+    #     "distance": 480,
+    #     "townName": "Miami",
+    #     "townName2": "Miami",
+    #     "townSize": 10,
+    #     "latitude": 25.83,
+    #     "duration": 501
+    # }
   end
 
   private

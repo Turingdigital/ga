@@ -171,6 +171,21 @@ class Analytics #< BaseCli
     return result
   end
 
+  def get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, _start="7daysAgo", _end="yesterday")
+    authorize
+
+    metrics = %w(ga:sessions ga:users ga:pageviews ga:goalCompletionsAll)
+    dimensions = %w(ga:nthWeek)
+    sort = %w(ga:nthWeek)
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+    return result
+  end
+
   def get_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 
