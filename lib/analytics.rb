@@ -186,6 +186,21 @@ class Analytics #< BaseCli
     return result
   end
 
+  def get_sessions_goalCompletionsAll_div_source(profile_id, _start="30daysAgo", _end="yesterday")
+    authorize
+
+    metrics = %w(ga:sessions ga:goalCompletionsAll)
+    dimensions = %w(ga:source)
+    sort = %w(ga:sessions)
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+    return result
+  end
+
   def get_sessions profile_id, _start="7daysAgo", _end="yesterday"
     authorize
 

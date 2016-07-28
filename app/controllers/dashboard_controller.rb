@@ -77,15 +77,16 @@ class DashboardController < ApplicationController
     @grpah3Data << {
       "date" => "#{now+7}"
     }
-    # var chartData = [{
-    #     "date": "2012-01-05",
-    #     "distance": 480,
-    #     "townName": "Miami",
-    #     "townName2": "Miami",
-    #     "townSize": 10,
-    #     "latitude": 25.83,
-    #     "duration": 501
-    # }
+
+    @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday").rows.reverse
+    @grpah5Data = @grpah5Data.first(6)
+    @grpah5Data.map!{|obj|
+      {
+          "year" => obj[0],
+          "income" => obj[1].to_f,
+          "expenses" => obj[2].to_f
+      }
+    }
   end
 
   private
