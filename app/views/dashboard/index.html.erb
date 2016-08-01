@@ -13,6 +13,29 @@
 <%= render :partial => "flight_routes_map" %>
 <%= render :partial => "dashboard_amchart_3" %>
 
+<% unless @searchsData.nil? %>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>搜尋字詞</th>
+      <th>被查次數</th>
+      <th>離開率</th>
+      <th>重複搜尋率</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @searchsData.each do |obj| %>
+    <tr>
+      <td><%= obj[0] %></td>
+      <td><%= obj[1] %></td>
+      <td><%= (obj[3].to_f*100).to_i/100.0 %>%</td>
+      <td><%= (obj[2].to_f*100).to_i/100.0 %>%</td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
 <h4>以下圖表測試中</h4>
 <!-- BEGIN PORTLET-->
 <div class="portlet light bordered">

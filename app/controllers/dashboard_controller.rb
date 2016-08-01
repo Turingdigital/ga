@@ -89,6 +89,12 @@ class DashboardController < ApplicationController
           "expenses" => obj[2].to_f
       }
     }
+
+    @searchsData = @analytics.get_searchs_div_searchKeyword(profile_id, "30daysAgo", "yesterday")
+    @searchsData = @searchsData["rows"]
+    unless @searchsData.nil?
+      @searchsData = @searchsData.first(20)
+    end
   end
 
   private

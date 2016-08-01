@@ -76,15 +76,15 @@ class Analytics #< BaseCli
     return @analytics.authorization ? true : false
   end
 
-  def get_cached
+  def get_cached profile_id
     caller_method_name = caller[0][/`.*'/][1..-2]
-    result = @redis.get("#{@user.email}:#{caller_method_name}")
+    result = @redis.get("#{@user.email}:#{profile_id}:#{caller_method_name}")
     return result ? JSON.parse(result) : nil
   end
 
-  def set_cached result
+  def set_cached result, profile_id
     caller_method_name = caller[0][/`.*'/][1..-2]
-    @redis.set "#{@user.email}:#{caller_method_name}", result.to_json
+    @redis.set "#{@user.email}:#{profile_id}:#{caller_method_name}", result.to_json
   end
 
   def reload_authorizer_store_credentials_from_model
@@ -94,15 +94,15 @@ class Analytics #< BaseCli
 
   def accountSummaries
     # unless self.authorized?
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
 
     begin
       result = @analytics.list_account_summaries
-      set_cached(result)
-      return get_cached
+      set_cached(result, profile_id)
+      return get_cached profile_id
     rescue Exception => e
       return false
     end
@@ -120,7 +120,7 @@ class Analytics #< BaseCli
   # method_option :start, type: :string, required: true
   # method_option :end, type: :string, required: true
   def show_visits(profile_id, _start, _end)
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -135,8 +135,8 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
     #                                _end,
@@ -151,7 +151,7 @@ class Analytics #< BaseCli
   end
 
   def get_visits(profile_id, _start, _end)
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -166,12 +166,12 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_visits_all_and_new(profile_id, _start, _end)
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -185,12 +185,31 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
+  end
+
+  def get_searchs_div_searchKeyword(profile_id, _start="7daysAgo", _end="yesterday")
+    result = get_cached profile_id
+    return result if result
+
+    authorize
+
+    metrics = %w(ga:searchResultViews ga:percentSearchRefinements ga:searchExitRate)
+    dimensions = %w(ga:searchKeyword)
+    sort = %w(-ga:searchResultViews)
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews(profile_id, _start="7daysAgo", _end="yesterday")
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -201,12 +220,12 @@ class Analytics #< BaseCli
                           "ga:#{profile_id}",
                           _start, _end,
                           metrics.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, _start="7daysAgo", _end="yesterday")
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -220,12 +239,12 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_sessions_goalCompletionsAll_div_source(profile_id, _start="30daysAgo", _end="yesterday")
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -239,12 +258,12 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -254,12 +273,12 @@ class Analytics #< BaseCli
                           "ga:#{profile_id}",
                           _start, _end,
                           metrics.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_campaign_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -273,12 +292,12 @@ class Analytics #< BaseCli
                           _start, _end,
                           metrics.join(','),
                           dimensions: dimensions.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_sourceMedium_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -290,12 +309,12 @@ class Analytics #< BaseCli
                           _start, _end,
                           metrics.join(','),
                           dimensions: dimensions.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_event_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -309,8 +328,8 @@ class Analytics #< BaseCli
                           _start, _end,
                           metrics.join(','),
                           dimensions: dimensions.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   # def get_users(profile_id, _start, _end)
@@ -328,7 +347,7 @@ class Analytics #< BaseCli
   # end
 
   def list_goals options={} #accountId, webPropertyId, profileId
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -337,12 +356,12 @@ class Analytics #< BaseCli
     webPropertyId = '~all' unless options[:webPropertyId]
     profileId     = '~all' unless options[:profileId]
     result = @analytics.list_goals(accountId, webPropertyId, profileId)
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
   end
 
   def get_realtime_data(profile_id)
-    result = get_cached
+    result = get_cached profile_id
     return result if result
 
     authorize
@@ -350,8 +369,8 @@ class Analytics #< BaseCli
     dimensions = %w(ga:date)
     metrics = %w(rt:activeUsers)
     result = @analytics.get_realtime_data("ga:#{profile_id}", metrics.join(','))
-    set_cached(result)
-    return get_cached
+    set_cached(result, profile_id)
+    return get_cached profile_id
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
     #                                _end,
