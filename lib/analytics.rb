@@ -102,7 +102,7 @@ class Analytics #< BaseCli
     begin
       result = @analytics.list_account_summaries
       set_cached(result)
-      return result
+      return get_cached
     rescue Exception => e
       return false
     end
@@ -136,7 +136,7 @@ class Analytics #< BaseCli
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
     set_cached(result)
-    return result
+    return get_cached
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
     #                                _end,
@@ -167,7 +167,7 @@ class Analytics #< BaseCli
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_visits_all_and_new(profile_id, _start, _end)
@@ -186,7 +186,7 @@ class Analytics #< BaseCli
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews(profile_id, _start="7daysAgo", _end="yesterday")
@@ -202,7 +202,7 @@ class Analytics #< BaseCli
                           _start, _end,
                           metrics.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, _start="7daysAgo", _end="yesterday")
@@ -221,7 +221,7 @@ class Analytics #< BaseCli
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_sessions_goalCompletionsAll_div_source(profile_id, _start="30daysAgo", _end="yesterday")
@@ -240,7 +240,7 @@ class Analytics #< BaseCli
                           dimensions: dimensions.join(','),
                           sort: sort.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_sessions profile_id, _start="7daysAgo", _end="yesterday"
@@ -255,7 +255,7 @@ class Analytics #< BaseCli
                           _start, _end,
                           metrics.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_campaign_sessions profile_id, _start="7daysAgo", _end="yesterday"
@@ -274,7 +274,7 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_sourceMedium_sessions profile_id, _start="7daysAgo", _end="yesterday"
@@ -291,7 +291,7 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_event_sessions profile_id, _start="7daysAgo", _end="yesterday"
@@ -310,7 +310,7 @@ class Analytics #< BaseCli
                           metrics.join(','),
                           dimensions: dimensions.join(','))
     set_cached(result)
-    return result
+    return get_cached
   end
 
   # def get_users(profile_id, _start, _end)
@@ -338,7 +338,7 @@ class Analytics #< BaseCli
     profileId     = '~all' unless options[:profileId]
     result = @analytics.list_goals(accountId, webPropertyId, profileId)
     set_cached(result)
-    return result
+    return get_cached
   end
 
   def get_realtime_data(profile_id)
@@ -351,7 +351,7 @@ class Analytics #< BaseCli
     metrics = %w(rt:activeUsers)
     result = @analytics.get_realtime_data("ga:#{profile_id}", metrics.join(','))
     set_cached(result)
-    return result
+    return get_cached
     # result = @analytics.get_ga_data("ga:#{profile_id}",
     #                                _start,
     #                                _end,
