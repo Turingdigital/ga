@@ -10,14 +10,14 @@ class DashboardController < ApplicationController
 
     @grpah1Data7 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
     begin
-      @grpah1Data7 = @grpah1Data7.totals_for_all_results
+      @grpah1Data7 = @grpah1Data7["totals_for_all_results"]
       @grpah1Data7 = {
         sessions: @grpah1Data7["ga:sessions"],
         users: @grpah1Data7["ga:users"],
         pageviews: @grpah1Data7["ga:pageviews"],
         goalCompletionsAll: @grpah1Data7["ga:goalCompletionsAll"]
       }
-    rescue ExceptionName
+    rescue
       @grpah1Data7 = {
         sessions: 0,
         users: 0,
@@ -28,14 +28,14 @@ class DashboardController < ApplicationController
 
     @grpah1Data30 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "30daysAgo", "yesterday")
     begin
-      @grpah1Data30 = @grpah1Data30.totals_for_all_results
+      @grpah1Data30 = @grpah1Data30["totals_for_all_results"]
       @grpah1Data30 = {
         sessions: @grpah1Data30["ga:sessions"],
         users: @grpah1Data30["ga:users"],
         pageviews: @grpah1Data30["ga:pageviews"],
         goalCompletionsAll: @grpah1Data30["ga:goalCompletionsAll"]
       }
-    rescue ExceptionName
+    rescue
       @grpah1Data30 = {
         sessions: 0,
         users: 0,
@@ -46,18 +46,19 @@ class DashboardController < ApplicationController
 
     @grpah2Data = @analytics.get_visits_all_and_new(profile_id, "183daysAgo", "yesterday")
     @grpah2DataOldVisitors = []
-    @grpah2Data.rows.each{|obj|
+    @grpah2Data["rows"].each{|obj|
       @grpah2DataOldVisitors << [obj[0], (obj[1].to_i - obj[2].to_i).to_s ]
     }
-    @grpah2Data.rows.map{|obj| obj.delete_at(1) }
-    @grpah2DataNewVisitors = @grpah2Data.rows
+    @grpah2Data["rows"].map{|obj| obj.delete_at(1) }
+    @grpah2DataNewVisitors = @grpah2Data["rows"]
 
 
     # Date.strptime(@grpah2Data.rows.first.first, "%Y%m%d")
     # byebug
 
     # nthWeek ga:sessions ga:users ga:pageviews ga:goalCompletionsAll
-    @grpah3Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, "49daysAgo", "yesterday").rows
+    @grpah3Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, "49daysAgo", "yesterday")
+    @grpah3Data = @grpah3Data["rows"]
     now = Date.today
     sum_latitude = 0
     @grpah3Data = @grpah3Data.map{|obj|
@@ -78,7 +79,8 @@ class DashboardController < ApplicationController
       "date" => "#{now+7}"
     }
 
-    @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday").rows.reverse
+    @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday")
+    @grpah5Data = @grpah5Data["rows"].reverse
     @grpah5Data = @grpah5Data.first(6)
     @grpah5Data.map!{|obj|
       {
@@ -102,7 +104,7 @@ class DashboardController < ApplicationController
     ###
     # 測試1
     @act_users = @analytics.get_realtime_data(profile_id)
-    @act_users = @act_users.totals_for_all_results["rt:activeUsers"]
+    @act_users = @act_users["totals_for_all_results"]["rt:activeUsers"]
     ###
 
     #TODO: 太肥大 重構
@@ -110,9 +112,9 @@ class DashboardController < ApplicationController
     warring[:event_sessions] = []
     @event_sessions = @analytics.get_event_sessions(profile_id)
     # if @event_sessions.rows && @event_sessions.rows[0][-1] == "0" && !@event_sessions.rows[0][0].empty?
-    if @event_sessions.rows
+    if @event_sessions["rows"]
       # @warring[:event_sessions] = @event_sessions.rows[0]
-      @event_sessions.rows.each do |row|
+      @event_sessions["rows"].each do |row|
         warring[:event_sessions] << row if row[-1].to_i == 0
       end
     end
@@ -133,9 +135,9 @@ class DashboardController < ApplicationController
       #TODO: 做法錯誤，不能全塞進去，
       # 1. 取資料時，就不取回重複日期
       # 2. 儲存時，不儲存重複日期
-      GaCampaign.create(@campaign_sessions.rows.map{|row|
+      GaCampaign.create(@campaign_sessions['rows'].map{|row|
         row={source: row[0], medium: row[1], date: row[2], sessions: row[3], user:current_user}
-      }) if @campaign_sessions.rows #TODO if false 要寫入Log紀錄 Bug
+      }) if @campaign_sessions["rows"] #TODO if false 要寫入Log紀錄 Bug
     end
 
     warring[:campaign_sessions] = [] # 下面的警告先在這邊初始化
