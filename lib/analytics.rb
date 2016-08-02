@@ -16,7 +16,7 @@ require 'google/apis/analytics_v3'
 require 'googleauth'
 
 require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googleauth/stores/redis_token_store'
-
+GA_DATA_REDIS_EXPIRE_TIME = 60*60*2
 # Examples for the Google Analytics APIs
 #
 # Sample usage session:
@@ -84,7 +84,9 @@ class Analytics #< BaseCli
 
   def set_cached result, profile_id
     caller_method_name = caller[0][/`.*'/][1..-2]
-    @redis.set "#{@user.email}:#{profile_id}:#{caller_method_name}", result.to_json
+    redis_key = "#{@user.email}:#{profile_id}:#{caller_method_name}"
+    @redis.set redis_key, result.to_json
+    @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
   end
 
   def reload_authorizer_store_credentials_from_model
@@ -92,6 +94,7 @@ class Analytics #< BaseCli
     Authorizer.store_credentials(@user.email, @user.ga_credential)
   end
 
+  # 有自己的Model儲存，所以不用Cache
   def accountSummaries
     # unless self.authorized?
     # result = get_cached profile_id
