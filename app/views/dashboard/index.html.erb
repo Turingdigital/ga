@@ -12,65 +12,8 @@
 <%= render :partial => "dashboard_amchart_1" %>
 <%= render :partial => "flight_routes_map" %>
 <%= render :partial => "dashboard_amchart_3" %>
-
 <% unless @searchsData.nil? %>
-<div class="portlet light bordered">
-  <div class="portlet-title">
-      <div class="caption">
-          <i class="icon-social-dribbble font-green"></i>
-          <span class="caption-subject font-green bold uppercase">站內搜尋分析</span>
-      </div>
-      <div class="actions">
-          <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-              <i class="icon-cloud-upload"></i>
-          </a>
-          <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-              <i class="icon-wrench"></i>
-          </a>
-          <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-              <i class="icon-trash"></i>
-          </a>
-      </div>
-  </div>
-  <div class="portlet-body">
-    <div class="table-scrollable">
-        <table class="table table-hover">
-        <!-- <table class="table table-striped table-hover "> -->
-          <thead>
-            <tr>
-              <th>搜尋字詞</th>
-              <th>被查次數</th>
-              <th>搜尋離開率</th>
-              <th>重複搜尋率</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @searchsData.each do |obj| %>
-            <tr>
-              <td><%= obj[0] %></td>
-              <td>
-                <%= obj[1] %>(
-                <% if obj[-1] == 'new' %>
-                  <i class="fa fa-star"></i>
-                  新進榜
-                <% elsif obj[-1] >=0 %>
-                  <i class="fa fa-arrow-up"></i>
-                  <%= (obj[-1].to_f*100).to_i/100.0 %>%
-                <% else %>
-                  <i class="fa fa-arrow-down"></i>
-                  -<%= 1 - (obj[-1].to_f*100).to_i/100.0 %>%
-                <% end %>
-                )
-              </td>
-              <td><%= (obj[3].to_f*100).to_i/100.0 %>%</td>
-              <td><%= (obj[2].to_f*100).to_i/100.0 %>%</td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  <%= render :partial => "search_table" %>
 <% end %>
 
 <h4>以下圖表測試中</h4>
