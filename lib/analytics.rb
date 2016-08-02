@@ -17,21 +17,6 @@ require 'googleauth'
 
 require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googleauth/stores/redis_token_store'
 GA_DATA_REDIS_EXPIRE_TIME = 60*60*2
-# Examples for the Google Analytics APIs
-#
-# Sample usage session:
-#
-#     $ ./google-api-samples analytics show_visits 55622900 --start='2015-12-01' --end='2015-12-08'
-#     ga:date   ga:sessions  ga:users  ga:newUsers  ga:percentNewSessions  ga:sessionDuration  ga:avgSessionDuration
-#     20151201  0            0         0            0.0                    0.0                 0.0
-#     20151202  0            0         0            0.0                    0.0                 0.0
-#     20151203  1            1         1            100.0                  0.0                 0.0
-#     20151204  2            2         1            50.0                   616.0               308.0
-#     20151205  0            0         0            0.0                    0.0                 0.0
-#     20151206  1            1         1            100.0                  0.0                 0.0
-#     20151207  0            0         0            0.0                    0.0                 0.0
-#     20151208  2            2         1            50.0                   0.0                 0.0
-#
 
 module Authorizer
   CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
@@ -68,7 +53,6 @@ class Analytics #< BaseCli
       host: Rails.env.development? ? 'localhost' : ENV["REDIS_PORT_6379_TCP_ADDR"],
       port: Rails.env.development? ? 6379 : ENV["REDIS_PORT_6379_TCP_PORT"],
       db: 2)
-    # @analytics.authorization = Authorizer.credentials(@user.email) #user_credentials_for(scope)
   end
 
   def authorize
@@ -112,17 +96,6 @@ class Analytics #< BaseCli
     end
   end
 
-  # def credentials
-  #   @authorizer.get_credentials(@user.email)
-  # end
-
-  # def oauth_url
-  #   url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
-  # end
-
-  # desc 'show_visits PROFILE_ID', 'Show visists for the given analytics profile ID'
-  # method_option :start, type: :string, required: true
-  # method_option :end, type: :string, required: true
   def show_visits(profile_id, _start, _end)
     result = get_cached profile_id, _start, _end
     return result if result
@@ -141,17 +114,6 @@ class Analytics #< BaseCli
                           sort: sort.join(','))
     set_cached(result, profile_id, _start, _end)
     return get_cached profile_id, _start, _end
-    # result = @analytics.get_ga_data("ga:#{profile_id}",
-    #                                _start,
-    #                                _end,
-    #                                metrics.join(','),
-    #                                dimensions: dimensions.join(','),
-    #                                sort: sort.join(','))
-
-    # data = []
-    # data.push(result.column_headers.map { |h| h.name })
-    # data.push(*result.rows)
-    # data
   end
 
   def get_visits(profile_id, _start, _end)
@@ -287,8 +249,6 @@ class Analytics #< BaseCli
 
     authorize
 
-
-
     dimensions = %w(ga:source ga:medium ga:date)
     metrics = %w(ga:sessions)
     result = @analytics.get_ga_data(
@@ -323,8 +283,6 @@ class Analytics #< BaseCli
 
     authorize
 
-
-
     dimensions = %w(ga:eventCategory ga:eventAction ga:eventLabel)
     metrics = %w(ga:sessions)
     result = @analytics.get_ga_data(
@@ -335,20 +293,6 @@ class Analytics #< BaseCli
     set_cached(result, profile_id, _start, _end)
     return get_cached profile_id, _start, _end
   end
-
-  # def get_users(profile_id, _start, _end)
-  #   authorize
-  #
-  #   metrics = %w(ga:users)
-  #   dimensions = %w(ga:date ga:hour)
-  #   result = @analytics.get_ga_data(
-  #                         "ga:#{profile_id}",
-  #                         _start, _end,
-  #                         metrics.join(','),
-  #                         dimensions: dimensions.join(','),
-  #                         sort: sort.join(','))
-  #   return result;
-  # end
 
   def list_goals options={} #accountId, webPropertyId, profileId
     result = get_cached profile_id, _start, _end
@@ -375,17 +319,6 @@ class Analytics #< BaseCli
     result = @analytics.get_realtime_data("ga:#{profile_id}", metrics.join(','))
     set_cached(result, profile_id, 'realtime', 'realtime')
     return get_cached profile_id, 'realtime', 'realtime'
-    # result = @analytics.get_ga_data("ga:#{profile_id}",
-    #                                _start,
-    #                                _end,
-    #                                metrics.join(','),
-    #                                dimensions: dimensions.join(','),
-    #                                sort: sort.join(','))
-
-    # data = []
-    # data.push(result.column_headers.map { |h| h.name })
-    # data.push(*result.rows)
-    # data
   end
 
   # def oauth_url
