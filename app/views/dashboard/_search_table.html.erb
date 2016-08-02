@@ -35,14 +35,14 @@
             <td>
               <%= obj[1] %>(
               <% if obj[-1] == 'new' %>
-              <i class="fa fa-star"></i>
-              新進榜
+                <font color="yellow"><i class="fa fa-star"></i></font>
+                新進榜
               <% elsif obj[-1] >=0 %>
-              <i class="fa fa-arrow-up"></i>
-              <%= (obj[-1].to_f*100).to_i/100.0 %>%
+                <font color="red"><i class="fa fa-arrow-up"></i></font>
+                <%= (obj[-1].to_f*100).to_i/100.0 %>%
               <% else %>
-              <i class="fa fa-arrow-down"></i>
-              -<%= 1 - (obj[-1].to_f*100).to_i/100.0 %>%
+                <font color="green"><i class="fa fa-arrow-down"></i></font>
+                -<%= 1 - (obj[-1].to_f*100).to_i/100.0 %>%
               <% end %>
               )
             </td>
