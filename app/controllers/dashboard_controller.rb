@@ -90,14 +90,32 @@ class DashboardController < ApplicationController
       }
     }
 
-    @searchsData = @analytics.get_searchs_div_searchKeyword(profile_id, "30daysAgo", "yesterday")
-    @searchsData = @searchsData["rows"]
-    unless @searchsData.nil?
-      @searchsData = @searchsData.first(20)
+    searchsDataPast = @analytics.get_searchs_div_searchKeyword(profile_id, "14daysAgo", "8daysAgo")
+    searchsDataPast = searchsDataPast["rows"]
+    unless searchsDataPast.nil?
+      # searchsDataPast = searchsDataPast.first(20)
+      searchsDataPast = searchsDataPast.inject({}) do |hash, ele|
+        hash[ele[0]] = ele
+        hash
+      end
+
+      @searchsData = @analytics.get_searchs_div_searchKeyword(profile_id, "7daysAgo", "yesterday")
+      @searchsData = @searchsData["rows"]
+      begin
+        @searchsData = @searchsData.first(20)
+        @searchsData.map do |obj|
+          pastData = searchsDataPast[obj[0]]
+          if pastData
+            obj << ((obj[1].to_f - pastData[1].to_f) / pastData[1].to_f)
+          else
+            obj << 'new'
+          end
+        end
+      rescue Exception => e
+        @searchsData = nil
+      end
     end
   end
-
-  private
 
   def create_warrings
     @analytics ||= Analytics.new current_user
