@@ -94,15 +94,16 @@ class Analytics #< BaseCli
 
   def accountSummaries
     # unless self.authorized?
-    result = get_cached profile_id
-    return result if result
+    # result = get_cached profile_id
+    # return result if result
 
     authorize
 
     begin
       result = @analytics.list_account_summaries
-      set_cached(result, profile_id)
-      return get_cached profile_id
+      # set_cached(result, profile_id)
+      # return get_cached profile_id
+      return result
     rescue Exception => e
       return false
     end
