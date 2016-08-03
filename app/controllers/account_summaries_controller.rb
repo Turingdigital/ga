@@ -7,6 +7,11 @@ class AccountSummariesController < ApplicationController
     return !self.default_profile.nil?
   end
 
+  def refetch
+    current_user.fetch_account_summary
+    redirect_to current_user.account_summary
+  end
+
   def setup_profile
     @account_summary.default_item         = params[:item]
     @account_summary.default_web_property = params[:web_property]
@@ -34,7 +39,7 @@ class AccountSummariesController < ApplicationController
     @item_id         = current_user.account_summary.default_item
     @web_property_id = current_user.account_summary.default_web_property
     @profile_id = current_user.account_summary.default_profile
-    AccountSummary.re_fetch current_user
+    # AccountSummary.re_fetch current_user
     # @goal_json = current_user.goal.json
   end
 

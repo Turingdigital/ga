@@ -30,6 +30,7 @@
       <div class="col-lg-10 col-lg-offset-2">
         <!-- <button type="reset" class="btn btn-default">Cancel</button> -->
         <%= submit_tag "Submit", :class => "btn btn-primary"%>
+        <%= link_to "更新資料", refetch_account_summaries_path, :class => "btn btn-success" %>
         <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
       </div>
     </div>
@@ -127,21 +128,3 @@ $(function(){
 });
 
 <% end %>
-
-<!-- <p>
-  <strong>User:</strong>
-  <%#= @account_summary.user.email %>
-</p>
-
-<p>
-  <strong>Jsonstring:</strong>
-  <%#= @account_summary.jsonString %>
-</p>
-
-<p>
-  <strong>Default Profile:</strong>
-  <%#= @account_summary.default_profile %>
-</p> -->
-
-<%#= link_to 'Edit', edit_account_summary_path(@account_summary) %> <!-- | -->
-<%#= link_to 'Back', account_summaries_path %>

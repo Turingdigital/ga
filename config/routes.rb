@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :account_summaries do
     collection do
       post 'setup_profile'
+      get :refetch
     end
   end
 
