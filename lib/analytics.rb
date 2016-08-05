@@ -60,14 +60,14 @@ class Analytics #< BaseCli
     return @analytics.authorization ? true : false
   end
 
-  def get_cached profile_id, _start, _end
-    caller_method_name = caller[0][/`.*'/][1..-2]
+  def get_cached profile_id, _start, _end, caller_method_name=nil
+    caller_method_name ||= caller[0][/`.*'/][1..-2]
     result = @redis.get("#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}")
     return result ? JSON.parse(result) : nil
   end
 
-  def set_cached result, profile_id, _start, _end
-    caller_method_name = caller[0][/`.*'/][1..-2]
+  def set_cached result, profile_id, _start, _end, caller_method_name=nil
+    caller_method_name ||= caller[0][/`.*'/][1..-2]
     redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}"
     @redis.set redis_key, result.to_json
     @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
@@ -94,6 +94,24 @@ class Analytics #< BaseCli
     rescue Exception => e
       return false
     end
+  end
+
+  def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil
+    caller_method_name ||= caller[0][/`.*'/][1..-2]
+    result = get_cached(profile_id, _start, _end, caller_method_name)
+    return result if result
+
+    authrize
+
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          dimensions: dimensions.join(','),
+                          sort: sort.join(','))
+
+    set_cached(result, profile_id, _start, _end, caller_method_name)
+    return get_cached(profile_id, _start, _end, caller_method_name)
   end
 
   def show_visits(profile_id, _start, _end)
