@@ -60,19 +60,6 @@ class Analytics #< BaseCli
     return @analytics.authorization ? true : false
   end
 
-  def get_cached profile_id, _start, _end, caller_method_name=nil
-    caller_method_name ||= caller[0][/`.*'/][1..-2]
-    result = @redis.get("#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}")
-    return result ? JSON.parse(result) : nil
-  end
-
-  def set_cached result, profile_id, _start, _end, caller_method_name=nil
-    caller_method_name ||= caller[0][/`.*'/][1..-2]
-    redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}"
-    @redis.set redis_key, result.to_json
-    @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
-  end
-
   def reload_authorizer_store_credentials_from_model
     # authorizer.store_credentials('isaac@adup.com.tw', cred)
     Authorizer.store_credentials(@user.email, @user.ga_credential)
@@ -96,220 +83,76 @@ class Analytics #< BaseCli
     end
   end
 
-  def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil
-    caller_method_name ||= caller[0][/`.*'/][1..-2]
-    result = get_cached(profile_id, _start, _end, caller_method_name)
-    return result if result
-
-    authrize
-
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-
-    set_cached(result, profile_id, _start, _end, caller_method_name)
-    return get_cached(profile_id, _start, _end, caller_method_name)
-  end
-
   def show_visits(profile_id, _start, _end)
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:date)
     metrics = %w(ga:sessions ga:users ga:newUsers ga:percentNewSessions
                  ga:sessionDuration ga:avgSessionDuration)
     sort = %w(ga:date)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_visits(profile_id, _start, _end)
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:date)
     metrics = %w(ga:sessions ga:users ga:newUsers ga:percentNewSessions
                  ga:sessionDuration ga:avgSessionDuration)
     sort = %w(ga:date)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_visits_all_and_new(profile_id, _start, _end)
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:yearMonth)
     metrics = %w(ga:users ga:newUsers)
     sort = %w(ga:yearMonth)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_searchs_div_searchKeyword(profile_id, _start="7daysAgo", _end="yesterday")
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     metrics = %w(ga:searchResultViews ga:percentSearchRefinements ga:searchExitRate)
     dimensions = %w(ga:searchKeyword)
     sort = %w(-ga:searchResultViews)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews(profile_id, _start="7daysAgo", _end="yesterday")
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     metrics = %w(ga:sessions ga:users ga:pageviews ga:goalCompletionsAll)
-
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics)
   end
 
   def get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, _start="7daysAgo", _end="yesterday")
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     metrics = %w(ga:sessions ga:users ga:pageviews ga:goalCompletionsAll)
     dimensions = %w(ga:nthWeek)
     sort = %w(ga:nthWeek)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_sessions_goalCompletionsAll_div_source(profile_id, _start="30daysAgo", _end="yesterday")
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     metrics = %w(ga:sessions ga:goalCompletionsAll)
     dimensions = %w(ga:source)
     sort = %w(ga:sessions)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','),
-                          sort: sort.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
   def get_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     metrics = %w(ga:sessions)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics)
   end
 
   def get_campaign_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:source ga:medium ga:date)
     metrics = %w(ga:sessions)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions)
   end
 
   def get_sourceMedium_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:sourceMedium)
     metrics = %w(ga:sessions)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions)
   end
 
   def get_event_sessions profile_id, _start="7daysAgo", _end="yesterday"
-    result = get_cached profile_id, _start, _end
-    return result if result
-
-    authorize
-
     dimensions = %w(ga:eventCategory ga:eventAction ga:eventLabel)
     metrics = %w(ga:sessions)
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          dimensions: dimensions.join(','))
-    set_cached(result, profile_id, _start, _end)
-    return get_cached profile_id, _start, _end
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions)
   end
 
   def list_goals options={} #accountId, webPropertyId, profileId
@@ -343,4 +186,37 @@ class Analytics #< BaseCli
   #   url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
   # end
 
+  private
+    def get_cached profile_id, _start, _end, caller_method_name=nil
+      caller_method_name ||= caller[0][/`.*'/][1..-2]
+      result = @redis.get("#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}")
+      return result ? JSON.parse(result) : nil
+    end
+
+    def set_cached result, profile_id, _start, _end, caller_method_name=nil
+      caller_method_name ||= caller[0][/`.*'/][1..-2]
+      redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}"
+      @redis.set redis_key, result.to_json
+      @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
+    end
+
+    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil
+      caller_method_name ||= caller[0][/`.*'/][1..-2]
+      result = get_cached(profile_id, _start, _end, caller_method_name)
+      return result if result
+
+      authorize
+
+      arg = {}
+      arg[:dimensions] = dimensions.join(',') if dimensions
+      arg[:sort] = sort.join(',') if sort
+      result = @analytics.get_ga_data(
+                            "ga:#{profile_id}",
+                            _start, _end,
+                            metrics.join(','),
+                            arg)
+
+      set_cached(result, profile_id, _start, _end, caller_method_name)
+      return get_cached(profile_id, _start, _end, caller_method_name)
+    end
 end
