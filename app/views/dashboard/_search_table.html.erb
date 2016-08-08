@@ -39,15 +39,15 @@
                 新進榜
               <% elsif obj[-1] >=0 %>
                 <font color="red"><i class="fa fa-arrow-up"></i></font>
-                <%= (obj[-1].to_f*100).to_i/100.0 %>%
+                <%= (obj[-1].to_f).round(2) %>%
               <% else %>
                 <font color="green"><i class="fa fa-arrow-down"></i></font>
-                -<%= 1 - (obj[-1].to_f*100).to_i/100.0 %>%
+                -<%= (1 - obj[-1].to_f).round(2) %>%
               <% end %>
               )
             </td>
-            <td><%= (obj[3].to_f*100).to_i/100.0 %>%</td>
-            <td><%= (obj[2].to_f*100).to_i/100.0 %>%</td>
+            <td><%= (obj[3].to_f).round(2) %>%</td>
+            <td><%= (obj[2].to_f).round(2) %>%</td>
           </tr>
           <% end %>
         </tbody>
