@@ -14,5 +14,6 @@ namespace :foo do
     #   Foo.create(title: "Test Data", start_date: DateTime.now)
     #   puts "ok 2"
     # end
+    User.all.each{|u| puts Analytics.new(u).authorize ? "OK:#{u.email}" : "Fail:#{u.email}"}
   end
 end

@@ -75,3 +75,4 @@ gem 'mysql2'
 
 gem 'iconv'
 gem 'write_xlsx', '~> 0.83.0'
+gem 'whenever', :require => false

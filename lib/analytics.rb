@@ -55,6 +55,8 @@ class Analytics #< BaseCli
       db: 2)
   end
 
+  # 批量檢查認證
+  # User.all.each{|u| puts Analytics.new(u).authorize ? "OK:#{u.email}" : "Fail:#{u.email}"}
   def authorize
     @analytics.authorization = Authorizer.credentials(@user.email)
     return @analytics.authorization ? true : false
