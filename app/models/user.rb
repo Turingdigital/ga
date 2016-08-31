@@ -12,6 +12,11 @@ class User < ActiveRecord::Base
   has_many :ga_campaigns
   has_many :campaign_media
 
+  def refetch_account_summary
+    # return self.account_summary ? self.account_summary : AccountSummary.fetch(self, code)
+    AccountSummary.re_fetch(self)
+  end
+
   def fetch_account_summary
     # return self.account_summary ? self.account_summary : AccountSummary.fetch(self, code)
     AccountSummary.fetch(self)

@@ -8,7 +8,7 @@ class AccountSummariesController < ApplicationController
   end
 
   def refetch
-    current_user.fetch_account_summary
+    current_user.refetch_account_summary
     redirect_to current_user.account_summary
   end
 
