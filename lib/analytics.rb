@@ -49,8 +49,8 @@ class Analytics #< BaseCli
     @user = user
     @analytics = Google::Apis::AnalyticsV3::AnalyticsService.new
     @redis = Redis.new(
-      host: Rails.env.development? ? 'localhost' : ENV["REDIS_PORT_6379_TCP_ADDR"],
-      port: Rails.env.development? ? 6379 : ENV["REDIS_PORT_6379_TCP_PORT"],
+      host: 'localhost',
+      port: 6379,
       db: 2)
   end
 
