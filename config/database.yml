@@ -31,5 +31,5 @@ production:
   password: cand00
   database: mysql_production
   pool: 5
-  host: <%= ENV["MYSQL_PORT_3306_TCP_ADDR"] %> #localhost
-  port: <%= ENV["MYSQL_PORT_3306_TCP_PORT"] %> #3306
+  host: localhost # ENV["MYSQL_PORT_3306_TCP_ADDR"] %>
+  port: 3306 # ENV["MYSQL_PORT_3306_TCP_PORT"] %>
