@@ -26,7 +26,7 @@ module Authorizer
   # ref https://github.com/redis/redis-rb
   # redis = Redis.new(:host => "10.0.1.1", :port => 6380, :db => 0, :path => "/tmp/redis.sock", :password => "mysecret")
 
-  Google::Auth::Stores::FileTokenStore.new(:file => Rails.root+"google_auth_stores")
+  TOKEN_STORE = Google::Auth::Stores::FileTokenStore.new(:file => Rails.root+"google_auth_stores")
 
   AUTHORIZER = Google::Auth::UserAuthorizer.new(CLIENT_ID, SCOPE, TOKEN_STORE, CALLBACK_URI)
 
