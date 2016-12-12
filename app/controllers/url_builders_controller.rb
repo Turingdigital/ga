@@ -304,7 +304,7 @@ class UrlBuildersController < ApplicationController
   private
     def convert_source_medium_sessions_to_hash(source_medium_sessions)
       result = {}
-      source_medium_sessions.rows.each do |sms|
+      source_medium_sessions["rows"].each do |sms|
         result[sms.first] = sms.last
       end
       return result
