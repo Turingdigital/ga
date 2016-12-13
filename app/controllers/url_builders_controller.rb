@@ -137,7 +137,7 @@ class UrlBuildersController < ApplicationController
         #   worksheet.write(row, col, "-")
         #   col += 1
         # }
-        worksheet.write(row, col, ub.url.size<250 ? ub.url : [(0..249)])
+        worksheet.write(row, col, ub.url.size<250 ? ub.url : ub.url[(0..249)])
         col+=1
         worksheet.write(row, col, ub.source)
         col+=1
