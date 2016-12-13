@@ -306,7 +306,7 @@ class UrlBuildersController < ApplicationController
       result = {}
       source_medium_sessions["rows"].each do |sms|
         result[sms.first] = sms.last
-      end
+      end if source_medium_sessions["rows"]
       return result
     end
 
