@@ -150,10 +150,10 @@ class UrlBuildersController < ApplicationController
         worksheet.write(row, col, ub.content)
         col+=1
 
-        if (ub.builded_url.size < 254)
+        if (ub.builded_url.size < 250)
           worksheet.write(row, col, ub.builded_url)
         else
-          worksheet.write(row, col, ub.builded_url[0..254])
+          worksheet.write(row, col, ub.builded_url[0..249])
         end
         col+=1
         worksheet.write(row, col, ub.short_url)
