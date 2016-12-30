@@ -70,7 +70,11 @@ function getCookie(cname) {
     <%= f.select(:campaign_medium_id, [], {}, {class: "bs-select form-control", "data-live-search" => "true", "data-size" => "6"}) do %>
       <%# [['Google', 1], ['Yahoo', 2], ['電子報', 2]].each do |c| -%>
       <% @campaign_media.each do |medium| -%>
-        <%= content_tag(:option, medium.medium, value: medium.id) %>
+        <% if @url_builder.campaign_medium.id == medium.id %>
+          <%= content_tag(:option, medium.medium, value: medium.id, selected: "selected") %>
+        <% else %>
+          <%= content_tag(:option, medium.medium, value: medium.id) %>
+        <% end %>
       <% end %>
     <% end %>
     <script>
