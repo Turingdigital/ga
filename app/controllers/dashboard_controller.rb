@@ -80,15 +80,17 @@ class DashboardController < ApplicationController
     }
 
     @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday")
-    @grpah5Data = @grpah5Data["rows"].reverse
-    @grpah5Data = @grpah5Data.first(6)
-    @grpah5Data.map!{|obj|
-      {
+    if @grpah5Data["rows"]
+      @grpah5Data = @grpah5Data["rows"].reverse
+      @grpah5Data = @grpah5Data.first(6)
+      @grpah5Data.map!{|obj|
+        {
           "year" => obj[0],
           "income" => obj[1].to_f,
           "expenses" => obj[2].to_f
+        }
       }
-    }
+    end
 
     searchsDataPast = @analytics.get_searchs_div_searchKeyword(profile_id, "14daysAgo", "8daysAgo")
     searchsDataPast = searchsDataPast["rows"]
