@@ -66,7 +66,7 @@
 </table>
 
 <br>
-
+<%= paginate @url_builders %>
 <%= link_to 'New Url builder', new_url_builder_path %>
 |<%= link_to "Download", url_builders_path(format: "csv") %>
 

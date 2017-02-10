@@ -292,6 +292,7 @@ DEPENDENCIES
   iconv
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   legato
   mysql2
   omniauth-google-oauth2
