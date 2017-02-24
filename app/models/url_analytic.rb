@@ -4,7 +4,7 @@ class UrlAnalytic < ActiveRecord::Base
   def allTime_shortUrlClicks
     begin
       return JSON.parse(self.json)["analytics"]["allTime"]["shortUrlClicks"]
-    rescue ExceptionName
+    rescue
 
     end
     return 0
