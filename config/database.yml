@@ -30,6 +30,6 @@ production:
   username: root
   password: cand00
   database: mysql_production
-  pool: 5
+  pool: 25
   host: localhost # ENV["MYSQL_PORT_3306_TCP_ADDR"] %>
   port: 3306 # ENV["MYSQL_PORT_3306_TCP_PORT"] %>

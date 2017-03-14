@@ -13,6 +13,7 @@ class UrlBuilder < ActiveRecord::Base
   # end
 
   before_save :set_short_url
+  after_create :set_twohour_data
 
   def sourceMedium
     return "#{self.source} / #{self.campaign_medium.medium}"
@@ -78,7 +79,13 @@ class UrlBuilder < ActiveRecord::Base
   end
 
   private
+    def set_twohour_data
+      TwohourJob.set( wait: 120.minutes ).perform_later(self)
+    end
+
     def set_short_url # 只是set 不會儲存
+      self.twohour = 0 # 順便設定預設值
+
       uri = URI(url)
       if uri.host == "goo.gl"
         self.short_url = "http://#{uri.host}#{uri.path}"

@@ -3,7 +3,7 @@
 
 # require 'nokogiri'
 # require 'open-uri'
-require 'retriever'
+# require 'retriever'
 
 namespace :foo do
 
@@ -11,53 +11,53 @@ namespace :foo do
   # task :rebuild => ["db:drop", "db:setup", :fake]
 # <a id="LinkButton1" href="javascript:__doPostBack('LinkButton1','')">確定送出</a>
 
-theForm.__EVENTTARGET.value = 'LinkButton1';
-theForm.__EVENTARGUMENT.value = '';
+# theForm.__EVENTTARGET.value = 'LinkButton1';
+# theForm.__EVENTARGUMENT.value = '';
+#
+# function check1(){
+#   if(theForm.ODName.value != "" &&
+#     theForm.r1.value != "" &&
+#     theForm.ODTelZip.value != "" &&
+#     theForm.ODTel.value != "" &&
+#     theForm.ODCell.value.match(/0/) &&
+#     theForm.ODMail.value.match(/.*@.*\.*/) &&
+#     theForm.ODWay.value != "0" &&
+#     theForm.ODCounty.value != "0")
+#     return true;
+#   return false;
+# }
 
-function check1(){
-  if(theForm.ODName.value != "" &&
-    theForm.r1.value != "" &&
-    theForm.ODTelZip.value != "" &&
-    theForm.ODTel.value != "" &&
-    theForm.ODCell.value.match(/0/) &&
-    theForm.ODMail.value.match(/.*@.*\.*/) &&
-    theForm.ODWay.value != "0" &&
-    theForm.ODCounty.value != "0")
-    return true;
-  return false;
-}
-
-(function(){
-  if(((theForm.ODName.value != "" &&
-    theForm.r1.value != "" &&
-    theForm.ODTelZip.value != "" &&
-    theForm.ODTel.value != "" &&
-    theForm.ODCell.value.match(/0/) &&
-    theForm.ODMail.value.match(/.*@.*\.*/) &&
-    theForm.ODWay.value != "0" &&
-    theForm.ODCounty.value != "0"))
-    &&
-	((theForm.opMOEPARENT_Q.value != "" &&
-    theForm.opMOENAME_Q.value != "" &&
-    theForm.txtAMOUNT.value != "") ||
-
-    (theForm.opMOEPARENT_Q2.value != "" &&
-    theForm.opMOENAME_Q2.value != "" &&
-    theForm.txtAMOUNT2.value != "") ||
-
-    (theForm.opMOEPARENT_Q3.value != "" &&
-    theForm.opMOENAME_Q3.value != "" &&
-    theForm.txtAMOUNT3.value != "") ||
-
-    (theForm.opMOEPARENT_Q4.value != "" &&
-    theForm.opMOENAME_Q4.value != "" &&
-    theForm.txtAMOUNT4.value != "") ||
-
-    (theForm.opMOEPARENT_Q5.value != "" &&
-    theForm.opMOENAME_Q5.value != "" &&
-    theForm.txtAMOUNT5.value != "")))
-    return true;
-})();
+# (function(){
+#   if(((theForm.ODName.value != "" &&
+#     theForm.r1.value != "" &&
+#     theForm.ODTelZip.value != "" &&
+#     theForm.ODTel.value != "" &&
+#     theForm.ODCell.value.match(/0/) &&
+#     theForm.ODMail.value.match(/.*@.*\.*/) &&
+#     theForm.ODWay.value != "0" &&
+#     theForm.ODCounty.value != "0"))
+#     &&
+# 	((theForm.opMOEPARENT_Q.value != "" &&
+#     theForm.opMOENAME_Q.value != "" &&
+#     theForm.txtAMOUNT.value != "") ||
+#
+#     (theForm.opMOEPARENT_Q2.value != "" &&
+#     theForm.opMOENAME_Q2.value != "" &&
+#     theForm.txtAMOUNT2.value != "") ||
+#
+#     (theForm.opMOEPARENT_Q3.value != "" &&
+#     theForm.opMOENAME_Q3.value != "" &&
+#     theForm.txtAMOUNT3.value != "") ||
+#
+#     (theForm.opMOEPARENT_Q4.value != "" &&
+#     theForm.opMOENAME_Q4.value != "" &&
+#     theForm.txtAMOUNT4.value != "") ||
+#
+#     (theForm.opMOEPARENT_Q5.value != "" &&
+#     theForm.opMOENAME_Q5.value != "" &&
+#     theForm.txtAMOUNT5.value != "")))
+#     return true;
+# })();
 
   # task :thr => :environment do
   #   def fab n

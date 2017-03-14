@@ -27,5 +27,7 @@ module Ga
 
     config.autoload_paths << Rails.root.join('lib')
     # config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

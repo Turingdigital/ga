@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712102013) do
+ActiveRecord::Schema.define(version: 20170313085107) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20160712102013) do
   end
 
   add_index "campaign_media", ["user_id"], name: "index_campaign_media_on_user_id"
+
+  create_table "checkgas", force: :cascade do |t|
+    t.text     "entryUrl"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "checkgas", ["user_id"], name: "index_checkgas_on_user_id"
 
   create_table "foos", force: :cascade do |t|
     t.string   "title"
@@ -93,6 +102,36 @@ ActiveRecord::Schema.define(version: 20160712102013) do
 
   add_index "goals", ["user_id"], name: "index_goals_on_user_id"
 
+  create_table "page_gas", force: :cascade do |t|
+    t.text     "code"
+    t.boolean  "isWorking"
+    t.integer  "page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "page_gas", ["page_id"], name: "index_page_gas_on_page_id"
+
+  create_table "page_gtms", force: :cascade do |t|
+    t.text     "code"
+    t.boolean  "isWorking"
+    t.integer  "page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "page_gtms", ["page_id"], name: "index_page_gtms_on_page_id"
+
+  create_table "pages", force: :cascade do |t|
+    t.text     "url"
+    t.integer  "checkga_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "pages", ["checkga_id"], name: "index_pages_on_checkga_id"
+  add_index "pages", ["url"], name: "index_pages_on_url"
+
   create_table "testings", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
@@ -133,6 +172,7 @@ ActiveRecord::Schema.define(version: 20160712102013) do
     t.integer  "campaign_medium_id"
     t.string   "short_url"
     t.string   "profile"
+    t.integer  "twohour"
   end
 
   add_index "url_builders", ["campaign_medium_id"], name: "index_url_builders_on_campaign_medium_id"

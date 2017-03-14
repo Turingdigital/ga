@@ -107,6 +107,24 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
   end
 
+  # ga:source==Line;ga:medium==POST;ga:adContent==line_圖文_午;ga:campaign=="170313-24_野餐用品";ga:keyword==line_每日po文_item_10
+  # 都要變小寫
+  def get_sessions_filter_canpaign_today(
+        profile_id,
+        source,
+        medium,
+        adContent,
+        campaign,
+        keyword,
+        _start="today",
+        _end="today")
+    metrics = %w(ga:sessions)
+    # dimensions = %w(ga:nthHour)
+    filter = "ga:source==#{source};ga:medium==#{medium};ga:adContent==#{adContent};ga:campaign==#{campaign};ga:keyword==#{keyword}"
+    # sort = %w(-ga:searchResultViews)
+    return get_ga_data(profile_id, _start, _end, metrics, nil, nil, filter)
+  end
+
   def get_searchs_div_searchKeyword(profile_id, _start="7daysAgo", _end="yesterday")
     metrics = %w(ga:searchResultViews ga:percentSearchRefinements ga:searchExitRate)
     dimensions = %w(ga:searchKeyword)
@@ -201,7 +219,7 @@ class Analytics #< BaseCli
       @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
     end
 
-    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil
+    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
       result = get_cached(profile_id, _start, _end, caller_method_name)
       return result if result
@@ -211,6 +229,7 @@ class Analytics #< BaseCli
       arg = {}
       arg[:dimensions] = dimensions.join(',') if dimensions
       arg[:sort] = sort.join(',') if sort
+      arg[:filters] = filters if filters
       result = @analytics.get_ga_data(
                             "ga:#{profile_id}",
                             _start, _end,
