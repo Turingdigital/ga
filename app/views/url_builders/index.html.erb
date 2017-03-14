@@ -28,7 +28,8 @@
       <th class="url_builder_long hide_show"><%= t("url_builder.long") %></th>
       <th class="url_builder_short hide_show"><%= t("url_builder.short") %></th>
       <th class="url_builder_source hide_show"><%= t("url_builder.source") %></th>
-      <th class="url_builder_source hide_show">短網址總點擊數</th>
+      <th class="url_builder_source hide_show">兩小時內點擊數</th>
+      <th class="url_builder_source hide_show">兩小時後點擊數</th>
       <th class="url_builder_medium hide_show"><%= t("url_builder.medium") %></th>
       <th class="url_builder_term hide_show"><%= t("url_builder.term") %></th>
       <th class="url_builder_content hide_show"><%= t("url_builder.content") %></th>
@@ -47,7 +48,8 @@
       <td class="url_builder_long hide_show"><%= url_builder.builded_url %></td>
       <td class="url_builder_short hide_show"><%= link_to url_builder.short_url, url_builder.short_url, target: "_blank" %></td>
       <td class="url_builder_source hide_show"><%= url_builder.source %></td>
-      <td class="url_builder_source hide_show"><%= (url_builder.url_analytics.nil? || url_builder.url_analytics.last.nil?) ? "0" : url_builder.url_analytics.last.allTime_shortUrlClicks %></td>
+      <td class="url_builder_source hide_show"><%= url_builder.twohour %></td>
+      <td class="url_builder_source hide_show"><%= (url_builder.url_analytics.nil? || url_builder.url_analytics.last.nil?) ? "0" : url_builder.url_analytics.last.allTime_shortUrlClicks - (url_builder.twohour.nil? ? 0 : url_builder.twohour) %></td>
       <td class="url_builder_medium hide_show"><%= url_builder.campaign_medium.medium %></td>
       <td class="url_builder_term hide_show"><%= url_builder.term %></td>
       <td class="url_builder_content hide_show"><%= url_builder.content %></td>
