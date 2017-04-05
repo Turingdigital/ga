@@ -121,10 +121,10 @@ class HotcarController < ApplicationController
                               "#{year_month_str}-#{'%02d' % previous_1_month_last_day}")
     @page3_desktop = @analytics.page1(profile_id, "#{year_month_str}-#{'%02d' % 1}",
                               "#{year_month_str}-#{'%02d' % previous_1_month_last_day}",
-                              %w(ga:deviceCategory==desktop))
+                              "ga:deviceCategory==desktop")
     @page3_mobile = @analytics.page1(profile_id, "#{year_month_str}-#{'%02d' % 1}",
                               "#{year_month_str}-#{'%02d' % previous_1_month_last_day}",
-                              %w(ga:deviceCategory!=desktop))
+                              "ga:deviceCategory!=desktop")
 
     year_month_str = "#{previous_1_month.year}-#{('%02d' % previous_1_month.month)}"
     event_pre1 = @analytics.event_1(
