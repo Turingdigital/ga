@@ -205,6 +205,67 @@ class Analytics #< BaseCli
   #   url = @authorizer.get_authorization_url(base_url: @@OOB_URI)
   # end
 
+
+  ###########
+  # HOT Car #
+  ###########
+  def page1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:users
+                  ga:sessions
+                  ga:pageviews
+                  ga:bounceRate
+                  ga:avgSessionDuration
+                  ga:newUsers )
+    dimensions = nil # %w(ga:deviceCategory)
+    # sort = %w(-ga:searchResultViews)
+    # filters = %w(ga:deviceCategory!=desktop)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
+  end
+  def page1_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:users
+                  ga:sessions )
+
+    dimensions = nil # %w(ga:deviceCategory)
+    # sort = %w(-ga:searchResultViews)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
+  end
+
+  def event_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w(ga:eventAction )
+    # sort = %w(-ga:searchResultViews)
+    filters = %w(ga:eventCategory==首頁:左側搜尋)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
+  end
+
+  def event_2(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w(ga:eventAction )
+    sort = %w(-ga:totalEvents)
+    filters = %w(ga:eventCategory==首頁:快速搜尋)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_3(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w(ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:快速搜尋;ga:eventAction==搜尋廠牌"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_4(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w(ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:快速搜尋;ga:eventAction==搜尋車型"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
@@ -222,7 +283,7 @@ class Analytics #< BaseCli
     def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
       result = get_cached(profile_id, _start, _end, caller_method_name)
-      return result if result
+      return result if result #&& caller_method_name != "event_3"
 
       authorize
 
@@ -240,3 +301,5 @@ class Analytics #< BaseCli
       return get_cached(profile_id, _start, _end, caller_method_name)
     end
 end
+
+# ga:source==Line;ga:medium==POST;ga:adContent==line_圖文_午;ga:campaign==170313-24_野餐用品;ga:keyword==line_每日po文_item_10

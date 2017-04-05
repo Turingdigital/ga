@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get 'oauth/ga_callback' => 'oauth#ga_callback'
 
   get 'dashboard' => 'dashboard#index'
+  get 'hotcar' => 'hotcar#index'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

@@ -1,0 +1,201 @@
+<h2><%= @previous_1_month.month %>月份表現</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <% @page3_all["query"]["metrics"].each do |obj| %>
+        <th><%= obj %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>桌機</td>
+      <% @page3_desktop["rows"].first.each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td>手機</td>
+      <% @page3_mobile["rows"].first.each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+    </tr>
+    <tr>
+      <td>全站</td>
+      <% @page3_all["rows"].first.each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-桌機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:desktop][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:desktop][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:desktop][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:desktop][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-手機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:mobile][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:mobile][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:mobile][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:mobile][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-全站</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:all][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<h2><%= @previous_1_month.month %>月首頁查詢車種</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>搜尋品牌</td>
+      <td><%= @event1[:pre1]["搜尋品牌"][0] %></td>
+      <td><%= @event1[:pre1]["搜尋品牌"][1] %></td>
+      <td><%= @event1[:pre2]["搜尋品牌"][0] %></td>
+    </tr>
+    <tr>
+      <td>搜尋價格</td>
+      <td><%= @event1[:pre1]["搜尋價格"][0] %></td>
+      <td><%= @event1[:pre1]["搜尋價格"][1] %></td>
+      <td><%= @event1[:pre2]["搜尋價格"][0] %></td>
+    </tr>
+    <tr>
+      <td>搜尋車種</td>
+      <td><%= @event1[:pre1]["搜尋車種"][0] %></td>
+      <td><%= @event1[:pre1]["搜尋車種"][1] %></td>
+      <td><%= @event1[:pre2]["搜尋車種"][0] %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月首頁快速搜尋</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_2_pre1.each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v[0] %></td>
+        <td><%= v[1] %></td>
+        <td><%= @event_2_pre2[k][0] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月快速搜尋-廠牌</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_3_pre1.first(30).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v[0] %></td>
+        <td><%= v[1] %></td>
+        <td><%= @event_3_pre2[k].nil? ? 0 : @event_3_pre2[k][0] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月快速搜尋-車型</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_4_pre1.first(30).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v[0] %></td>
+        <td><%= v[1] %></td>
+        <td><%= @event_4_pre2[k].nil? ? 0 : @event_4_pre2[k][0] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
