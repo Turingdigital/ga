@@ -199,3 +199,23 @@
     <% end %>
   </tbody>
 </table>
+<hr/>
+<h2><%= @previous_1_month.month %>月選擇器: 快速找車-年份</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>年</th>
+      <th>上限</th>
+      <th>下限</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_5_pre1.keys.sort.each do |year| %>
+      <tr>
+        <td><%= year %></td>
+        <td><%= @event_5_pre1[year]["搜尋年份上限"] %></td>
+        <td><%= @event_5_pre1[year]["搜尋年份下限"].nil? ? 0 : @event_5_pre1[year]["搜尋年份下限"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

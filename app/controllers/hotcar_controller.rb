@@ -201,6 +201,21 @@ class HotcarController < ApplicationController
     event_pre2["rows"].each do |obj|
       @event_4_pre2[obj[0]] = [obj[1], obj[2]]
     end
+
+    year_month_str = "#{previous_1_month.year}-#{('%02d' % previous_1_month.month)}"
+    event_pre1 = @analytics.event_5(
+      profile_id,
+      "#{year_month_str}-01",
+      "#{year_month_str}-#{'%02d' % previous_1_month_last_day}")
+    event_pre1 = event_pre1["rows"]
+    @event_5_pre1 = {}
+    event_pre1.each do |obj|
+      next if obj[1]=="全部"
+      obj[1].gsub! "年", ""
+      @event_5_pre1[obj[1]] = {} if @event_5_pre1[obj[1]].nil?
+      @event_5_pre1[obj[1]][obj.first] = 0 if @event_5_pre1[obj[1]][obj.first].nil?
+      @event_5_pre1[obj[1]][obj.first] += obj[2].to_i
+    end
   end
 
   private

@@ -266,6 +266,15 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
   end
 
+  def event_5(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventAction ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:快速搜尋;ga:eventAction=@搜尋年份"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
