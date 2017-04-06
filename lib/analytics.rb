@@ -17,7 +17,7 @@ require 'googleauth'
 
 # require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googleauth/stores/redis_token_store'
 require 'googleauth/stores/file_token_store'
-GA_DATA_REDIS_EXPIRE_TIME = 60*60*2
+GA_DATA_REDIS_EXPIRE_TIME = 60*60*8
 
 module Authorizer
   CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
@@ -275,6 +275,105 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
   end
 
+  def event_6(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:快速搜尋;ga:eventAction==搜尋城市"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_7(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:快速搜尋;ga:eventAction==搜尋區域"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_8(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventAction ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==知識專區"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_9(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventAction ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==最新消息"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_10(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventAction )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==全站:右側頁籤"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_11(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:白金/金質車商"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_12(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:熱門/成交車商"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_13(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventAction )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==首頁:熱門/成交車商"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_14(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==手機版"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_15(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==手機版選擇器: 選取廠牌"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def event_16(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==手機版選擇器: 選取車型"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
@@ -292,7 +391,7 @@ class Analytics #< BaseCli
     def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
       result = get_cached(profile_id, _start, _end, caller_method_name)
-      return result if result #&& caller_method_name != "page1"
+      return result if result #&& caller_method_name != "event_11"
 
       authorize
 

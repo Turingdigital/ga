@@ -219,3 +219,254 @@
     <% end %>
   </tbody>
 </table>
+
+<h2><%= @previous_1_month.month %>月服務地區搜尋</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>地區</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @event_6_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @event_6_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月服務區域搜尋</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>區域</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @event_7_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @event_7_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月知識專區</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>點擊知識專區</th>
+      <th>事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_8_pre1.first(10).each do |obj| %>
+      <tr>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月最新消息</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>點擊最新消息</th>
+      <th>事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_9_pre1.first(10).each do |obj| %>
+      <tr>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月右側選單</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th>2月事件總數</th>
+      <th>2月不重複事件</th>
+      <th>1月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>點擊: 回頁首</td>
+      <td><%= @event_10_pre1["點擊: 回頁首"][0] %></td>
+      <td><%= @event_10_pre1["點擊: 回頁首"][1] %></td>
+      <td><%= @event_10_pre2["點擊: 回頁首"][0] %></td>
+    </tr>
+    <tr>
+      <td>點擊: 車輛比較</td>
+      <td><%= @event_10_pre1["點擊: 車輛比較"][0] %></td>
+      <td><%= @event_10_pre1["點擊: 車輛比較"][1] %></td>
+      <td><%= @event_10_pre2["點擊: 車輛比較"][0] %></td>
+    </tr>
+    <tr>
+      <td>點擊: 最近瀏覽</td>
+      <td><%= @event_10_pre1["點擊: 最近瀏覽"][0] %></td>
+      <td><%= @event_10_pre1["點擊: 最近瀏覽"][1] %></td>
+      <td><%= @event_10_pre2["點擊: 最近瀏覽"][0] %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 首頁 白金/金質車商點擊</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <!-- <th></th> -->
+      <th>活動標籤</th>
+      <th>事件總數</th>
+      <th>8月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_11_pre1.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 熱門/成交車商</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <!-- <th></th> -->
+      <th>活動標籤</th>
+      <th>事件總數</th>
+      <th>欄1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_12_pre1.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 熱門/成交車商-長條圖</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <!-- <th></th> -->
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_13_pre1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @event_13_pre2[obj[0]][1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月手機版車商資料電話點擊</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <!-- <th></th> -->
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_14_pre1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月手機版選擇廠牌</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_15_pre1.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @event_15_pre2[obj[0]].first %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月手機版選擇車型</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_16_pre1.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @event_16_pre2[obj[0]].nil? ? 0 : @event_16_pre2[obj[0]].first %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
