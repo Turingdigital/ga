@@ -6,26 +6,34 @@
       <% @page3_all["query"]["metrics"].each do |obj| %>
         <th><%= obj %></th>
       <% end %>
+      <th>New</th>
+      <th>Returing</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>桌機</td>
-      <% @page3_desktop["rows"].first.each do |result|%>
+      <% @page3_desktop["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
+      <td><%= "#{('%.2f' % (@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
     </tr>
     <tr>
       <td>手機</td>
-      <% @page3_mobile["rows"].first.each do |result|%>
+      <% @page3_mobile["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
+      <td><%= "#{('%.2f' % (@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
     </tr>
     <tr>
       <td>全站</td>
-      <% @page3_all["rows"].first.each do |result|%>
+      <% @page3_all["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
+      <td><%= "#{('%.2f' % (@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
     </tr>
   </tbody>
 </table>
@@ -42,7 +50,7 @@
     </tr>
   </thead>
   <tbody>
-    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
       <tr>
         <td><%= "#{@previous_1_month.month}/#{v}" %></td>
         <td><%= @basic_data[:pre1][:desktop][:users][i] %></td>
@@ -66,7 +74,7 @@
     </tr>
   </thead>
   <tbody>
-    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
       <tr>
         <td><%= "#{@previous_1_month.month}/#{v}" %></td>
         <td><%= @basic_data[:pre1][:mobile][:users][i] %></td>
@@ -90,7 +98,7 @@
     </tr>
   </thead>
   <tbody>
-    <% ["1~6","7~12","13~18","19~24"].each_with_index do |v, i| %>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
       <tr>
         <td><%= "#{@previous_1_month.month}/#{v}" %></td>
         <td><%= @basic_data[:pre1][:all][:users][i] %></td>

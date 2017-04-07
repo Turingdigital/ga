@@ -22,7 +22,7 @@ class HotcarController < ApplicationController
         "#{year_month_pre1_str}-#{'%02d' % day}",
         "#{year_month_pre1_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}",
         %w(ga:deviceCategory==desktop))
-        day += 1
+      day += 1
     end
     day = 1
     @data_pre2_desktop = []
@@ -33,7 +33,7 @@ class HotcarController < ApplicationController
         "#{year_month_pre2_str}-#{'%02d' % day}",
         "#{year_month_pre2_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}",
         %w(ga:deviceCategory==desktop))
-        day += 1
+      day += 1
     end
     day = 1
     @data_pre1_mobile = []
@@ -44,7 +44,7 @@ class HotcarController < ApplicationController
         "#{year_month_str}-#{'%02d' % day}",
         "#{year_month_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}",
         %w(ga:deviceCategory!=desktop))
-        day += 1
+      day += 1
     end
     day = 1
     @data_pre2_mobile = []
@@ -55,7 +55,7 @@ class HotcarController < ApplicationController
         "#{year_month_str}-#{'%02d' % day}",
         "#{year_month_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}",
         %w(ga:deviceCategory!=desktop))
-        day += 1
+      day += 1
     end
     day = 1
     @data_pre1_all = []
@@ -65,7 +65,7 @@ class HotcarController < ApplicationController
         profile_id,
         "#{year_month_str}-#{'%02d' % day}",
         "#{year_month_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}")
-        day += 1
+      day += 1
     end
     day = 1
     @data_pre2_all = []
@@ -75,7 +75,7 @@ class HotcarController < ApplicationController
         profile_id,
         "#{year_month_str}-#{'%02d' % day}",
         "#{year_month_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}")
-        day += 1
+      day += 1
     end
 
     @basic_data = {
