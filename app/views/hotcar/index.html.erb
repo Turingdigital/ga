@@ -356,8 +356,8 @@
     <tr>
       <!-- <th></th> -->
       <th>活動標籤</th>
-      <th>事件總數</th>
-      <th>8月事件總數</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
     </tr>
   </thead>
   <tbody>
@@ -365,7 +365,7 @@
       <tr>
         <td><%= obj[0] %></td>
         <td><%= obj[1] %></td>
-        <td></td>
+        <td><%= @event_11_pre2[obj[0]].nil? ? 0 : @event_11_pre2[obj[0]] %></td>
       </tr>
     <% end %>
   </tbody>
@@ -377,8 +377,8 @@
     <tr>
       <!-- <th></th> -->
       <th>活動標籤</th>
-      <th>事件總數</th>
-      <th>欄1</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
     </tr>
   </thead>
   <tbody>
@@ -386,7 +386,7 @@
       <tr>
         <td><%= obj[0] %></td>
         <td><%= obj[1] %></td>
-        <td></td>
+        <td><%= @event_12_pre2[obj[0]].nil? ? 0 : @event_12_pre2[obj[0]] %></td>
       </tr>
     <% end %>
   </tbody>
@@ -396,7 +396,7 @@
 <table class="table table-striped table-hover ">
   <thead>
     <tr>
-      <!-- <th></th> -->
+      <th></th>
       <th><%= @previous_1_month.month %>月事件總數</th>
       <th><%= @previous_1_month.month %>月不重複事件</th>
       <th><%= @previous_2_month.month %>月事件總數</th>

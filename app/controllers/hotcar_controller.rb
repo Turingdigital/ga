@@ -276,12 +276,28 @@ class HotcarController < ApplicationController
       "#{year_month_pre1_str}-01",
       "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}")
     @event_11_pre1 = event_pre1["rows"]
+    event_pre2 = @analytics.event_11(
+      profile_id,
+      "#{year_month_pre2_str}-01",
+      "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
+    @event_11_pre2 = {}
+    event_pre2["rows"].each do |obj|
+      @event_11_pre2[obj.first] = obj.last
+    end
 
     event_pre1 = @analytics.event_12(
       profile_id,
       "#{year_month_pre1_str}-01",
       "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}")
     @event_12_pre1 = event_pre1["rows"]
+    event_pre2 = @analytics.event_12(
+      profile_id,
+      "#{year_month_pre2_str}-01",
+      "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
+    @event_12_pre2 = {}
+    event_pre2["rows"].each do |obj|
+      @event_12_pre2[obj.first] = obj.last
+    end
 
     event_pre1 = @analytics.event_13(
       profile_id,
