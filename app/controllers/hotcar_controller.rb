@@ -313,6 +313,20 @@ class HotcarController < ApplicationController
       @event_14_pre1[obj.first] += obj.last
     end
     # @event_14_pre1.sort { |x, y| x.last <=> y.last }
+    event_pre1 = @analytics.event_14(
+      profile_id,
+      "#{year_month_pre2_str}-01",
+      "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
+    event_pre1 = event_pre1["rows"]
+    event_pre1.map do |obj|
+      obj[0] = obj[0].split(/:/).first
+      obj[1] = obj[1].to_i
+    end
+    @event_14_pre2 = {}
+    event_pre1.each do |obj|
+      @event_14_pre2[obj.first] = 0 if @event_14_pre2[obj.first].nil?
+      @event_14_pre2[obj.first] += obj.last
+    end
 
     event_pre1 = @analytics.event_15(
       profile_id,

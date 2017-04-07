@@ -389,8 +389,9 @@ class Analytics #< BaseCli
     end
 
     def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil
-      caller_method_name ||= caller[0][/`.*'/][1..-2]
-      result = get_cached(profile_id, _start, _end, caller_method_name+(filters.nil? ? "nofilter" : filters.to_s))
+      caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
+
+      result = get_cached(profile_id, _start, _end, caller_method_name)
       return result if result #&& caller_method_name != "page1_1"
 
       authorize
