@@ -1,0 +1,2 @@
+module IrentHelper
+end

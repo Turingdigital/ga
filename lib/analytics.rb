@@ -374,6 +374,226 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
   end
 
+  #########
+  # IRent #
+  #########
+  def irent_1(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:sessions )
+
+    dimensions = %w( ga:deviceCategory )
+    sort = %w(-ga:sessions)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort)
+  end
+
+  def irent_2(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==電腦版點擊"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_3(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==手機版點擊"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_4(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==電腦版選擇地區"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_5(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==手機版選擇地區"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_6(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==電腦版選擇服務據點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_7(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==手機版選擇服務據點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_8(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventAction )
+    sort = nil #%w(-ga:totalEvents)
+    filters = "ga:eventCategory==video"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_9(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:userGender )
+    sort = nil #%w(-ga:totalEvents)
+    filters = "ga:eventCategory==video;ga:eventAction==Playing"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_10(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:userAgeBracket )
+    sort = nil #%w(-ga:totalEvents)
+    filters = "ga:eventCategory==video;ga:eventAction==Playing"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_11(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:operatingSystem )
+    sort = nil #%w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_12(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:mobileDeviceInfo )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_13(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:sessions ga:pageviews ga:bounceRate )
+
+    dimensions = %w( ga:sourceMedium )
+    sort = %w(-ga:sessions)
+    filters = nil # "ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_13_1(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:sourceMedium )
+    sort = nil #%w(-ga:sessions)
+    filters = "ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_14(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:sessions )
+
+    dimensions = %w( ga:userType ga:userGender ga:userAgeBracket )
+    sort = nil #%w(-ga:sessions)
+    filters = nil #"ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_14_1(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:userType ga:userGender ga:userAgeBracket )
+    sort = nil #%w(-ga:sessions)
+    filters = "ga:eventCategory==按鈕;ga:eventLabel=~下載APP_下|GooglePlay下載|App Store下載"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_15(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 取車地點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_16(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 還車地點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_17(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 取車站點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_18(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 還車站點"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_19(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==點擊-優惠專案查詢"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_20(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:totalEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==點擊-訂購車型"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_21(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:uniqueEvents )
+
+    dimensions = %w( ga:eventLabel )
+    sort = %w(-ga:uniqueEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==點擊"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+  def irent_21_2(profile_id, _start="7daysAgo", _end="yesterday")
+    metrics = %w( ga:uniqueEvents )
+
+    dimensions = %w( ga:eventAction )
+    sort = %w(-ga:uniqueEvents)
+    filters = "ga:eventCategory==按鈕;ga:eventAction==點擊下一步_我要租車後續頁"
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+  end
+
+
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
@@ -392,7 +612,7 @@ class Analytics #< BaseCli
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
       result = get_cached(profile_id, _start, _end, caller_method_name)
-      return result if result #&& caller_method_name != "page1_1"
+      return result if result #&& !(caller_method_name =~ /irent_21_2/)
 
       authorize
 

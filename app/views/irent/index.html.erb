@@ -1,0 +1,799 @@
+<h2><%= @previous_1_month.month %>月份表現</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <% @page3_all["query"]["metrics"].each do |obj| %>
+        <th><%= obj %></th>
+      <% end %>
+      <th>New</th>
+      <th>Returing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>桌機</td>
+      <% @page3_desktop["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
+    </tr>
+    <tr>
+      <td>手機</td>
+      <% @page3_mobile["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
+    </tr>
+    <tr>
+      <td>全站</td>
+      <% @page3_all["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-桌機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:desktop][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:desktop][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:desktop][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:desktop][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-手機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:mobile][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:mobile][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:mobile][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:mobile][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-全站</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:all][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2><%= @previous_1_month.month %>月裝置比較</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2><%= @previous_1_month.month %>月WEB頁面熱門點擊</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_2_pre1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @irent_2_pre2[obj[0]].nil? ? 0 : @irent_2_pre2[obj[0]][1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月APP頁面熱門點擊</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_3_pre1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @irent_3_pre2[obj[0]].nil? ? 0 : @irent_3_pre2[obj[0]][1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月服務地區搜尋(Desktop)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>區域</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @irent_4_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @irent_4_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月服務地區搜尋(Mobile)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>區域</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @irent_5_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @irent_5_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月服務據點搜尋(Desktop)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>區域</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @irent_6_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @irent_6_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月服務據點搜尋(Mobile)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>區域</th>
+      <th>次數</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info"><td>最熱門</td><td></td></tr>
+    <% @irent_7_pre1.first(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+    <tr class="info"><td>最不熱門</td><td></td></tr>
+    <% @irent_7_pre1.last(4).each do |obj| %>
+      <tr>
+        <td><%= obj.first %></td>
+        <td><%= obj.second %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月影片播放情形(播放次數)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th><%= @previous_1_month.month %>月</th>
+      <th><%= @previous_2_month.month %>月</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% ["Playing", "Paused", "Buffering"].each do |label| %>
+      <tr>
+        <td><%= label %></td>
+        <td><%= @irent_8_pre1[label] %></td>
+        <td><%= @irent_8_pre2[label] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月影片播放情形(播放進度)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th><%= @previous_1_month.month %>月</th>
+      <th><%= @previous_2_month.month %>月</th>
+      <!-- <th>區域</th> -->
+    </tr>
+  </thead>
+  <tbody>
+    <% ["25%", "50%", "75%", "100%"].each do |label| %>
+      <tr>
+        <td><%= label %></td>
+        <td><%= @irent_8_pre1[label=="100%" ? "Completed" : "Progress_#{label}"] %></td>
+        <td><%= @irent_8_pre2[label=="100%" ? "Completed" : "Progress_#{label}"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月影片播放情形(使用者輪廓)(性別比例)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>play次數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>男性</td>
+      <td><%= @irent_9_pre1["male"] %></td>
+    </tr>
+    <tr>
+      <td>女性</td>
+      <td><%= @irent_9_pre1["female"] %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月影片播放情形(使用者輪廓)(年齡比例)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>play次數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_10_pre1.each do |k,v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月影片播放情形(使用者輪廓)(播放品質)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>次數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_8_pre1.each do |k,v| %>
+      <% next unless k =~ /Quality_/ %>
+      <tr>
+        <td><%= k.split(/_/)[1] %></td>
+        <td><%= v %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月APP下載次數(OS)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>編號</th>
+      <th>作業系統</th>
+      <th>次數</th>
+      <th>比例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["iOS", "Android", "Windows"].each_with_index do |os, i| %>
+      <tr>
+        <td><%= i %></td>
+        <td><%= os %></td>
+        <td><%= @irent_11_pre1[os] %></td>
+        <td><%= "#{('%.2f') % (@irent_11_pre1[os].to_f/@irent_11_pre1_totalEvents.to_f*100)}%" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月APP下載次數(DEVICE)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>編號</th>
+      <th>設備</th>
+      <th>次數</th>
+      <th>比例</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% cnt=0 %>
+    <% @irent_12_pre1.first(10).each do |k, v| %>
+      <tr>
+        <td><%= cnt+=1 %></td>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= "#{('%.2f') % (v.to_f/@irent_12_pre1_totalEvents.to_f*100)}%" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月各渠道成效表現</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>來源媒介</th>
+      <th>工作階段</th>
+      <th>瀏覽量</th>
+      <th>跳出率</th>
+      <th>下載APP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_13_pre1.first(20).each do |ary| %>
+      <tr>
+        <% ary.first(3).each do |v| %>
+          <td><%= v %></td>
+        <% end %>
+        <td><%= '%.2f' % ary[-1].to_f %></td>
+        <td><%= @irent_13_1_pre1[ary[0]].nil? ? 0 : @irent_13_1_pre1[ary[0]] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月下載APP使用者</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>使用者</th>
+      <th>工作階段</th>
+      <th>下載APP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_14_pre1_total[:sessions].each do |k, obj| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= obj["total"] %></td>
+        <td><%= @irent_14_pre1_total[:events][k]["total"] %></td>
+      </tr>
+      <% obj.delete("total") %>
+      <% obj.each do |k1, obj1| %>
+        <tr>
+          <td><%= k1 %></td>
+          <td><%= obj1 %></td>
+          <td><%= @irent_14_pre1_total[:events][k][k1] %></td>
+        </tr>
+        <% @irent_14_pre1[k][k1].each do |k2, v2| %>
+          <tr>
+            <td><%= k2 %></td>
+            <td><%= v2 %></td>
+            <td><%= @irent_14_1_pre1[k][k1][k2].nil? ? 0 : @irent_14_1_pre1[k][k1][k2] %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr><td><hr/></td></tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>我要租車與活動網站表現</h1>
+
+
+
+
+
+<h2><%= @previous_1_month.month %>月份表現</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <% @page3_2_all["query"]["metrics"].each do |obj| %>
+        <th><%= obj %></th>
+      <% end %>
+      <th>New</th>
+      <th>Returing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>桌機</td>
+      <% @page3_2_desktop["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[0].to_f))}" %></td>
+    </tr>
+    <tr>
+      <td>手機</td>
+      <% @page3_2_mobile["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[0].to_f))}" %></td>
+    </tr>
+    <tr>
+      <td>全站</td>
+      <% @page3_2_all["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[0].to_f))}" %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-桌機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_2_data[:pre1][:desktop][:users][i] %></td>
+        <td><%= @basic_2_data[:pre2][:desktop][:users][i] %></td>
+        <td><%= @basic_2_data[:pre1][:desktop][:sessions][i] %></td>
+        <td><%= @basic_2_data[:pre2][:desktop][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-手機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_2_data[:pre1][:mobile][:users][i] %></td>
+        <td><%= @basic_2_data[:pre2][:mobile][:users][i] %></td>
+        <td><%= @basic_2_data[:pre1][:mobile][:sessions][i] %></td>
+        <td><%= @basic_2_data[:pre2][:mobile][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-全站</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_2_data[:pre1][:all][:users][i] %></td>
+        <td><%= @basic_2_data[:pre2][:all][:users][i] %></td>
+        <td><%= @basic_2_data[:pre1][:all][:sessions][i] %></td>
+        <td><%= @basic_2_data[:pre2][:all][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>我要租車-使用者輪廓(性別)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>數量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>男性</td>
+      <td>還不曉得取什麼數據</td>
+    </tr>
+    <tr>
+      <td>女性</td>
+      <td>還不曉得取什麼數據</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>我要租車-使用者輪廓(年齡)</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th>數量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>男性</td>
+      <td>還不曉得取什麼數據</td>
+    </tr>
+    <tr>
+      <td>女性</td>
+      <td>還不曉得取什麼數據</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 取車地點</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月取車</th>
+      <th><%= @previous_2_month.month %>月取車</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_15_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_15_pre2[k].nil? ? 0 : @irent_15_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 還車地點</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月還車</th>
+      <th><%= @previous_2_month.month %>月還車</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_16_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_16_pre2[k].nil? ? 0 : @irent_16_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 取車站點</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月取車</th>
+      <th><%= @previous_2_month.month %>月取車</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_17_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_17_pre2[k].nil? ? 0 : @irent_17_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 還車站點</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月還車</th>
+      <th><%= @previous_2_month.month %>月還車</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_18_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_18_pre2[k].nil? ? 0 : @irent_18_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 優惠方案查詢</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月查詢</th>
+      <th><%= @previous_2_month.month %>月查詢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_19_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_19_pre2[k].nil? ? 0 : @irent_19_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 選擇車型</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月查詢</th>
+      <th><%= @previous_2_month.month %>月查詢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @irent_20_pre1.first(14).each do |k, v| %>
+      <tr>
+        <td><%= k %></td>
+        <td><%= v %></td>
+        <td><%= @irent_20_pre2[k].nil? ? 0 : @irent_20_pre2[k] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月 租車流程</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>活動標籤</th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%
+      mapping = {
+        "確認送出" => "1.點擊確認送出",
+        "點擊確認送出 - 進入重新選車頁面" => "2.進入重新選車",
+        "點擊確認送出 - 進入付費頁面" => "3.進入金流畫面",
+      }
+    %>
+    <% ["確認送出", "點擊確認送出 - 進入重新選車頁面", "點擊確認送出 - 進入付費頁面"].each do |k| %>
+      <tr>
+        <td><%= mapping[k] %></td>
+        <td><%= @irent_21_pre1[k].nil? ? 0 : @irent_21_pre1[k] %></td>
+        <td><%= @irent_21_pre2[k].nil? ? 0 : @irent_21_pre2[k] %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td>4.點擊付款</td>
+      <td><%= @irent_21_2_pre1[0][1] %></td>
+      <td><%= @irent_21_2_pre2[0][1] %></td>
+    </tr>
+  </tbody>
+</table>
