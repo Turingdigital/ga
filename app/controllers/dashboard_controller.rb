@@ -7,6 +7,8 @@ class DashboardController < ApplicationController
 
     @analytics = Analytics.new current_user
     profile_id = current_user.account_summary.default_profile
+    @analytics.segment profile_id
+    # @analytics.filter
 
     @grpah1Data7 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
     begin

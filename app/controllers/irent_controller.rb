@@ -538,6 +538,17 @@ class IrentController < ApplicationController
       "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
     @irent_21_2_pre2 = irent_21_2_pre2["rows"]
 
+    # irent_22_pre1 = @analytics.irent_22(
+    #   profile_id,
+    #   "#{year_month_pre1_str}-01",
+    #   "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}")
+    # @irent_22_pre1 = irent_22_pre1["rows"]
+    # irent_22_pre2 = @analytics.irent_22(
+    #   profile_id,
+    #   "#{year_month_pre2_str}-01",
+    #   "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
+    # @irent_22_pre2 = irent_22_pre2["rows"]
+
   end
 
   private
