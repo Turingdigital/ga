@@ -45,7 +45,7 @@
 
 
 
-                        <li class="nav-item nav-dashboard start active open">
+                        <!-- <li class="nav-item nav-dashboard start active open">
                             <a href="javascript:;" class="nav-link nav-toggle">
                                 <i class="icon-home"></i>
                                 <span class="title">Dashboard</span>
@@ -63,7 +63,7 @@
                                 </li>
 
                             </ul>
-                        </li>
+                        </li> -->
 
 
                         <li class="nav-item nav-url_builders ">
@@ -107,6 +107,21 @@
                                   <%= link_to "下載Excel", excel_url_builders_path%>
                                 </li>
 
+                            </ul>
+                        </li>
+
+                        <li class="nav-item nav-filters ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">GA篩選器</span>
+                                <span class=""></span>
+                                <span class="arrow"></span>
+                            </a>
+
+                            <ul class="sub-menu">
+                                <li class="nav-item  ">
+                                  <%= link_to "進行設定", filters_path %>
+                                </li>
                             </ul>
                         </li>
 
@@ -203,6 +218,12 @@
     $(".nav-dashboard").addClass("open");
     $(".nav-dashboard").find('.sub-menu').show();
     $(".nav-dashboard").find('.arrow').addClass('open');
+  }
+
+  if("<%= params['controller'] %>" == 'filters'){
+    $(".nav-filters").addClass("open");
+    $(".nav-filters").find('.sub-menu').show();
+    $(".nav-filters").find('.arrow').addClass('open');
   }
 
 <% end %>
