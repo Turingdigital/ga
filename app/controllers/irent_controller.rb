@@ -340,7 +340,8 @@ class IrentController < ApplicationController
         profile_id,
         "#{year_month_pre2_str}-#{'%02d' % day}",
         "#{year_month_pre2_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}",
-        %w(ga:deviceCategory==desktop))
+        %w(ga:deviceCategory==desktop),
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
     day = 1
@@ -351,7 +352,8 @@ class IrentController < ApplicationController
         profile_id,
         "#{year_month_pre1_str}-#{'%02d' % day}",
         "#{year_month_pre1_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}",
-        %w(ga:deviceCategory!=desktop))
+        %w(ga:deviceCategory!=desktop),
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
     day = 1
@@ -362,7 +364,8 @@ class IrentController < ApplicationController
         profile_id,
         "#{year_month_pre2_str}-#{'%02d' % day}",
         "#{year_month_pre2_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}",
-        %w(ga:deviceCategory!=desktop))
+        %w(ga:deviceCategory!=desktop),
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
     day = 1
@@ -372,7 +375,9 @@ class IrentController < ApplicationController
       @data_2_pre1_all << @analytics.page1_1(
         profile_id,
         "#{year_month_pre1_str}-#{'%02d' % day}",
-        "#{year_month_pre1_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}")
+        "#{year_month_pre1_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}",
+        nil,
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
     day = 1
@@ -382,7 +387,9 @@ class IrentController < ApplicationController
       @data_2_pre2_all << @analytics.page1_1(
         profile_id,
         "#{year_month_pre2_str}-#{'%02d' % day}",
-        "#{year_month_pre2_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}")
+        "#{year_month_pre2_str}-#{'%02d' % (n==4 ? previous_2_month_last_day : day+=5)}",
+        nil,
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
 

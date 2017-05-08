@@ -429,13 +429,13 @@ class Analytics #< BaseCli
     # filters = %w(ga:deviceCategory!=desktop)
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
   end
-  def page1_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+  def page1_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil, segment=nil)
     metrics = %w( ga:users
                   ga:sessions )
 
     dimensions = nil # %w(ga:deviceCategory)
     # sort = %w(-ga:searchResultViews)
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters, segment)
   end
 
   def event_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
@@ -734,7 +734,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 取車地點"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_16(profile_id, _start="7daysAgo", _end="yesterday")
@@ -743,7 +743,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 還車地點"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_17(profile_id, _start="7daysAgo", _end="yesterday")
@@ -752,7 +752,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 取車站點"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_18(profile_id, _start="7daysAgo", _end="yesterday")
@@ -761,7 +761,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==選擇器;ga:eventAction==選擇器: 還車站點"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_19(profile_id, _start="7daysAgo", _end="yesterday")
@@ -770,7 +770,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==按鈕;ga:eventAction==點擊-優惠專案查詢"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_20(profile_id, _start="7daysAgo", _end="yesterday")
@@ -779,7 +779,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:totalEvents)
     filters = "ga:eventCategory==按鈕;ga:eventAction==點擊-訂購車型"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_21(profile_id, _start="7daysAgo", _end="yesterday")
@@ -788,7 +788,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:uniqueEvents)
     filters = "ga:eventCategory==按鈕;ga:eventAction==點擊"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_21_2(profile_id, _start="7daysAgo", _end="yesterday")
@@ -797,7 +797,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventAction )
     sort = %w(-ga:uniqueEvents)
     filters = "ga:eventCategory==按鈕;ga:eventAction==點擊下一步_我要租車後續頁"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   def irent_22(profile_id, _start="7daysAgo", _end="yesterday")
@@ -806,7 +806,7 @@ class Analytics #< BaseCli
     dimensions = %w( ga:eventLabel )
     sort = %w(-ga:uniqueEvents)
     filters = "ga:eventCategory==按鈕;ga:eventAction==點擊;ga:eventLabel=~點擊確認送出 - 進入付費頁面 -"
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
   private
@@ -823,11 +823,12 @@ class Analytics #< BaseCli
       @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
     end
 
-    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil
+    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil
+
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
-      result = get_cached(profile_id, _start, _end, caller_method_name)
-      return result if result #&& !(caller_method_name =~ /irent_21_2/)
+      # result = get_cached(profile_id, _start, _end, caller_method_name)
+      # return result if result #&& !(caller_method_name =~ /irent_21_2/)
 
       authorize
 
@@ -835,6 +836,8 @@ class Analytics #< BaseCli
       arg[:dimensions] = dimensions.join(',') if dimensions
       arg[:sort] = sort.join(',') if sort
       arg[:filters] = filters if filters
+      arg[:segment] = segment if segment
+
       result = @analytics.get_ga_data(
                             "ga:#{profile_id}",
                             _start, _end,
