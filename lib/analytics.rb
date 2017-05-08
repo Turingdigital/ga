@@ -67,6 +67,111 @@ class Analytics #< BaseCli
     Authorizer.store_credentials(@user.email, @user.ga_credential)
   end
 
+  def snailhouse
+    # sessions::condition::ga:sourceMedium==yahoo / organic;
+    # sessions::condition::ga:userType==Returning Visitor;
+    # sessions::condition::ga:userGender==female;
+    # sessions::condition::ga:userAgeBracket==35-44
+    #
+    # sessions::condition::ga:userGender==female;sessions::condition::ga:userAgeBracket==35-44
+
+# sessions::condition::ga:eventAction==checkout
+# checkout	1	1,782
+# checkout	2	603
+# checkout	3	237
+# 292
+#
+# checkout	1	306
+# checkout	2	204
+# checkout	3	123
+# 124
+#
+# var tfloor = -1;
+# var dfloor='';
+# if(tfloor == 1){
+# 	dfloor ='1';
+# }else if(tfloor >= 2 &&  tfloor <= 5){
+# 	dfloor ='2-5';
+# }else if(tfloor >= 6 &&  tfloor <= 9){
+# 	dfloor ='6-9';
+# }else if(tfloor >= 10){
+# 	dfloor ='10+';
+# }else{
+#   dfloor ='其他';
+# }
+#
+# dataLayer.push({
+# 	event: '樓層',
+# 	'樓層': dfloor
+# });
+#
+# if( pRatio >= 1 && pRatio< 21 ){
+#  	dpRatio ='1-20%';
+# }else if( pRatio >= 21 && pRatio< 26 ){ //若剛好>20但<21的數字會漏掉
+#  	dpRatio ='21-25%';
+# }else if( pRatio >= 26 && pRatio< 31 ){
+#  	dpRatio ='26-30%';
+# }else if( pRatio >= 31 && pRatio< 36 ){
+#  	dpRatio ='31-35%';
+# }else if( pRatio >=31  ){
+#  	dpRatio ='35% +';
+# }else{
+#   dpRatio ='無公設';
+# }
+#
+# var unitPriceRang='';
+# if(unit_price  < 20 ){
+# 	unitPriceRang='0-19.9';
+# }else if(unit_price >= 20 &&  unit_price  < 30 ){
+# 	unitPriceRang='20.0-29.9';
+# }else if(unit_price >= 30 &&  unit_price  < 40 ){
+# 	unitPriceRang='30.0-39.9';
+# }else if(unit_price >= 40 &&  unit_price  < 50 ){
+# 	unitPriceRang='40.0-49.9';
+# }else if(unit_price >= 50 &&  unit_price  < 60 ){
+# 	unitPriceRang='50.0-59.9';
+# }else if(unit_price >= 60 &&  unit_price  < 70 ){
+# 	unitPriceRang='60.0-69.9';
+# }else if(unit_price >= 70 &&  unit_price  < 80 ){
+# 	unitPriceRang='70.0-79.9';
+# }else if(unit_price >= 80 &&  unit_price  < 90 ){
+# 	unitPriceRang='80.0-89.9';
+# }else if(unit_price >= 90 &&  unit_price  < 100 ){
+# 	unitPriceRang='90.0-99.9';
+# }else if(unit_price >= 100  ){
+# 	unitPriceRang='100.0+';
+# }else{
+#   unitPriceRang='其他';
+# }
+#
+# dataLayer.push({
+# 	event: '單價/坪',
+# 	'單價/坪': unitPriceRang
+# });
+
+
+
+# sessions::condition::ga:eventAction==checkout;sessions::condition::ga:eventLabel==3
+#     # /object/18177?s=I20
+#     # /object/18524?s=I26
+#     /object/18563
+#     /object/18744?s=I30
+#     # /object/18760
+#     # /object/18820?s=I26
+#     /object/18851
+#     # /object/18886?s=I20
+#     # /object/18953
+#
+#     /object/18563
+#     /object/18744?s=I30
+#     /object/18851
+#     /object/18953
+#
+#     /object/18524?s=I26
+#     /object/18886?s=I20
+
+  end
+
   def segment profile_id
     authorize
 
