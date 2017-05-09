@@ -329,7 +329,8 @@ class IrentController < ApplicationController
         profile_id,
         "#{year_month_pre1_str}-#{'%02d' % day}",
         "#{year_month_pre1_str}-#{'%02d' % (n==4 ? previous_1_month_last_day : day+=5)}",
-        %w(ga:deviceCategory==desktop))
+        %w(ga:deviceCategory==desktop),
+        'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
       day += 1
     end
     day = 1
@@ -433,13 +434,17 @@ class IrentController < ApplicationController
 
     year_month_str = year_month_pre1_str
     @page3_2_all = @analytics.page1(profile_id, "#{year_month_pre1_str}-#{'%02d' % 1}",
-                              "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}")
+                              "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}",
+                              nil,
+                              'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
     @page3_2_desktop = @analytics.page1(profile_id, "#{year_month_pre1_str}-#{'%02d' % 1}",
                               "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}",
-                              "ga:deviceCategory==desktop")
+                              "ga:deviceCategory==desktop",
+                              'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
     @page3_2_mobile = @analytics.page1(profile_id, "#{year_month_pre1_str}-#{'%02d' % 1}",
                               "#{year_month_pre1_str}-#{'%02d' % previous_1_month_last_day}",
-                              "ga:deviceCategory!=desktop")
+                              "ga:deviceCategory!=desktop",
+                              'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
 
     irent_15_pre1 = @analytics.irent_15(
       profile_id,

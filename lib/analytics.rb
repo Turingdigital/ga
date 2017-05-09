@@ -417,7 +417,7 @@ class Analytics #< BaseCli
   ###########
   # HOT Car #
   ###########
-  def page1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil)
+  def page1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil, segment=nil)
     metrics = %w( ga:users
                   ga:sessions
                   ga:pageviews
@@ -427,7 +427,7 @@ class Analytics #< BaseCli
     dimensions = nil # %w(ga:deviceCategory)
     # sort = %w(-ga:searchResultViews)
     # filters = %w(ga:deviceCategory!=desktop)
-    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters)
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, nil, filters, segment)
   end
   def page1_1(profile_id, _start="7daysAgo", _end="yesterday", filters=nil, segment=nil)
     metrics = %w( ga:users
@@ -827,8 +827,8 @@ class Analytics #< BaseCli
 
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
-      # result = get_cached(profile_id, _start, _end, caller_method_name)
-      # return result if result #&& !(caller_method_name =~ /irent_21_2/)
+      result = get_cached(profile_id, _start, _end, caller_method_name)
+      return result if result && !(caller_method_name =~ /page1/)
 
       authorize
 
