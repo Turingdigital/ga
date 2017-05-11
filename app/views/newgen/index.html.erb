@@ -1,0 +1,165 @@
+<h2><%= @previous_1_month.month %>月份表現</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <% @page3_all["query"]["metrics"].each do |obj| %>
+        <th><%= obj %></th>
+      <% end %>
+      <th>New</th>
+      <th>Returing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>全站</td>
+      <% @page3_all["rows"].first.first(6).each do |result|%>
+        <td><%= result %></td>
+      <% end %>
+      <td><%= "#{('%.2f' % (@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[1].to_f))}" %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月份表現-全站</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= @previous_1_month.month %>月使用者</th>
+      <th><%= @previous_2_month.month %>月使用者</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% ["1~6","7~12","13~18","19~24", "25~"].each_with_index do |v, i| %>
+      <tr>
+        <td><%= "#{@previous_1_month.month}/#{v}" %></td>
+        <td><%= @basic_data[:pre1][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:users][i] %></td>
+        <td><%= @basic_data[:pre1][:all][:sessions][i] %></td>
+        <td><%= @basic_data[:pre2][:all][:sessions][i] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月活動頁追蹤內容</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>標籤</th>
+      <th><%= @previous_1_month.month %>月事件總數</th>
+      <th><%= @previous_1_month.month %>月不重複事件</th>
+      <th><%= @previous_2_month.month %>月事件總數</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @newgen_1_pre1.each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= obj[2] %></td>
+        <td><%= @newgen_1_pre2[obj[0]].nil? ? 0 : @newgen_1_pre2[obj[0]][1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月付費渠道表現-桌機 Excel</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>來源/媒介</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th>跳出率</th>
+      <th>點擊-進一步洽詢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @newgen_2.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= '%.2f' % obj[2] %>%</td>
+        <td><%= @newgen_3[obj[0]].nil? ? 0 : @newgen_3[obj[0]] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月付費渠道表現-桌機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>來源/媒介</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th>跳出率</th>
+      <th>點擊-進一步洽詢</th>
+      <th>目標達成比</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @newgen_2.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= '%.2f' % obj[2] %>%</td>
+        <td><%= @newgen_3[obj[0]].nil? ? 0 : @newgen_3[obj[0]] %></td>
+        <td><%= @newgen_3[obj[0]].nil? ? 0 : ('%.2f' % (obj[1].to_f/@newgen_3[obj[0]].to_f)) %></td>
+        <td><%= @newgen_2_pre2[obj[0]].nil? ? 0 : @newgen_2_pre2[obj[0]] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月付費渠道表現-手機 Excel</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>來源/媒介</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th>跳出率</th>
+      <th>點擊-進一步洽詢</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @newgen_4.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= '%.2f' % obj[2] %>%</td>
+        <td><%= @newgen_5[obj[0]].nil? ? 0 : @newgen_5[obj[0]] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2><%= @previous_1_month.month %>月付費渠道表現-手機</h2>
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>來源/媒介</th>
+      <th><%= @previous_1_month.month %>月工作階段</th>
+      <th>跳出率</th>
+      <th>點擊-進一步洽詢</th>
+      <th>目標達成比</th>
+      <th><%= @previous_2_month.month %>月工作階段</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @newgen_4.first(20).each do |obj| %>
+      <tr>
+        <td><%= obj[0] %></td>
+        <td><%= obj[1] %></td>
+        <td><%= '%.2f' % obj[2] %>%</td>
+        <td><%= @newgen_5[obj[0]].nil? ? 0 : @newgen_5[obj[0]] %></td>
+        <td><%= @newgen_5[obj[0]].nil? ? 0 : ('%.2f' % (obj[1].to_f/@newgen_5[obj[0]].to_f)) %></td>
+        <td><%= @newgen_4_pre2[obj[0]].nil? ? 0 : @newgen_4_pre2[obj[0]] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

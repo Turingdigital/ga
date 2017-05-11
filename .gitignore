@@ -46,3 +46,4 @@ bower.json
 /google_auth_stores
 
 #/config/database.yml
+/dump.rdb

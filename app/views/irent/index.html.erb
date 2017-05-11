@@ -16,24 +16,24 @@
       <% @page3_desktop["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_desktop["rows"].first[-1].to_f/@page3_desktop["rows"].first[1].to_f))}" %></td>
     </tr>
     <tr>
       <td>手機</td>
       <% @page3_mobile["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_mobile["rows"].first[-1].to_f/@page3_mobile["rows"].first[1].to_f))}" %></td>
     </tr>
     <tr>
       <td>全站</td>
       <% @page3_all["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_all["rows"].first[-1].to_f/@page3_all["rows"].first[1].to_f))}" %></td>
     </tr>
   </tbody>
 </table>
@@ -508,24 +508,24 @@
       <% @page3_2_desktop["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_desktop["rows"].first[-1].to_f/@page3_2_desktop["rows"].first[1].to_f))}" %></td>
     </tr>
     <tr>
       <td>手機</td>
       <% @page3_2_mobile["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_mobile["rows"].first[-1].to_f/@page3_2_mobile["rows"].first[1].to_f))}" %></td>
     </tr>
     <tr>
       <td>全站</td>
       <% @page3_2_all["rows"].first.first(6).each do |result|%>
         <td><%= result %></td>
       <% end %>
-      <td><%= "#{('%.2f' % (@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[0].to_f))}" %></td>
-      <td><%= "#{('%.2f' % (1-@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[0].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[1].to_f))}" %></td>
+      <td><%= "#{('%.2f' % (1-@page3_2_all["rows"].first[-1].to_f/@page3_2_all["rows"].first[1].to_f))}" %></td>
     </tr>
   </tbody>
 </table>
@@ -794,7 +794,7 @@
   </tbody>
 </table>
 
-<!-- <h2><%#= @previous_1_month.month %>月金流選取狀況</h2>
+<h2><%#= @previous_1_month.month %>月金流選取狀況</h2>
 <table class="table table-striped table-hover ">
   <thead>
     <tr>
@@ -827,4 +827,4 @@
       </tr>
     <%# end %>
   </tbody>
-</table> -->
+</table>

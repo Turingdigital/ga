@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   get 'dashboard' => 'dashboard#index'
   get 'hotcar' => 'hotcar#index'
   get 'irent' => 'irent#index'
+  get 'newgen' => 'newgen#index'
+  get 'newgen/:y1/:m1' => 'newgen#index'
+  get 'newgen/:y1/:m1/:y2/:m2' => 'newgen#index'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

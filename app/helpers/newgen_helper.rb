@@ -1,0 +1,2 @@
+module NewgenHelper
+end
