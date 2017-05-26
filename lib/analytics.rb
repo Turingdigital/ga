@@ -835,7 +835,7 @@ class Analytics #< BaseCli
       arg = {}
       arg[:dimensions] = dimensions.join(',') if dimensions
       arg[:sort] = sort.join(',') if sort
-      arg[:filters] = filters if filters
+      arg[:filters] = filters if filters # 假流量篩sessions
       arg[:segment] = segment if segment
 
       result = @analytics.get_ga_data(

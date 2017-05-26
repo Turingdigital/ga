@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :filters
+  resources :filters do
+    collection do
+      post 'setup'
+    end
+  end
+
   resources :ga_data
   resources :ga_labels
   resources :foos

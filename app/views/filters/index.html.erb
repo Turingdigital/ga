@@ -1,27 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Filters</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @filters.each do |filter| %>
-      <tr>
-        <td><%= filter.name %></td>
-        <td><%= link_to 'Show', filter %></td>
-        <td><%= link_to 'Edit', edit_filter_path(filter) %></td>
-        <td><%= link_to 'Destroy', filter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Filter', new_filter_path %>
+<p>以下垃圾流量將自動設置為篩選器</p>
+<textarea rows="10" cols="40" disabled><%= @trashes.join('&#13;&#10;').html_safe %></textarea><br/><br/>
+<%= button_to "確定", setup_filters_path, :class=>"btn blue",:method => :post %>

@@ -1,10 +1,31 @@
 class FiltersController < ApplicationController
   before_action :set_filter, only: [:show, :edit, :update, :destroy]
 
+  def setup
+    # @exclude = params[:filter][:referral].split(/\r?\n/)
+    # @account_summary = current_user.account_summary
+    # @summaries = JSON.parse @account_summary.jsonString
+    #
+    # @analytics = Analytics.new current_user
+    # params[:profile][:setting].each do |acc|
+    #   ac = JSON.parse(acc)
+    #   account_id = ac["item"]
+    #   web_property_id = ac["web_property"]
+    #   @analytics.filter ac["item"], ac["web_property"], ac["profile"]
+    # end
+    af = AnalyticsFilter.new current_user
+    af.filter
+    # account_summary = current_user.account_summary
+    # summaries = JSON.parse account_summary.jsonString
+    # byebug
+    redirect_to filters_path
+  end
+
   # GET /filters
   # GET /filters.json
   def index
-    @filters = Filter.all
+    # @filters = Filter.all
+    @trashes = AnalyticsFilter.trashes
   end
 
   # GET /filters/1
