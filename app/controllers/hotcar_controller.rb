@@ -334,9 +334,13 @@ class HotcarController < ApplicationController
       "#{year_month_pre2_str}-01",
       "#{year_month_pre2_str}-#{'%02d' % previous_2_month_last_day}")
     event_pre1 = event_pre1["rows"]
-    event_pre1.map do |obj|
-      obj[0] = obj[0].split(/:/).first
-      obj[1] = obj[1].to_i
+    if event_pre1.nil?
+      event_pre1 = []
+    else
+      event_pre1.map do |obj|
+        obj[0] = obj[0].split(/:/).first
+        obj[1] = obj[1].to_i
+      end
     end
     @event_14_pre2 = {}
     event_pre1.each do |obj|
