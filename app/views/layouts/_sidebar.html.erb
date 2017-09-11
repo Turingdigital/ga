@@ -157,6 +157,39 @@
 
                             </ul>
                         </li>
+                        
+                        <% if user_signed_in? && current_user.email=="analytics@turingdigital.com.tw" %>
+                        <li class="nav-item nav-account_summaries ">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-home"></i>
+                                <span class="title">圖靈工具</span>
+                                <span class=""></span>
+                                <span class="arrow"></span>
+                            </a>
+
+                            <ul class="sub-menu">
+
+                                <!-- <li class="nav-item  ">
+                                    <a href="#" class="nav-link ">
+                                        <span class="title">總覽</span>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item  ">
+                                    <a href="#" class="nav-link ">
+                                        <span class="title">加值分析</span>
+                                    </a>
+                                </li> -->
+
+                                <li class="nav-item  ">
+                                  <%= link_to "妳好南搞", sstainan_path %>
+                                </li>
+
+
+
+                            </ul>
+                        </li>
+                        <% end %>
 
                       <!--
 

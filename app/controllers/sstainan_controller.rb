@@ -1,6 +1,7 @@
 class SstainanController < ApplicationController
 
   def index
+    # current_user = User.find(38)# if !current_user
     @analytics = Analytics.new current_user
     profile_id = "147896085" # 妳好南搞
 
