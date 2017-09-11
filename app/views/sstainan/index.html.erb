@@ -1,0 +1,35 @@
+<%= form_tag('/sstainan', method: :get) do %>
+  開始日期：<%= text_field_tag 'start_date' %>範例：2017-09-03<br/>
+  結束日期：<%= text_field_tag 'end_date' %>範例：2017-09-09<br/>
+  <%= submit_tag '送出' %>(預設7天前至昨天)
+<% end %>
+<br/>
+<table>
+  <tr>
+    <th>列標籤</th>
+    <th>PV</th>
+    <th>25%</th>
+    <th>50%</th>
+    <th>75%</th>
+    <th>100%</th>
+    <th>總計</th>
+    <th>到50%的留存率</th>
+    <th>到75%的留存率</th>
+  </tr>
+<% @ok.each do |k, m|%>
+  <%# if !(k=~/customize_changeset_uuid|post_type|admin/) && m[:pv]&&m["25%"]&&m["50%"]&&m["75%"]&&m["100%"] && (m[:pv].to_i!=0)&&(m["25%"].to_i!=0)&&(m["50%"].to_i!=0)&&(m["75%"].to_i!=0)&&(m["100%"].to_i!=0)%>
+  <tr>
+    <td><%= k %></td>
+    <td><%= m[:pv] %></td>
+    <td><%= m["25%"] %></td>
+    <td><%= m["50%"] %></td>
+    <td><%= m["75%"] %></td>
+    <td><%= m["100%"] %></td>
+
+    <td><%= m["25%"].to_i+m["50%"].to_i+m["75%"].to_i+m["100%"].to_i %></td>
+    <td><%= '%.2f' % (m["50%"].to_f / m[:pv].to_f * 100) %>%</td>
+    <td><%= '%.2f' % (m["75%"].to_f / m[:pv].to_f * 100) %>%</td>
+  </tr>
+  <%# end %>
+<% end %>
+</table>

@@ -809,6 +809,28 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, 'sessions::condition::ga:pagePath=~WEB110.ASPX|/WEB110.aspx')
   end
 
+  def sstainan(profile_id, _start="7daysAgo", _end="yesterday", start_index=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel ga:pagePath )
+    sort = nil # %w(-ga:uniqueEvents)
+    filters = "ga:eventCategory==滾軸事件"
+    segment = nil
+    # start_index = 1001
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
+  def sstainan_pageview(profile_id, _start="7daysAgo", _end="yesterday", start_index=nil)
+    metrics = %w( ga:pageviews )
+
+    dimensions = %w( ga:pagePath )
+    sort = %w( -ga:pageviews )
+    filters = nil #{}"ga:eventCategory==滾軸事件"
+    segment = nil
+    # start_index = 1001
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
@@ -823,12 +845,12 @@ class Analytics #< BaseCli
       @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
     end
 
-    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil
+    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
 
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
       result = get_cached(profile_id, _start, _end, caller_method_name)
-      return result if result && !(caller_method_name =~ /page1/)
+      return result if result && !(caller_method_name =~ /page1|sstainan/)
 
       authorize
 
@@ -837,6 +859,7 @@ class Analytics #< BaseCli
       arg[:sort] = sort.join(',') if sort
       arg[:filters] = filters if filters # 假流量篩sessions
       arg[:segment] = segment if segment
+      arg[:start_index] = start_index if start_index
 
       result = @analytics.get_ga_data(
                             "ga:#{profile_id}",
