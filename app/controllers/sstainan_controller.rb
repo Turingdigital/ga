@@ -1,0 +1,2 @@
+class SstainanController < ApplicationController
+end
