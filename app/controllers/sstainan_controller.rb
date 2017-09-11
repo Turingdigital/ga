@@ -32,9 +32,9 @@ class SstainanController < ApplicationController
     end
 
     @ok = map
-    @ok.delete_if do |k, m|
+    @ok.delete_if { |k, m|
       (k=~/customize_changeset_uuid|post_type|admin/) || m[:pv].nil?||m["25%"].nil?||m["50%"].nil?||m["75%"].nil?||m["100%"].nil? || (m[:pv].to_i==0)||(m["25%"].to_i==0)||(m["50%"].to_i==0)||(m["75%"].to_i==0)||(m["100%"].to_i==0)
-    end
+    } if profile_id = "147896085"
 
     # csv = "列標籤,PV,25%,50%,75%,100%,總計,到50%的留存率,到75%的留存率\n"
     # map.each do |k, m|
@@ -43,5 +43,11 @@ class SstainanController < ApplicationController
     #   end
     # end
     # byebug
+  end
+
+  def download
+    # byebug
+    redirect_to :back #sstainan_path
+    # send_data @users.to_csv, filename: "users-#{Date.today}.csv"
   end
 end
