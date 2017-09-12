@@ -3,122 +3,122 @@ class DashboardController < ApplicationController
   before_action :authorize, only: [:index]
 
   def index
-    @warring = create_warrings
-
-    @analytics = Analytics.new current_user
-    profile_id = current_user.account_summary.default_profile
-    # @analytics.segment profile_id
-    # @analytics.filter
-
-    @grpah1Data7 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
-    begin
-      @grpah1Data7 = @grpah1Data7["totals_for_all_results"]
-      @grpah1Data7 = {
-        sessions: @grpah1Data7["ga:sessions"],
-        users: @grpah1Data7["ga:users"],
-        pageviews: @grpah1Data7["ga:pageviews"],
-        goalCompletionsAll: @grpah1Data7["ga:goalCompletionsAll"]
-      }
-    rescue
-      @grpah1Data7 = {
-        sessions: 0,
-        users: 0,
-        pageviews: 0,
-        goalCompletionsAll: 0
-      }
-    end
-
-    @grpah1Data30 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "30daysAgo", "yesterday")
-    begin
-      @grpah1Data30 = @grpah1Data30["totals_for_all_results"]
-      @grpah1Data30 = {
-        sessions: @grpah1Data30["ga:sessions"],
-        users: @grpah1Data30["ga:users"],
-        pageviews: @grpah1Data30["ga:pageviews"],
-        goalCompletionsAll: @grpah1Data30["ga:goalCompletionsAll"]
-      }
-    rescue
-      @grpah1Data30 = {
-        sessions: 0,
-        users: 0,
-        pageviews: 0,
-        goalCompletionsAll: 0
-      }
-    end
-
-    @grpah2Data = @analytics.get_visits_all_and_new(profile_id, "183daysAgo", "yesterday")
-    @grpah2DataOldVisitors = []
-    @grpah2Data["rows"].each{|obj|
-      @grpah2DataOldVisitors << [obj[0], (obj[1].to_i - obj[2].to_i).to_s ]
-    }
-    @grpah2Data["rows"].map{|obj| obj.delete_at(1) }
-    @grpah2DataNewVisitors = @grpah2Data["rows"]
-
-
-    # Date.strptime(@grpah2Data.rows.first.first, "%Y%m%d")
-    # byebug
-
-    # nthWeek ga:sessions ga:users ga:pageviews ga:goalCompletionsAll
-    @grpah3Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, "49daysAgo", "yesterday")
-    @grpah3Data = @grpah3Data["rows"]
-    now = Date.today
-    sum_latitude = 0
-    @grpah3Data = @grpah3Data.map{|obj|
-      sum_latitude += obj[3].to_i;
-      {
-        "date" => "#{now-7*obj[0].to_i}",
-        "distance" => obj[2], # Users
-        "latitude" => obj[3], # Predicated Page Views
-        "duration" => obj[3]  # Page Views
-        # "distance" => 10,
-        # "latitude" => 20,
-        # "duration" => 30,
-      }
-    }.reverse
-    @grpah3Data.last["bulletClass"] = "lastBullet"
-    @grpah3Data.last["latitude"] = (sum_latitude.to_f/@grpah3Data.size).to_s
-    @grpah3Data << {
-      "date" => "#{now+7}"
-    }
-
-    @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday")
-    if @grpah5Data["rows"]
-      @grpah5Data = @grpah5Data["rows"].reverse
-      @grpah5Data = @grpah5Data.first(6)
-      @grpah5Data.map!{|obj|
-        {
-          "year" => obj[0],
-          "income" => obj[1].to_f,
-          "expenses" => obj[2].to_f
-        }
-      }
-    end
-
-    searchsDataPast = @analytics.get_searchs_div_searchKeyword(profile_id, "14daysAgo", "8daysAgo")
-    searchsDataPast = searchsDataPast["rows"]
-    unless searchsDataPast.nil?
-      # searchsDataPast = searchsDataPast.first(20)
-      searchsDataPast = searchsDataPast.inject({}) do |hash, ele|
-        hash[ele[0]] = ele
-        hash
-      end
-
-      @searchsData = @analytics.get_searchs_div_searchKeyword(profile_id, "7daysAgo", "yesterday")
-      @searchsData = @searchsData["rows"]
-      begin
-        @searchsData = @searchsData.first(20)
-        @searchsData.map do |obj|
-          pastData = searchsDataPast[obj[0]]
-          if pastData
-            obj << ((obj[1].to_f - pastData[1].to_f) / pastData[1].to_f)
-          else
-            obj << 'new'
-          end
-        end
-      rescue Exception => e
-        @searchsData = nil
-      end
-    end
+    # @warring = create_warrings
+    #
+    # @analytics = Analytics.new current_user
+    # profile_id = current_user.account_summary.default_profile
+    # # @analytics.segment profile_id
+    # # @analytics.filter
+    #
+    # @grpah1Data7 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "7daysAgo", "yesterday")
+    # begin
+    #   @grpah1Data7 = @grpah1Data7["totals_for_all_results"]
+    #   @grpah1Data7 = {
+    #     sessions: @grpah1Data7["ga:sessions"],
+    #     users: @grpah1Data7["ga:users"],
+    #     pageviews: @grpah1Data7["ga:pageviews"],
+    #     goalCompletionsAll: @grpah1Data7["ga:goalCompletionsAll"]
+    #   }
+    # rescue
+    #   @grpah1Data7 = {
+    #     sessions: 0,
+    #     users: 0,
+    #     pageviews: 0,
+    #     goalCompletionsAll: 0
+    #   }
+    # end
+    #
+    # @grpah1Data30 = @analytics.get_users_sessions_goalCompletionsAll_pageViews(profile_id, "30daysAgo", "yesterday")
+    # begin
+    #   @grpah1Data30 = @grpah1Data30["totals_for_all_results"]
+    #   @grpah1Data30 = {
+    #     sessions: @grpah1Data30["ga:sessions"],
+    #     users: @grpah1Data30["ga:users"],
+    #     pageviews: @grpah1Data30["ga:pageviews"],
+    #     goalCompletionsAll: @grpah1Data30["ga:goalCompletionsAll"]
+    #   }
+    # rescue
+    #   @grpah1Data30 = {
+    #     sessions: 0,
+    #     users: 0,
+    #     pageviews: 0,
+    #     goalCompletionsAll: 0
+    #   }
+    # end
+    #
+    # @grpah2Data = @analytics.get_visits_all_and_new(profile_id, "183daysAgo", "yesterday")
+    # @grpah2DataOldVisitors = []
+    # @grpah2Data["rows"].each{|obj|
+    #   @grpah2DataOldVisitors << [obj[0], (obj[1].to_i - obj[2].to_i).to_s ]
+    # }
+    # @grpah2Data["rows"].map{|obj| obj.delete_at(1) }
+    # @grpah2DataNewVisitors = @grpah2Data["rows"]
+    #
+    #
+    # # Date.strptime(@grpah2Data.rows.first.first, "%Y%m%d")
+    # # byebug
+    #
+    # # nthWeek ga:sessions ga:users ga:pageviews ga:goalCompletionsAll
+    # @grpah3Data = @analytics.get_users_sessions_goalCompletionsAll_pageViews_div_nthweek(profile_id, "49daysAgo", "yesterday")
+    # @grpah3Data = @grpah3Data["rows"]
+    # now = Date.today
+    # sum_latitude = 0
+    # @grpah3Data = @grpah3Data.map{|obj|
+    #   sum_latitude += obj[3].to_i;
+    #   {
+    #     "date" => "#{now-7*obj[0].to_i}",
+    #     "distance" => obj[2], # Users
+    #     "latitude" => obj[3], # Predicated Page Views
+    #     "duration" => obj[3]  # Page Views
+    #     # "distance" => 10,
+    #     # "latitude" => 20,
+    #     # "duration" => 30,
+    #   }
+    # }.reverse
+    # @grpah3Data.last["bulletClass"] = "lastBullet"
+    # @grpah3Data.last["latitude"] = (sum_latitude.to_f/@grpah3Data.size).to_s
+    # @grpah3Data << {
+    #   "date" => "#{now+7}"
+    # }
+    #
+    # @grpah5Data = @analytics.get_sessions_goalCompletionsAll_div_source(profile_id, "30daysAgo", "yesterday")
+    # if @grpah5Data["rows"]
+    #   @grpah5Data = @grpah5Data["rows"].reverse
+    #   @grpah5Data = @grpah5Data.first(6)
+    #   @grpah5Data.map!{|obj|
+    #     {
+    #       "year" => obj[0],
+    #       "income" => obj[1].to_f,
+    #       "expenses" => obj[2].to_f
+    #     }
+    #   }
+    # end
+    #
+    # searchsDataPast = @analytics.get_searchs_div_searchKeyword(profile_id, "14daysAgo", "8daysAgo")
+    # searchsDataPast = searchsDataPast["rows"]
+    # unless searchsDataPast.nil?
+    #   # searchsDataPast = searchsDataPast.first(20)
+    #   searchsDataPast = searchsDataPast.inject({}) do |hash, ele|
+    #     hash[ele[0]] = ele
+    #     hash
+    #   end
+    #
+    #   @searchsData = @analytics.get_searchs_div_searchKeyword(profile_id, "7daysAgo", "yesterday")
+    #   @searchsData = @searchsData["rows"]
+    #   begin
+    #     @searchsData = @searchsData.first(20)
+    #     @searchsData.map do |obj|
+    #       pastData = searchsDataPast[obj[0]]
+    #       if pastData
+    #         obj << ((obj[1].to_f - pastData[1].to_f) / pastData[1].to_f)
+    #       else
+    #         obj << 'new'
+    #       end
+    #     end
+    #   rescue Exception => e
+    #     @searchsData = nil
+    #   end
+    # end
   end
 
   def create_warrings
