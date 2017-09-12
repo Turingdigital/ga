@@ -157,7 +157,7 @@
 
                             </ul>
                         </li>
-                        
+
                         <% if user_signed_in? && current_user.email=="analytics@turingdigital.com.tw" %>
                         <li class="nav-item nav-account_summaries ">
                             <a href="javascript:;" class="nav-link nav-toggle">
@@ -182,7 +182,10 @@
                                 </li> -->
 
                                 <li class="nav-item  ">
-                                  <%= link_to "妳好南搞", sstainan_path %>
+                                  <%= link_to "妳好南搞", sstainan_path(profile_id: 147896085) %>
+                                </li>
+                                <li class="nav-item  ">
+                                  <%= link_to "小南天", sstainan_path(profile_id: 140038874) %>
                                 </li>
 
 
