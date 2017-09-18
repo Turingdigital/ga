@@ -4,7 +4,8 @@ class SstainanController < ApplicationController
     # current_user = User.find(38)# if !current_user
     @analytics = Analytics.new current_user
     profile_id = params[:profile_id] # "147896085" # 妳好南搞
-
+    @profile_id = profile_id
+    
     all_data = []
     start_index = 1
     start_date = params["start_date"]||"7daysAgo"

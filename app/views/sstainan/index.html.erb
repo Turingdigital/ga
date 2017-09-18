@@ -1,6 +1,7 @@
-<%= form_tag('/sstainan', method: :get) do %>
+<%= form_tag(sstainan_path, method: :get) do %>
   開始日期：<%= text_field_tag 'start_date' %>範例：2017-09-03<br/>
   結束日期：<%= text_field_tag 'end_date' %>範例：2017-09-09<br/>
+  <%= text_field_tag 'profile_id', @profile_id, type: "hidden" %>
   <%= submit_tag '送出' %>(預設7天前至昨天)
 <% end %>
 <br/>
