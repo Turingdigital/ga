@@ -22,7 +22,7 @@ class SstainanController < ApplicationController
       break if result["rows"].size < 1000
 
       start_index += 1000
-      result = @analytics.sstainan(profile_id, "7daysAgo", "yesterday", start_index)
+      result = @analytics.sstainan(profile_id, start_date, end_date, start_index)
     end
     all_data.each do |d|
       # byebug
@@ -33,10 +33,9 @@ class SstainanController < ApplicationController
     end
 
     @ok = map
-    # @ok.delete_if { |k, m|
-    #   (k=~/customize_changeset_uuid|post_type|admin/) || m[:pv].nil?||m["25%"].nil?||m["50%"].nil?||m["75%"].nil?||m["100%"].nil? || (m[:pv].to_i==0)||(m["25%"].to_i==0)||(m["50%"].to_i==0)||(m["75%"].to_i==0)||(m["100%"].to_i==0)
-    # } if profile_id = "147896085"
-    byebug
+    @ok.delete_if { |k, m|
+      (k=~/customize_changeset_uuid|post_type|admin/) || m[:pv].nil?||m["25%"].nil?||m["50%"].nil?||m["75%"].nil?||m["100%"].nil? || (m[:pv].to_i==0)||(m["25%"].to_i==0)||(m["50%"].to_i==0)||(m["75%"].to_i==0)||(m["100%"].to_i==0)
+    } if profile_id = "147896085"
 
     # csv = "列標籤,PV,25%,50%,75%,100%,總計,到50%的留存率,到75%的留存率\n"
     # map.each do |k, m|
