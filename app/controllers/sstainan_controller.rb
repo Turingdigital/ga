@@ -14,7 +14,9 @@ class SstainanController < ApplicationController
     pageview = @analytics.sstainan_pageview(profile_id, start_date, end_date)
     pageview = pageview["rows"]
     map = {}
-    pageview.each {|p| map[p.first]= {pv: p[1]} }
+    pageview.each {|p|
+      map[p.first]= {pv: p[2], title: p[1], avgTimeOnPage: p[3]} 
+    }
     loop do
       break if result["rows"].nil?
 

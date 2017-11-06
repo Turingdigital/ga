@@ -821,9 +821,9 @@ class Analytics #< BaseCli
   end
 
   def sstainan_pageview(profile_id, _start="7daysAgo", _end="yesterday", start_index=nil)
-    metrics = %w( ga:pageviews )
+    metrics = %w( ga:pageviews ga:avgTimeOnPage )
 
-    dimensions = %w( ga:pagePath )
+    dimensions = %w( ga:pagePath ga:pageTitle )
     sort = %w( -ga:pageviews )
     filters = nil #{}"ga:eventCategory==滾軸事件"
     segment = nil

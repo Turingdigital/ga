@@ -1,6 +1,9 @@
 <%= form_tag(sstainan_path, method: :get) do %>
-  開始日期：<%= text_field_tag 'start_date' %>範例：2017-09-03<br/>
-  結束日期：<%= text_field_tag 'end_date' %>範例：2017-09-09<br/>
+  <% pre_month = Date.today.prev_month %>
+  <% pre_month_first_day = Date.civil(pre_month.year, pre_month.month, 1).strftime('%F') %>
+  <% pre_month_last_day = Date.civil(pre_month.year, pre_month.month, -1).strftime('%F') %>
+  開始日期：<%= text_field_tag 'start_date', pre_month_first_day %>範例：<%= pre_month_first_day %><br/>
+  結束日期：<%= text_field_tag 'end_date', pre_month_last_day %>範例：<%= pre_month_last_day %><br/>
   <%= text_field_tag 'profile_id', @profile_id, type: "hidden" %>
   <%= submit_tag '送出' %>(預設7天前至昨天)
 <% end %>
@@ -9,6 +12,8 @@
   <tr>
     <th>列標籤</th>
     <th>PV</th>
+    <th>Title</th>
+    <th>停留時間</th>
     <th>25%</th>
     <th>50%</th>
     <th>75%</th>
@@ -22,6 +27,8 @@
   <tr>
     <td><%= k %></td>
     <td><%= m[:pv] %></td>
+    <td><%= m[:title] %></td>
+    <td><%= '%.2f' % m[:avgTimeOnPage].to_f %></td>
     <td><%= m["25%"] %></td>
     <td><%= m["50%"] %></td>
     <td><%= m["75%"] %></td>
