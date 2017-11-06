@@ -8,8 +8,8 @@ class SstainanController < ApplicationController
 
 
     pre_month = Date.today.prev_month
-    @pre_month_first_day = Date.civil(pre_month.year, pre_month.month, 1).strftime('%F')
-    @pre_month_last_day = Date.civil(pre_month.year, pre_month.month, -1).strftime('%F')
+    @pre_month_first_day = params["start_date"]|| Date.civil(pre_month.year, pre_month.month, 1).strftime('%F')
+    @pre_month_last_day = params["end_date"]||Date.civil(pre_month.year, pre_month.month, -1).strftime('%F')
 
     all_data = []
     start_index = 1
@@ -43,6 +43,13 @@ class SstainanController < ApplicationController
     @ok.delete_if { |k, m|
       (k=~/customize_changeset_uuid|post_type|admin/) || m[:pv].nil?||m["25%"].nil?||m["50%"].nil?||m["75%"].nil?||m["100%"].nil? || (m[:pv].to_i==0)||(m["25%"].to_i==0)||(m["50%"].to_i==0)||(m["75%"].to_i==0)||(m["100%"].to_i==0)
     } if profile_id = "147896085"
+
+    @ok.each {|k, m|
+      m["25%"] = m[:pv] if m[:pv].to_i < m["25%"].to_i
+      m["50%"] = m[:pv] if m[:pv].to_i < m["50%"].to_i
+      m["75%"] = m[:pv] if m[:pv].to_i < m["75%"].to_i
+      m["100%"] = m[:pv] if m[:pv].to_i < m["100%"].to_i
+    }
 
     # csv = "列標籤,PV,25%,50%,75%,100%,總計,到50%的留存率,到75%的留存率\n"
     # map.each do |k, m|
