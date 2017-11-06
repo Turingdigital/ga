@@ -6,16 +6,21 @@ class SstainanController < ApplicationController
     profile_id = params[:profile_id] # "147896085" # 妳好南搞
     @profile_id = profile_id
 
+
+    pre_month = Date.today.prev_month
+    @pre_month_first_day = Date.civil(pre_month.year, pre_month.month, 1).strftime('%F')
+    @pre_month_last_day = Date.civil(pre_month.year, pre_month.month, -1).strftime('%F')
+
     all_data = []
     start_index = 1
-    start_date = params["start_date"]||"7daysAgo"
-    end_date = params["end_date"]||"yesterday"
+    start_date = params["start_date"]||@pre_month_first_day
+    end_date = params["end_date"]||@pre_month_last_day
     result = @analytics.sstainan(profile_id, start_date, end_date)
     pageview = @analytics.sstainan_pageview(profile_id, start_date, end_date)
     pageview = pageview["rows"]
     map = {}
     pageview.each {|p|
-      map[p.first]= {pv: p[2], title: p[1], avgTimeOnPage: p[3]} 
+      map[p.first]= {pv: p[2], title: p[1], avgTimeOnPage: p[3]}
     }
     loop do
       break if result["rows"].nil?

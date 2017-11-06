@@ -1,11 +1,8 @@
 <%= form_tag(sstainan_path, method: :get) do %>
-  <% pre_month = Date.today.prev_month %>
-  <% pre_month_first_day = Date.civil(pre_month.year, pre_month.month, 1).strftime('%F') %>
-  <% pre_month_last_day = Date.civil(pre_month.year, pre_month.month, -1).strftime('%F') %>
-  開始日期：<%= text_field_tag 'start_date', pre_month_first_day %>範例：<%= pre_month_first_day %><br/>
-  結束日期：<%= text_field_tag 'end_date', pre_month_last_day %>範例：<%= pre_month_last_day %><br/>
+  開始日期：<%= text_field_tag 'start_date', @pre_month_first_day %>範例：<%= @pre_month_first_day %><br/>
+  結束日期：<%= text_field_tag 'end_date', @pre_month_last_day %>範例：<%= @pre_month_last_day %><br/>
   <%= text_field_tag 'profile_id', @profile_id, type: "hidden" %>
-  <%= submit_tag '送出' %>(預設7天前至昨天)
+  <%= submit_tag '送出' %><br/><b>(預設上個月1號至月底)</b>
 <% end %>
 <br/>
 <table class="table table-striped table-hover">
