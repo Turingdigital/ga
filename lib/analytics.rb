@@ -831,6 +831,17 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  def myjapanHK_auto(profile_id, _start="yesterday", _end="yesterday", start_index=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventAction ga:eventLabel ga:dimension1 )
+    sort = nil # %w( -ga:pageviews )
+    filters = "ga:eventCategory==會員註冊" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil
+    # start_index = 1001
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil
       caller_method_name ||= caller[0][/`.*'/][1..-2]
