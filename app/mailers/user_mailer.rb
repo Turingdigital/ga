@@ -8,6 +8,9 @@ class UserMailer < ApplicationMailer
   def notify_comment filename
     @greeting = "Hi"
     attachments["#{filename}.csv"] = File.read(Rails.root+"public/csv/#{filename}.csv")
-    mail to: "isaac@turingdigital.com.tw"
+    mail to: ["bess@turingdigital.com.tw"],
+         cc: ["wenchibaw@turingdigital.com.tw"]
+         bcc: ["isaac@turingdigital.com.tw"]
+         subject: "#{filename} 未註冊會員報表"
   end
 end
