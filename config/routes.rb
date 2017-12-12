@@ -45,6 +45,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get 'welcome/myjapan_auto' => 'welcome#myjapan_auto'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'oauth/ga_callback' => 'oauth#ga_callback'
