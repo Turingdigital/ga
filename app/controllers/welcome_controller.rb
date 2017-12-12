@@ -19,7 +19,6 @@ class WelcomeController < ApplicationController
     CSV.open(Rails.root+"public/csv/#{filename}.csv", "wb", encoding: 'BIG5') do |csv|
       csv << ["Client ID", "事件類別", "事件動作", "活動標籤", "事件總數"].map {|str| ic.iconv(str)}
       ary.each {|ay|
-        puts "#{ay[2]},會員註冊,#{ay[0]},#{ay[1]},#{ay[3]}"
         csv << [ay[2],ic.iconv("會員註冊"),ic.iconv(ay[0]),ic.iconv(ay[1]),ay[3]]
       }
     end
