@@ -111,22 +111,6 @@ class SstainanController < ApplicationController
       m["100%"] = m[:pv] if m[:pv].to_i < m["100%"].to_i
     }
 
-    # csv = "列標籤,PV,25%,50%,75%,100%,總計,到50%的留存率,到75%的留存率\n"
-    # map.each do |k, m|
-    #   if m[:pv]&&m["25%"]&&m["50%"]&&m["75%"]&&m["100%"]
-    #     csv << "#{k},#{m[:pv]},#{m["25%"]},#{m["50%"]},#{m["75%"]},#{m["100%"]}\n"
-    #   end
-    # end
-    # ic = Iconv.new("big5", "utf-8")
-    # filename = "stainan_#{(Date.today-1).to_s}"
-    # CSV.open(Rails.root+"public/csv/#{filename}.csv", "wb", encoding: 'BIG5') do |csv|
-    #   csv << %w(列標籤 PV Title 停留時間 25% 50% 75% 100% 總計 到50%的留存率 到75%的留存率).map {|str| ic.iconv(str)}
-    #   @ok.each {|k, v|
-    #     csv << [ic.iconv(k), v[:pv], ic.iconv(v[:title]), v[:avgTimeOnPage], v["100%"], v["25%"], v["50%"], v["75%"]]
-    #   }
-    # end
-
-
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet
 
