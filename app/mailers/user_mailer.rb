@@ -13,4 +13,12 @@ class UserMailer < ApplicationMailer
          cc: ["allen@myday.com.tw", "jessie_chang@myday.com.tw", "bess@turingdigital.com.tw", "dennis@turingdigital.com.tw"],
          subject: "圖靈05.My JAPAN HK 未註冊會員報表"
   end
+
+  def stainan filename
+    @filename = filename
+    attachments["#{filename}.xls"] = File.read(Rails.root+"public/csv/#{filename}.xls")
+    mail bcc: ["isaac@turingdigital.com.tw"],
+         to: ["bess@turingdigital.com.tw"],
+         subject: "圖靈01.妳好南搞滾軸事件報表"
+  end
 end

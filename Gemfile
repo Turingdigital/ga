@@ -79,3 +79,5 @@ gem 'whenever', :require => false
 
 gem 'kaminari'
 gem 'sidekiq'
+gem "roo", "~> 2.7.0"
+gem 'roo-xls'

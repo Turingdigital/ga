@@ -228,6 +228,14 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (2.1.0)
+    roo (2.7.1)
+      nokogiri (~> 1)
+      rubyzip (~> 1.1, < 2.0.0)
+    roo-xls (1.0.0)
+      nokogiri
+      roo (>= 2.0.0beta1, < 3)
+      spreadsheet (> 0.9.0)
+    ruby-ole (1.2.12)
     rubyzip (1.2.0)
     safe_yaml (1.0.4)
     sass (3.4.22)
@@ -250,6 +258,8 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    spreadsheet (1.1.4)
+      ruby-ole (>= 1.0)
     spring (1.7.1)
     sprockets (3.6.0)
       concurrent-ruby (~> 1.0)
@@ -310,6 +320,8 @@ DEPENDENCIES
   redis
   redis-session-store
   rest-client (~> 1.8.0)
+  roo (~> 2.7.0)
+  roo-xls
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   sidekiq
