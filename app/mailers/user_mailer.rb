@@ -11,7 +11,7 @@ class UserMailer < ApplicationMailer
     mail bcc: ["isaac@turingdigital.com.tw"],
          to: ["pauline_huang@myday.com.tw"],
          cc: ["allen@myday.com.tw", "jessie_chang@myday.com.tw", "bess@turingdigital.com.tw", "dennis@turingdigital.com.tw"],
-         subject: "圖靈05.My JAPAN HK 未註冊會員報表"
+         subject: "圖靈05. MYJAPAN HK未註冊會員報表"
   end
 
   def stainan filename
