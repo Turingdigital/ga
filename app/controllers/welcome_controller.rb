@@ -18,7 +18,8 @@ class WelcomeController < ApplicationController
     # ary.each {|ay| puts "#{ay[2]},會員註冊,#{ay[0]},#{ay[1]},#{ay[3]}"}
 
     ic = Iconv.new("big5", "utf-8")
-    filename = "myjapan_#{(Date.today-1).to_s}"
+    date_str = (Date.today-1).to_s
+    filename = "myjapan_#{date_str}"
     CSV.open(Rails.root+"public/csv/#{filename}.csv", "wb", encoding: 'BIG5') do |csv|
       csv << ["Client ID", "事件類別", "事件動作", "活動標籤", "事件總數"].map {|str| ic.iconv(str)}
       ary.each {|ay|
@@ -26,7 +27,7 @@ class WelcomeController < ApplicationController
       }
     end
 
-    UserMailer.notify_comment(filename).deliver_now!
+    UserMailer.notify_comment(filename, date_str).deliver_now!
   end
 end
 
