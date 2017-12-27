@@ -1,0 +1,43 @@
+<%= form_tag(sunmailife_path, method: :get) do %>
+  開始日期：<%= text_field_tag 'start_date', @pre_month_first_day %>範例：<%= @pre_month_first_day %><br/>
+  結束日期：<%= text_field_tag 'end_date', @pre_month_last_day %>範例：<%= @pre_month_last_day %><br/>
+  <%= text_field_tag 'profile_id', @profile_id, type: "hidden" %>
+  <%= submit_tag '送出' %><br/><b>(預設上個月1號至月底)</b>
+<% end %>
+<br/>
+<%#= link_to "下載CSV", sunmailife_download_path %>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>列標籤</th>
+    <th>PV</th>
+    <th>Title</th>
+    <th>停留時間</th>
+    <th>25%</th>
+    <th>50%</th>
+    <th>75%</th>
+    <th>100%</th>
+    <th>總計</th>
+    <th>到50%的留存率</th>
+    <th>到75%的留存率</th>
+  </tr>
+<% @ok.each do |k, m|%>
+  <% m.each do |k1, m1|%>
+    <%# if !(k=~/customize_changeset_uuid|post_type|admin/) && m[:pv]&&m["25%"]&&m["50%"]&&m["75%"]&&m["100%"] && (m[:pv].to_i!=0)&&(m["25%"].to_i!=0)&&(m["50%"].to_i!=0)&&(m["75%"].to_i!=0)&&(m["100%"].to_i!=0)%>
+    <tr>
+      <td><%= k %></td>
+      <td><%= m1[:pv] %></td>
+      <td><%= m1[:title] %></td>
+      <td><%= '%.2f' % m1[:avgTimeOnPage].to_f %></td>
+      <td><%= m1["25%"] %></td>
+      <td><%= m1["50%"] %></td>
+      <td><%= m1["75%"] %></td>
+      <td><%= m1["100%"] %></td>
+
+      <td><%= m1["25%"].to_i+m1["50%"].to_i+m1["75%"].to_i+m1["100%"].to_i %></td>
+      <td><%= '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100) %>%</td>
+      <td><%= '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100) %>%</td>
+    </tr>
+    <%# end %>
+  <% end %>
+<% end %>
+</table>

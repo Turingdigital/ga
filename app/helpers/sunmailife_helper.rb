@@ -1,0 +1,2 @@
+module SunmailifeHelper
+end

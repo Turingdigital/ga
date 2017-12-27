@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313085107) do
+ActiveRecord::Schema.define(version: 20171227095134) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -42,6 +42,29 @@ ActiveRecord::Schema.define(version: 20170313085107) do
   end
 
   add_index "checkgas", ["user_id"], name: "index_checkgas_on_user_id"
+
+  create_table "demos", force: :cascade do |t|
+    t.text     "ecommerce"
+    t.string   "containerid"
+    t.string   "gatc"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "filterforms", force: :cascade do |t|
+    t.integer  "user_id"
+    t.text     "infojson"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "filterforms", ["user_id"], name: "index_filterforms_on_user_id"
+
+  create_table "filters", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "foos", force: :cascade do |t|
     t.string   "title"
@@ -102,6 +125,26 @@ ActiveRecord::Schema.define(version: 20170313085107) do
 
   add_index "goals", ["user_id"], name: "index_goals_on_user_id"
 
+  create_table "myday_hosts", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "myday_sitemaps", force: :cascade do |t|
+    t.text     "url"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "host_id"
+  end
+
+  add_index "myday_sitemaps", ["end_date"], name: "index_myday_sitemaps_on_end_date"
+  add_index "myday_sitemaps", ["host_id"], name: "index_myday_sitemaps_on_host_id"
+  add_index "myday_sitemaps", ["start_date"], name: "index_myday_sitemaps_on_start_date"
+  add_index "myday_sitemaps", ["url"], name: "index_myday_sitemaps_on_url"
+
   create_table "page_gas", force: :cascade do |t|
     t.text     "code"
     t.boolean  "isWorking"
@@ -131,6 +174,16 @@ ActiveRecord::Schema.define(version: 20170313085107) do
 
   add_index "pages", ["checkga_id"], name: "index_pages_on_checkga_id"
   add_index "pages", ["url"], name: "index_pages_on_url"
+
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
 
   create_table "testings", force: :cascade do |t|
     t.string   "title"

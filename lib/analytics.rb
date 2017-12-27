@@ -831,6 +831,17 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  def sunamilife(profile_id, _start="7daysAgo", _end="yesterday", start_index=nil)
+    metrics = %w( ga:totalEvents )
+
+    dimensions = %w( ga:eventLabel ga:pagePath ga:pageTitle )
+    sort = nil # %w(-ga:uniqueEvents)
+    filters = "ga:eventCategory==滾軸事件"
+    segment = nil
+    # start_index = 1001
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   def myjapanHK_auto(profile_id, _start="yesterday", _end="yesterday", start_index=nil)
     metrics = %w( ga:totalEvents )
 

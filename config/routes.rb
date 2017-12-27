@@ -62,6 +62,9 @@ Rails.application.routes.draw do
   get 'sstainan/send_mail' => 'sstainan#send_mail'
   get 'sstainan/download' => 'sstainan#download'
 
+  get 'sunmailife' => 'sunmailife#index'
+  get 'sunmailife/download' => 'sunmailife#download'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
