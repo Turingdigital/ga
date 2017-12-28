@@ -68,14 +68,14 @@ class SunmailifeController < ApplicationController
           m1[:pv],
           m1[:title],
           '%.2f' % m1[:avgTimeOnPage].to_f,
-          m1["25%"],
-          m1["50%"],
-          m1["75%"],
-          m1["100%"],
+          m1["25%"]||0,
+          m1["50%"]||0,
+          m1["75%"]||0,
+          m1["100%"]||0,
 
           m1["25%"].to_i+m1["50%"].to_i+m1["75%"].to_i+m1["100%"].to_i,
-          '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100),
-          '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100),
+          m1[:pv]==0 ? 0 : '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100),
+          m1[:pv]==0 ? 0 : '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100),
         ]
       end
     end
