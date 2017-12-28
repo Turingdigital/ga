@@ -74,8 +74,8 @@ class SunmailifeController < ApplicationController
           m1["100%"]||0,
 
           m1["25%"].to_i+m1["50%"].to_i+m1["75%"].to_i+m1["100%"].to_i,
-          m1[:pv]==0 ? 0 : '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100),
-          m1[:pv]==0 ? 0 : '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100),
+          m1[:pv]=="0" ? 0 : '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100),
+          m1[:pv]=="0" ? 0 : '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100),
         ]
       end
     end
