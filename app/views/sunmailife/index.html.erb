@@ -5,7 +5,9 @@
   <%= submit_tag '送出' %><br/><b>(預設上個月1號至月底)</b>
 <% end %>
 <br/>
-<%#= link_to "下載CSV", sunmailife_download_path %>
+<%= link_to sunmailife_download_path do %>
+  <button type="button" class="btn btn-success">下載CSV</button>
+<% end %>
 <table class="table table-striped table-hover">
   <tr>
     <th>列標籤</th>

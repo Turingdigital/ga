@@ -2,7 +2,7 @@ class SunmailifeController < ApplicationController
   def index
     # current_user = User.find(38)# if !current_user
     @analytics = Analytics.new current_user
-    profile_id = params[:profile_id] # "147896085" # 妳好南搞
+    profile_id = params[:profile_id] || "147896085" # 妳好南搞
     @profile_id = profile_id
 
 
@@ -35,8 +35,7 @@ class SunmailifeController < ApplicationController
     end
 
     all_data.each do |d|
-      # byebug
-      if map[d[1]]# && map[d[1]][d[0]]
+      if map[d[1]] && map[d[1]][d[2]] # && map[d[1]][d[0]]
         map[d[1]][d[2]][d[0]] = d.last
       end
       # break
@@ -49,7 +48,9 @@ class SunmailifeController < ApplicationController
         m1["50%"] = m1[:pv] if m1[:pv].to_i < m1["50%"].to_i
         m1["75%"] = m1[:pv] if m1[:pv].to_i < m1["75%"].to_i
         m1["100%"] = m1[:pv] if m1[:pv].to_i < m1["100%"].to_i
+        @ok[k].delete(k1) if @ok[k][k1]["25%"].nil?
       }
+      @ok.delete(k) if @ok[k].empty?
     }
     session[:ok] = @ok
   end
@@ -59,7 +60,6 @@ class SunmailifeController < ApplicationController
     # redirect_to :back #sstainan_path
     # send_data @users.to_csv, filename: "users-#{Date.today}.csv"
     @ok = session[:ok]
-    byebug
     ary = [["列標籤", "PV", "Title", "停留時間", "25%", "50%", "75%", "100%", "總計", "到50%的留存率", "到75%的留存率"]]
     @ok.each do |k, m|
       m.each do |k1, m1|
@@ -79,6 +79,19 @@ class SunmailifeController < ApplicationController
         ]
       end
     end
-    send_data ary.to_csv, filename: "sunmailife.csv"
+
+    book = Spreadsheet::Workbook.new
+    sheet1 = book.create_worksheet
+
+    i = 0
+    ary.each do |row|
+      sheet1.row(i).replace(row)
+      i += 1
+    end
+
+    @time_now = Time.now.to_f
+    filename = Rails.root+"public/csv/result#{@time_now}.xls"
+    book.write(filename)
+    redirect_to "/csv/result#{@time_now}.xls"
   end
 end
