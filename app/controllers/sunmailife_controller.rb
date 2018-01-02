@@ -37,13 +37,23 @@ class SunmailifeController < ApplicationController
     all_data.each do |d|
       if map[d[1]] && map[d[1]][d[2]] # && map[d[1]][d[0]]
         map[d[1]][d[2]][d[0]] = d.last
+        # byebug if d[1]=='/index.php?s=confirm&property=twtai31188&confirmation=dEuR9rx5k810TwSN&bh=645617f6e2137c83bd1a422549d95dcac396e27a4904ba27193978cba9994edd7c8c5427df576cbc7b1593a5602336f851af3058c2a42c6827ef733ee2b964a7&arrival=2017-12-31&departure=2018-01-01&adults1=2&adults2=2&children1=0&childrenAges1=&children2=0&rooms=2&locale=zh_Hant_HK&currency=TWD&stid=glkka0txo&showPromotions=3&language=zh&Hotelnames=ASIATWHTLSNTLifeHote&hname=ASIATWHTLSNTLifeHote&arrivalDateValue=2017-12-31&frommonth=12&fromday=31&fromyear=2017&departureDateValue=2018-01-01&tomonth=01&today=01&toyear=2018&adulteresa=2&nbAdultsValue=2&redir=BIZ-so5523q0o4&rt=1514634948'
       end
       # break
     end
-
+# @ok['/index.php?s=confirm&property=twtai31188&confirmation=dEuR9rx5k810TwSN&bh=645617f6e2137c83bd1a422549d95dcac396e27a4904ba27193978cba9994edd7c8c5427df576cbc7b1593a5602336f851af3058c2a42c6827ef733ee2b964a7&arrival=2017-12-31&departure=2018-01-01&adults1=2&adults2=2&children1=0&childrenAges1=&children2=0&rooms=2&locale=zh_Hant_HK&currency=TWD&stid=glkka0txo&showPromotions=3&language=zh&Hotelnames=ASIATWHTLSNTLifeHote&hname=ASIATWHTLSNTLifeHote&arrivalDateValue=2017-12-31&frommonth=12&fromday=31&fromyear=2017&departureDateValue=2018-01-01&tomonth=01&today=01&toyear=2018&adulteresa=2&nbAdultsValue=2&redir=BIZ-so5523q0o4&rt=1514634948']
     @ok = map
+    # byebug
     @ok.each {|k, m|
       m.each {|k1, m1|
+        if @ok[k][k1]["25%"].nil?
+          @ok[k].delete(k1)
+          next
+        end
+        if m1[:pv]=='0'
+          @ok[k].delete(k1)
+          next
+        end
         m1["25%"] = m1[:pv] if m1[:pv].to_i < m1["25%"].to_i
         m1["50%"] = m1[:pv] if m1[:pv].to_i < m1["50%"].to_i
         m1["75%"] = m1[:pv] if m1[:pv].to_i < m1["75%"].to_i
@@ -52,6 +62,7 @@ class SunmailifeController < ApplicationController
       }
       @ok.delete(k) if @ok[k].empty?
     }
+    # byebug
     # session[:ok] = @ok
     session[:ok] = save_result(@ok)
   end

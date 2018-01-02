@@ -872,7 +872,7 @@ class Analytics #< BaseCli
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
       result = get_cached(profile_id, _start, _end, caller_method_name)
-      # return result if result && !(caller_method_name =~ /page1|sstainan/)
+      return result if result && !(caller_method_name =~ /page1|sstainan/)
 
       authorize
 
