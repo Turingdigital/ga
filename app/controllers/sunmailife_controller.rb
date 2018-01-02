@@ -52,14 +52,58 @@ class SunmailifeController < ApplicationController
       }
       @ok.delete(k) if @ok[k].empty?
     }
-    session[:ok] = @ok
+    # session[:ok] = @ok
+    session[:ok] = save_result(@ok)
   end
 
   def download
+
+    redirect_to session[:ok]
+
     # byebug
     # redirect_to :back #sstainan_path
     # send_data @users.to_csv, filename: "users-#{Date.today}.csv"
-    @ok = session[:ok]
+
+
+    # @ok = session[:ok]
+    # ary = [["列標籤", "PV", "Title", "停留時間", "25%", "50%", "75%", "100%", "總計", "到50%的留存率", "到75%的留存率"]]
+    # @ok.each do |k, m|
+    #   m.each do |k1, m1|
+    #     ary << [
+    #       k,
+    #       m1[:pv],
+    #       m1[:title],
+    #       '%.2f' % m1[:avgTimeOnPage].to_f,
+    #       m1["25%"]||0,
+    #       m1["50%"]||0,
+    #       m1["75%"]||0,
+    #       m1["100%"]||0,
+    #
+    #       m1["25%"].to_i+m1["50%"].to_i+m1["75%"].to_i+m1["100%"].to_i,
+    #       m1[:pv]=="0" ? 0 : '%.2f' % (m1["50%"].to_f / m1[:pv].to_f * 100),
+    #       m1[:pv]=="0" ? 0 : '%.2f' % (m1["75%"].to_f / m1[:pv].to_f * 100),
+    #     ]
+    #   end
+    # end
+    #
+    # book = Spreadsheet::Workbook.new
+    # sheet1 = book.create_worksheet
+    #
+    # i = 0
+    # ary.each do |row|
+    #   sheet1.row(i).replace(row)
+    #   i += 1
+    # end
+    #
+    # @time_now = Time.now.to_f
+    # filename = Rails.root+"public/csv/result#{@time_now}.xls"
+    # book.write(filename)
+    # redirect_to "/csv/result#{@time_now}.xls"
+  end
+
+  private
+  def save_result data
+    @ok = data
     ary = [["列標籤", "PV", "Title", "停留時間", "25%", "50%", "75%", "100%", "總計", "到50%的留存率", "到75%的留存率"]]
     @ok.each do |k, m|
       m.each do |k1, m1|
@@ -92,6 +136,6 @@ class SunmailifeController < ApplicationController
     @time_now = Time.now.to_f
     filename = Rails.root+"public/csv/result#{@time_now}.xls"
     book.write(filename)
-    redirect_to "/csv/result#{@time_now}.xls"
+    return "/csv/result#{@time_now}.xls"
   end
 end
