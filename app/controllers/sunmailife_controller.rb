@@ -15,7 +15,7 @@ class SunmailifeController < ApplicationController
     start_date = params["start_date"]||@pre_month_first_day
     end_date = params["end_date"]||@pre_month_last_day
 
-    pageview = @analytics.sstainan_pageview(profile_id, start_date, end_date)
+    pageview = @analytics.sstainan_pageview(profile_id, start_date, end_date, 1)
     pageview = pageview["rows"]
     map = {}
     pageview.each {|p|
@@ -44,6 +44,7 @@ class SunmailifeController < ApplicationController
 # @ok['/index.php?s=confirm&property=twtai31188&confirmation=dEuR9rx5k810TwSN&bh=645617f6e2137c83bd1a422549d95dcac396e27a4904ba27193978cba9994edd7c8c5427df576cbc7b1593a5602336f851af3058c2a42c6827ef733ee2b964a7&arrival=2017-12-31&departure=2018-01-01&adults1=2&adults2=2&children1=0&childrenAges1=&children2=0&rooms=2&locale=zh_Hant_HK&currency=TWD&stid=glkka0txo&showPromotions=3&language=zh&Hotelnames=ASIATWHTLSNTLifeHote&hname=ASIATWHTLSNTLifeHote&arrivalDateValue=2017-12-31&frommonth=12&fromday=31&fromyear=2017&departureDateValue=2018-01-01&tomonth=01&today=01&toyear=2018&adulteresa=2&nbAdultsValue=2&redir=BIZ-so5523q0o4&rt=1514634948']
     @ok = map
     # byebug
+
     @ok.each {|k, m|
       m.each {|k1, m1|
         if @ok[k][k1]["25%"].nil?
@@ -64,6 +65,7 @@ class SunmailifeController < ApplicationController
     }
     # byebug
     # session[:ok] = @ok
+
     session[:ok] = save_result(@ok)
   end
 

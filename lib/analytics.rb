@@ -854,15 +854,15 @@ class Analytics #< BaseCli
   end
 
   private
-    def get_cached profile_id, _start, _end, caller_method_name=nil
+    def get_cached profile_id, _start, _end, caller_method_name=nil, start_index
       caller_method_name ||= caller[0][/`.*'/][1..-2]
-      result = @redis.get("#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}")
+      result = @redis.get("#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}:#{start_index}")
       return result ? JSON.parse(result) : nil
     end
 
-    def set_cached result, profile_id, _start, _end, caller_method_name=nil
+    def set_cached result, profile_id, _start, _end, caller_method_name=nil, start_index=1
       caller_method_name ||= caller[0][/`.*'/][1..-2]
-      redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}"
+      redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}:#{start_index}"
       @redis.set redis_key, result.to_json
       @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
     end
@@ -871,7 +871,7 @@ class Analytics #< BaseCli
 
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
-      result = get_cached(profile_id, _start, _end, caller_method_name)
+      result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
       return result if result && !(caller_method_name =~ /page1|sstainan/)
 
       authorize
@@ -889,8 +889,8 @@ class Analytics #< BaseCli
                             metrics.join(','),
                             arg)
 
-      set_cached(result, profile_id, _start, _end, caller_method_name)
-      return get_cached(profile_id, _start, _end, caller_method_name)
+      set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
+      return get_cached(profile_id, _start, _end, caller_method_name, start_index)
     end
 end
 
