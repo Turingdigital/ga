@@ -8,6 +8,29 @@
 namespace :foo do
 
   desc "Testing"
+
+  task :ok => :environment do
+    (1..12).each do |n|
+      date = Date.new(2018, 1, n)
+      puts "#{date} -> #{prior_sunday(date)}"
+    end
+  end
+
+  def prior_sunday(date)
+    days_before = (date.wday + 6) % 7 + 1
+    date.to_date - days_before
+  end
+
+  def prior_saturday(date)
+    days_before = (date.wday + 0) % 7 + 1
+    date.to_date - days_before
+  end
+
+  def prior_friday(date)
+    days_before = (date.wday + 1) % 7 + 1
+    date.to_date - days_before
+  end
+
   # task :rebuild => ["db:drop", "db:setup", :fake]
 # <a id="LinkButton1" href="javascript:__doPostBack('LinkButton1','')">確定送出</a>
 

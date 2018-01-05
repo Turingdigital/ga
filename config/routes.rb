@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'welcome/myjapan_auto' => 'welcome#myjapan_auto'
+  get 'welcome/myday_b01' => 'welcome#myday_b01'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
