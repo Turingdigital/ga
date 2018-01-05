@@ -64,14 +64,14 @@ class WelcomeController < ApplicationController
       # sum[arr[0]] += arr[-1].to_i
     end
     # filename = (save_result report, sum, start_date, end_date)
-    filename = (save_result report, start_date, end_date)
-    date_str = "#{start_date_date.strftime('%m/%d')}~#{end_date_date.strftime('%m/%d')}"
+    date_str = "#{start_date_date.strftime('%m_%d')}~#{end_date_date.strftime('%m_%d')}"
+    filename = (save_result report, date_str) #, start_date, end_date)
     UserMailer.myday_b01(filename, date_str).deliver_now!
   end
 
   private
   # def save_result data, sum, start_date, end_date
-  def save_result data, start_date, end_date
+  def save_result data, date_str # start_date, end_date
     ary = [["加總 - 不重複事件", "欄標籤"],
            [
              "列標籤",
@@ -148,9 +148,9 @@ class WelcomeController < ApplicationController
     end
 
     @time_now = Time.now.to_f
-    filename = Rails.root+"public/csv/myday_b01_#{start_date}_#{end_date}.xls"
+    filename = Rails.root+"public/csv/圖靈#{date_str}-MYDAY未註冊會員報表.xls"
     book.write(filename)
-    return "myday_b01_#{start_date}_#{end_date}"
+    return "圖靈#{date_str}-MYDAY未註冊會員報表"
   end
 
   private
