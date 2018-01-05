@@ -34,9 +34,10 @@ class WelcomeController < ApplicationController
     u = User.where(email: 'analytics@turingdigital.com.tw').first
     ana = Analytics.new u
     # start_date = prior_sunday(Date.today).strftime('%F')
-    end_date = prior_saturday(Date.today)#.strftime('%F')
-    start_date = (end_date-6).strftime('%F')
-    end_date = end_date.strftime('%F')
+    end_date_date = prior_saturday(Date.today)#.strftime('%F')
+    start_date_date = end_date_date-6
+    start_date = start_date_date.strftime('%F')
+    end_date = end_date_date.strftime('%F')
 
     profile_id = '7525809'
     result = ana.myday_b01(profile_id, start_date, end_date)
@@ -54,21 +55,23 @@ class WelcomeController < ApplicationController
 
     # ary = mj["rows"]
     report = {}
-    sum = {}
+    # sum = {}
     all_data.each do |arr|
       report[arr[2]] = {} if report[arr[2]].nil?
-      sum[arr[0]] = 0 if sum[arr[0]].nil?
+      # sum[arr[0]] = 0 if sum[arr[0]].nil?
       # ["勾選欄位:convstore_get", "OFF", "108533710.1514313304", "1", "1"]
       report[arr[2]][arr[0]] = arr[1]
-      sum[arr[0]] += arr[-1].to_i
+      # sum[arr[0]] += arr[-1].to_i
     end
-    filename = (save_result report, sum, start_date, end_date)
-    date_str = (Date.today-1).to_s
+    # filename = (save_result report, sum, start_date, end_date)
+    filename = (save_result report, start_date, end_date)
+    date_str = "#{start_date_date.strftime('%m/%d')}~#{end_date_date.strftime('%m/%d')}"
     UserMailer.myday_b01(filename, date_str).deliver_now!
   end
 
   private
-  def save_result data, sum, start_date, end_date
+  # def save_result data, sum, start_date, end_date
+  def save_result data, start_date, end_date
     ary = [["加總 - 不重複事件", "欄標籤"],
            [
              "列標籤",
@@ -114,26 +117,26 @@ class WelcomeController < ApplicationController
       ]
     end
 
-    ary << [
-      "總計",
-      sum["勾選欄位:convstore_get"].nil? ? "" : sum["勾選欄位:convstore_get"],
-      sum["編輯欄位:address"].nil? ? "" : sum["編輯欄位:address"],
-      sum["編輯欄位:area"].nil? ? "" : sum["編輯欄位:area"],
-      sum["編輯欄位:check_password"].nil? ? "" : sum["編輯欄位:check_password"],
-      sum["編輯欄位:email"].nil? ? "" : sum["編輯欄位:email"],
-      sum["編輯欄位:mobile"].nil? ? "" : sum["編輯欄位:mobile"],
-      sum["編輯欄位:name"].nil? ? "" : sum["編輯欄位:name"],
-      sum["編輯欄位:password"].nil? ? "" : sum["編輯欄位:password"],
-      sum["編輯欄位:phone"].nil? ? "" : sum["編輯欄位:phone"],
-      sum["編輯欄位:q"].nil? ? "" : sum["編輯欄位:q"],
-      sum["編輯欄位:recommend_code"].nil? ? "" : sum["編輯欄位:recommend_code"],
-      sum["選擇欄位:county"].nil? ? "" : sum["選擇欄位:county"],
-      sum["選擇欄位:day"].nil? ? "" : sum["選擇欄位:day"],
-      sum["選擇欄位:district"].nil? ? "" : sum["選擇欄位:district"],
-      sum["選擇欄位:month"].nil? ? "" : sum["選擇欄位:month"],
-      sum["選擇欄位:sex"].nil? ? "" : sum["選擇欄位:sex"],
-      sum["選擇欄位:year"].nil? ? "" : sum["選擇欄位:year"],
-    ]
+    # ary << [
+    #   "總計",
+    #   sum["勾選欄位:convstore_get"].nil? ? "" : sum["勾選欄位:convstore_get"],
+    #   sum["編輯欄位:address"].nil? ? "" : sum["編輯欄位:address"],
+    #   sum["編輯欄位:area"].nil? ? "" : sum["編輯欄位:area"],
+    #   sum["編輯欄位:check_password"].nil? ? "" : sum["編輯欄位:check_password"],
+    #   sum["編輯欄位:email"].nil? ? "" : sum["編輯欄位:email"],
+    #   sum["編輯欄位:mobile"].nil? ? "" : sum["編輯欄位:mobile"],
+    #   sum["編輯欄位:name"].nil? ? "" : sum["編輯欄位:name"],
+    #   sum["編輯欄位:password"].nil? ? "" : sum["編輯欄位:password"],
+    #   sum["編輯欄位:phone"].nil? ? "" : sum["編輯欄位:phone"],
+    #   sum["編輯欄位:q"].nil? ? "" : sum["編輯欄位:q"],
+    #   sum["編輯欄位:recommend_code"].nil? ? "" : sum["編輯欄位:recommend_code"],
+    #   sum["選擇欄位:county"].nil? ? "" : sum["選擇欄位:county"],
+    #   sum["選擇欄位:day"].nil? ? "" : sum["選擇欄位:day"],
+    #   sum["選擇欄位:district"].nil? ? "" : sum["選擇欄位:district"],
+    #   sum["選擇欄位:month"].nil? ? "" : sum["選擇欄位:month"],
+    #   sum["選擇欄位:sex"].nil? ? "" : sum["選擇欄位:sex"],
+    #   sum["選擇欄位:year"].nil? ? "" : sum["選擇欄位:year"],
+    # ]
 
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet

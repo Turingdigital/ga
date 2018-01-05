@@ -21,7 +21,7 @@ class UserMailer < ApplicationMailer
          to: ["bess@turingdigital.com.tw"],
          # to: ["pauline_huang@myday.com.tw"],
          # cc: ["allen@myday.com.tw", "jessie_chang@myday.com.tw", "bess@turingdigital.com.tw", "dennis@turingdigital.com.tw"],
-         subject: "#{date_str} 圖靈b01. MYDAY未註冊會員報表"
+         subject: "圖靈#{date_str}-MYDAY未註冊會員報表"
   end
 
   def stainan filename
