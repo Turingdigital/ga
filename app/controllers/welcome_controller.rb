@@ -94,7 +94,6 @@ class WelcomeController < ApplicationController
     data.each do |k, m|
       ary << [
         k,
-        m["列標籤"].nil? ? "":m["列標籤"],
         m["勾選欄位:convstore_get"].nil? ? "":m["勾選欄位:convstore_get"],
         m["編輯欄位:address"].nil? ? "":m["編輯欄位:address"],
         m["編輯欄位:area"].nil? ? "":m["編輯欄位:area"],
@@ -117,7 +116,6 @@ class WelcomeController < ApplicationController
 
     ary << [
       "總計",
-      sum["列標籤"].nil? ? "" : sum["列標籤"],
       sum["勾選欄位:convstore_get"].nil? ? "" : sum["勾選欄位:convstore_get"],
       sum["編輯欄位:address"].nil? ? "" : sum["編輯欄位:address"],
       sum["編輯欄位:area"].nil? ? "" : sum["編輯欄位:area"],

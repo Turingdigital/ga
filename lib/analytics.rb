@@ -208,6 +208,7 @@ class Analytics #< BaseCli
           filters: 'ga:eventAction==PromoClick',
           segment: "sessions::condition::ga:eventLabel==#{k}"
         })
+
         unless promo.rows.nil?
           result[promo.rows.first.first] = [0] if result[promo.rows.first.first].nil?
           result[promo.rows.first.first][0] += 1
@@ -858,8 +859,8 @@ class Analytics #< BaseCli
 
     dimensions = %w( ga:eventAction ga:eventLabel ga:dimension2 )
     sort = nil # %w( -ga:pageviews )
-    filters = "ga:eventCategory==會員註冊頁;ga:pagePath=@a_myday/member_form.php;ga:pagePath!@a_myday/login_start.php" # nil #"ga:eventCategory==滾軸事件"
-    segment = nil
+    filters = "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
     # start_index = 1001
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
