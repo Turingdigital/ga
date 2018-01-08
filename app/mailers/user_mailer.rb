@@ -18,9 +18,8 @@ class UserMailer < ApplicationMailer
     @filename = filename
     attachments["#{filename}.xls"] = File.read(Rails.root+"public/csv/#{filename}.xls")
     mail bcc: ["isaac@turingdigital.com.tw"],
-         to: ["bess@turingdigital.com.tw"],
-         # to: ["pauline_huang@myday.com.tw"],
-         # cc: ["allen@myday.com.tw", "jessie_chang@myday.com.tw", "bess@turingdigital.com.tw", "dennis@turingdigital.com.tw"],
+         to: ["pauline_huang@myday.com.tw"],
+         cc: ["allen@myday.com.tw", "bess@turingdigital.com.tw", "dennis@turingdigital.com.tw"],
          subject: "圖靈#{date_str}-MYDAY未註冊會員報表"
   end
 
