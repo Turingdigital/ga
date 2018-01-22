@@ -66,6 +66,8 @@ Rails.application.routes.draw do
   get 'sunmailife' => 'sunmailife#index'
   get 'sunmailife/download' => 'sunmailife#download'
 
+  get 'matrixec' => 'matrixec#index'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
