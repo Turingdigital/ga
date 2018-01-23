@@ -69,6 +69,8 @@ Rails.application.routes.draw do
   get 'matrixec' => 'matrixec#index'
   post 'matrixec' => 'matrixec#post'
 
+  post 'get_ga_data' => 'get_ga_data#get_ga_data'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

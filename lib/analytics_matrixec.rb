@@ -119,6 +119,32 @@ class AnalyticsMatrixec #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
+
+    caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
+
+    result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
+    return result if result && !(caller_method_name =~ /page1|sstainan/)
+
+    authorize
+
+    arg = {}
+    arg[:dimensions] = dimensions.join(',') if dimensions
+    arg[:sort] = sort.join(',') if sort
+    arg[:filters] = filters if filters # 假流量篩sessions
+    arg[:segment] = segment if segment
+    arg[:start_index] = start_index if start_index
+
+    result = @analytics.get_ga_data(
+                          "ga:#{profile_id}",
+                          _start, _end,
+                          metrics.join(','),
+                          arg)
+
+    set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
+    return get_cached(profile_id, _start, _end, caller_method_name, start_index)
+  end
+
   private
     def get_cached profile_id, _start, _end, caller_method_name=nil, start_index
       caller_method_name ||= caller[0][/`.*'/][1..-2]
@@ -131,32 +157,6 @@ class AnalyticsMatrixec #< BaseCli
       redis_key = "#{@user.email}:#{profile_id}:#{_start}:#{_end}:#{caller_method_name}:#{start_index}"
       @redis.set redis_key, result.to_json
       @redis.expire redis_key, GA_DATA_REDIS_EXPIRE_TIME
-    end
-
-    def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
-
-      caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
-
-      # result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
-      # return result if result && !(caller_method_name =~ /page1|sstainan/)
-
-      authorize
-
-      arg = {}
-      arg[:dimensions] = dimensions.join(',') if dimensions
-      arg[:sort] = sort.join(',') if sort
-      arg[:filters] = filters if filters # 假流量篩sessions
-      arg[:segment] = segment if segment
-      arg[:start_index] = start_index if start_index
-
-      result = @analytics.get_ga_data(
-                            "ga:#{profile_id}",
-                            _start, _end,
-                            metrics.join(','),
-                            arg)
-
-      set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
-      return get_cached(profile_id, _start, _end, caller_method_name, start_index)
     end
 end
 
