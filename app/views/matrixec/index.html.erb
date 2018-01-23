@@ -1,14 +1,13 @@
-<% if false %>
-<select id="e1">
-    <option value="AL">Alabama</option>
-    <option value="WY">Wyoming</option>
-</select>
-<script>
-    // $(document).ready(function() {  });
-    $("#e1").select2({
-        theme: "bootstrap",
-        language: "zh-TW"
-    });
-    // $( "#e1" ).select2();
-</script>
+<%= form_tag(matrixec_path) do -%>
+  <!-- <label>GA代碼-資源</label><br>
+  <input type="text" name="matrixec[start_date]" value=""><br> -->
+  <label>GA資料檢視號碼ID</label><br>
+  <input type="text" value="160319413" name="matrixec[profile_id]" placeholder="128329090" required>(ex: 128329090)
+  <hr>
+  <label>開始時間</label><br>
+  <input type="text" value="2017-12-01" name="matrixec[start_date]" placeholder="2017-12-01" required>(ex: 2017-12-01)<br>
+  <label>結束時間</label><br>
+  <input type="text" value="2018-01-01" name="matrixec[end_date]" placeholder="2018-01-01" required>(ex: 2018-01-01)
+  <hr>
+  <%= submit_tag "載載" %>
 <% end %>

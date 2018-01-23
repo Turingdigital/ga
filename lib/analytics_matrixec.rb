@@ -40,7 +40,7 @@ module Authorizer
   end
 end
 
-class Analytics #< BaseCli
+class AnalyticsMatrixec #< BaseCli
 
   # @@OOB_URI = 'http://localhost:3000/oauth/ga_callback'
   # @@CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
@@ -108,14 +108,14 @@ class Analytics #< BaseCli
   end
 
   # 11. 小時年齡熱點
-  def _11
-    metrics = %w( ga:sessions ga:transations ga:transactionRevenue )
+  def _11 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:sessions ga:transactions ga:transactionRevenue )
 
     dimensions = %w( ga:date ga:hour ga:userAgeBracket )
     sort = nil # %w( -ga:pageviews )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
     segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
-    # start_index = 1001
+    start_index = 1
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
@@ -137,8 +137,8 @@ class Analytics #< BaseCli
 
       caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
-      result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
-      return result if result && !(caller_method_name =~ /page1|sstainan/)
+      # result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
+      # return result if result && !(caller_method_name =~ /page1|sstainan/)
 
       authorize
 
