@@ -50,6 +50,8 @@ class GetGaDataController < ActionController::Base
     #   segment,
     #   start_index,
     # )
+    params = params[:query_json] unless params[:query_json].nil?
+    logger.debug(params)
 
     result = ana.get_ga_data(
       params[:profile_id],
