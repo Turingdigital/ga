@@ -56,11 +56,11 @@ class GetGaDataController < ApplicationController
       params[:start],
       params[:end],
       params[:metrics],
-      params[:dimensions].empty? ? nil : params[:dimensions],
+      params[:dimensions].nil? || params[:dimensions].empty? ? nil : params[:dimensions],
       nil, #params[:sort],
-      params[:filters].empty? ? nil : params[:filters],
-      params[:segment].empty? ? nil : params[:segment],
-      params[:start_index].empty? ? nil : params[:start_index]
+      params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
+      params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
+      params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
     )
 
     render json: result.to_json
