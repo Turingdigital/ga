@@ -50,21 +50,35 @@ class GetGaDataController < ActionController::Base
     #   segment,
     #   start_index,
     # )
-    params = params[:query_json] unless params[:query_json].nil?
     logger.debug(params)
+    if params[:query_json].nil?
+      result = ana.get_ga_data(
+        params[:profile_id],
+        params[:start],
+        params[:end],
+        params[:metrics],
+        params[:dimensions].nil? || params[:dimensions].empty? ? nil : params[:dimensions],
+        nil, #params[:sort],
+        params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
+        params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
+        params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
+      )
 
-    result = ana.get_ga_data(
-      params[:profile_id],
-      params[:start],
-      params[:end],
-      params[:metrics],
-      params[:dimensions].nil? || params[:dimensions].empty? ? nil : params[:dimensions],
-      nil, #params[:sort],
-      params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
-      params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
-      params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
-    )
+      render json: result.to_json
+    else
+      result = ana.get_ga_data(
+        params[:query_json][:profile_id],
+        params[:query_json][:start],
+        params[:query_json][:end],
+        params[:query_json][:metrics],
+        params[:query_json][:dimensions].nil? || params[:query_json][:dimensions].empty? ? nil : params[:query_json][:dimensions],
+        nil, #params[:query_json][:sort],
+        params[:query_json][:filters].nil? || params[:query_json][:filters].empty? ? nil : params[:query_json][:filters],
+        params[:query_json][:segment].nil? || params[:query_json][:segment].empty? ? nil : params[:query_json][:segment],
+        params[:query_json][:start_index].nil? || params[:query_json][:start_index].empty? ? nil : params[:query_json][:start_index]
+      )
 
-    render json: result.to_json
+      render json: result.to_json
+    end
   end
 end
