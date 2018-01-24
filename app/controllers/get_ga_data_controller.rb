@@ -57,13 +57,12 @@ class GetGaDataController < ActionController::Base
         params[:start],
         params[:end],
         params[:metrics].split(','),
-        params[:dimensions].nil? || params[:dimensions].empty? ? nil : params[:dimensions].split(','),
+        (params[:dimensions].nil? || params[:dimensions].empty?) ? nil : params[:dimensions].split(','),
         nil, #params[:sort],
         params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
         params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
         params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
       )
-
       render json: result.to_json
     else
       result = ana.get_ga_data(

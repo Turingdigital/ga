@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: MyString
+  hour: MyString
+  age: MyString
+  sessions: 1
+  transactions: 1
+  revenue: 1.5
+  ct: 1.5
+
+two:
+  date: MyString
+  hour: MyString
+  age: MyString
+  sessions: 1
+  transactions: 1
+  revenue: 1.5
+  ct: 1.5

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227095134) do
+ActiveRecord::Schema.define(version: 20180124091431) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -124,6 +124,18 @@ ActiveRecord::Schema.define(version: 20171227095134) do
   end
 
   add_index "goals", ["user_id"], name: "index_goals_on_user_id"
+
+  create_table "matrixec_11s", force: :cascade do |t|
+    t.string   "date"
+    t.string   "hour"
+    t.string   "age"
+    t.integer  "sessions"
+    t.integer  "transactions"
+    t.float    "revenue"
+    t.float    "ct"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "myday_hosts", force: :cascade do |t|
     t.string   "name"
