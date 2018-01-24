@@ -1,4 +1,4 @@
-class GetGaDataController < ApplicationController
+class GetGaDataController < ActionController::Base
   def get_ga_data
     # profile_id=params[:profile_id],
     # _start=params[:start],
