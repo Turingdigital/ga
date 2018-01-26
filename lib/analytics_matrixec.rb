@@ -115,13 +115,14 @@ class AnalyticsMatrixec #< BaseCli
     sort = nil # %w( -ga:pageviews )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
     segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
-    start_index = 1
+    # start_index = 1 if start_index.nil?
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
   def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
-
     caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
+
+    # byebug
 
     result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
     return result if result && !(caller_method_name =~ /page1|sstainan/)
@@ -134,7 +135,7 @@ class AnalyticsMatrixec #< BaseCli
     arg[:filters] = filters if filters # 假流量篩sessions
     arg[:segment] = segment if segment
     arg[:start_index] = start_index if start_index
-
+byebug
     result = @analytics.get_ga_data(
                           "ga:#{profile_id}",
                           _start, _end,

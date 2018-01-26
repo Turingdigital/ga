@@ -16,6 +16,7 @@ class MatrixecController < ApplicationController
 
   def _11 file_name
     profile_id = params[:matrixec][:profile_id]
+    profileid = profile_id
     _start = params[:matrixec][:start_date]
     _end = params[:matrixec][:end_date]
     results = []
@@ -42,21 +43,78 @@ class MatrixecController < ApplicationController
     # revenue:float
     # ct:float
 
-    results.each do |result|
-      result["rows"].each do|row|
-        Matrixec11.create(
-          date:row[0],
-          hour:row[1],
-          age:row[2],
-          sessions:row[3].to_i,
-          transactions:row[4].to_i,
-          revenue:row[5].to_f,
-          ct:row[-2].to_f==0 ? 0 : row[-1].to_f/row[-2].to_f
-        )
-      end
-    end
-    byebug
+    # if false
+      Matrixec11.transaction{
+        Matrixec11.destroy_all
+        results.each do |result|
+          result["rows"].each do|row|
+            Matrixec11.create(
+              date:row[0],
+              hour:row[1],
+              age:row[2],
+              sessions:row[3].to_i,
+              transactions:row[4].to_i,
+              revenue:row[5].to_f,
+              ct:(row[-2].to_f==0 ? 0 : row[-1].to_f/row[-2].to_f),
+              profileid:profileid
+            )
+          end unless result["rows"].nil?
+        end
+      }
+    # end
 
+# rails g migration add_column_profileid_to_matrixec profileid:string:index
+    data = {
+      "小時熱點年齡" => -> {
+        result = [["", Matrixec11.dates(profileid), "總計"].flatten]
+        Matrixec11.ages(profileid).each do |age|
+          result << [age]
+
+          age_total = 0
+          [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+            "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
+              transactions_array = Matrixec11.transactions_array(profileid, hour, age)
+              transactions_array_sum = transactions_array.sum
+              result << [hour, transactions_array, transactions_array.sum].flatten
+              age_total += transactions_array_sum
+          end
+
+          result << ["#{age} 合計"]
+          Matrixec11.dates(profileid).each do |date|
+            result.last << Matrixec11.sum_date_transactions(profileid, date, age)
+          end
+          result.last << age_total
+        end
+        return result
+      }.call
+    }
+    # byebug
+    filename = Rails.root+"public/xls/圖靈#{Time.now.to_f}-小時熱點報表.xls"
+    write_xls filename, data
+    redirect_to method: :index
+      #   re_all = [["",""].concat(dates)<<"總和"]
+      #   ["18-24","25-34","35-44","45-54","55-64","65+"].each {|age|
+      #     sum_date = {}
+      #     ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"].each {|hour|
+      #       re_age_hour = [age, hour]
+      #       sum_hour = 0
+      #       dates.each {|date|
+      #         begin
+      #           re_age_hour << table_1[age][hour][date]
+      #           sum_hour += table_1[age][hour][date].to_i
+      #           sum_date[date] = 0 if sum_date[date].nil?
+      #           sum_date[date] += table_1[age][hour][date].to_i
+      #           # sum_date += table_1[age][hour][date].to_i
+      #         rescue
+      #           re_age_hour << "0"
+      #         end
+      #       }
+      #       re_age_hour << sum_hour
+      #       re_all << re_age_hour
+      #     }
+      #     re_all << (["#{age} 總計", ""].concat(sum_date.values))
+      #   }
+      # }
 
     # rows = []
     # table_1 = {}
@@ -141,7 +199,7 @@ class MatrixecController < ApplicationController
 
   def write_xls filename, data #{sheet_name_1: [rows...], sheet_name_2: [rows...], ...}
     book = Spreadsheet::Workbook.new
-
+    # byebug
     # book = Spreadsheet.open Rails.root+"publick"+file_name
     data.each do |k, ary|
       sheet = book.create_worksheet
