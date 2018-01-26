@@ -135,7 +135,7 @@ class AnalyticsMatrixec #< BaseCli
     arg[:filters] = filters if filters # 假流量篩sessions
     arg[:segment] = segment if segment
     arg[:start_index] = start_index if start_index
-byebug
+    
     result = @analytics.get_ga_data( "ga:#{profile_id}", _start, _end, metrics.join(','), arg)
 
     set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
