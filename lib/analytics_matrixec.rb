@@ -136,11 +136,7 @@ class AnalyticsMatrixec #< BaseCli
     arg[:segment] = segment if segment
     arg[:start_index] = start_index if start_index
 byebug
-    result = @analytics.get_ga_data(
-                          "ga:#{profile_id}",
-                          _start, _end,
-                          metrics.join(','),
-                          arg)
+    result = @analytics.get_ga_data( "ga:#{profile_id}", _start, _end, metrics.join(','), arg)
 
     set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
     return get_cached(profile_id, _start, _end, caller_method_name, start_index)

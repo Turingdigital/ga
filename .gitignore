@@ -9,6 +9,7 @@ capybara-*.html
 /db/dump.rdb
 /public/system
 /public/csv
+/public/xls
 /coverage/
 /spec/tmp
 **.orig

@@ -45,7 +45,7 @@ class MatrixecController < ApplicationController
 
     # if false
       Matrixec11.transaction{
-        Matrixec11.destroy_all
+        # Matrixec11.destroy_all
         results.each do |result|
           result["rows"].each do|row|
             Matrixec11.create(
@@ -63,35 +63,80 @@ class MatrixecController < ApplicationController
       }
     # end
 
+    # 為了在資料庫裡面搜尋
+    _start.gsub!('-', '')
+    _end.gsub!('-', '')
+
 # rails g migration add_column_profileid_to_matrixec profileid:string:index
     data = {
       "小時熱點年齡" => -> {
-        result = [["", Matrixec11.dates(profileid), "總計"].flatten]
-        Matrixec11.ages(profileid).each do |age|
+        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
+        Matrixec11.ages(profileid, _start, _end).each do |age|
           result << [age]
 
           age_total = 0
           [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
             "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
-              transactions_array = Matrixec11.transactions_array(profileid, hour, age)
+              transactions_array = Matrixec11.transactions_array(profileid, _start, _end, hour, age)
               transactions_array_sum = transactions_array.sum
               result << [hour, transactions_array, transactions_array.sum].flatten
               age_total += transactions_array_sum
           end
 
           result << ["#{age} 合計"]
-          Matrixec11.dates(profileid).each do |date|
+          Matrixec11.dates(profileid, _start, _end).each do |date|
             result.last << Matrixec11.sum_date_transactions(profileid, date, age)
           end
           result.last << age_total
         end
         return result
+      }.call,
+      "小時熱點交易數" => -> {
+        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
+
+        total = 0
+        [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+          "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
+            transactions_array = Matrixec11.transactions_array(profileid, _start, _end, hour)
+            transactions_array_sum = transactions_array.sum
+            result << [hour, transactions_array, transactions_array.sum].flatten
+            total += transactions_array_sum
+        end
+
+        result << ["總計"]
+        Matrixec11.dates(profileid, _start, _end).each do |date|
+          result.last << Matrixec11.sum_date_transactions(profileid, date)
+        end
+        result.last << total
+
+        return result
+      }.call,
+      "小時熱點交易金額" => -> {
+        result = [["加總 - 產品收益"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
+
+        total = 0
+        [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
+          "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
+          # ["17"].each do |hour|
+            revenue_array = Matrixec11.revenue_array(profileid, _start, _end, hour)
+            revenue_array_sum = revenue_array.sum
+            result << [hour, revenue_array, revenue_array.sum].flatten
+            total += revenue_array_sum
+        end
+
+        result << ["總計"]
+        Matrixec11.dates(profileid, _start, _end).each do |date|
+          result.last << Matrixec11.sum_date_revenue(profileid, date)
+        end
+        result.last << total
+
+        return result
       }.call
     }
     # byebug
-    filename = Rails.root+"public/xls/圖靈#{Time.now.to_f}-小時熱點報表.xls"
+    filename = "report_11#{Time.now.to_f}.xls"
     write_xls filename, data
-    redirect_to method: :index
+    redirect_to "/xls/#{filename}"
       #   re_all = [["",""].concat(dates)<<"總和"]
       #   ["18-24","25-34","35-44","45-54","55-64","65+"].each {|age|
       #     sum_date = {}
@@ -202,7 +247,7 @@ class MatrixecController < ApplicationController
     # byebug
     # book = Spreadsheet.open Rails.root+"publick"+file_name
     data.each do |k, ary|
-      sheet = book.create_worksheet
+      sheet = book.create_worksheet(name: k)
       i = 0
       ary.each do |row|
         sheet.row(i).replace(row)
@@ -214,7 +259,7 @@ class MatrixecController < ApplicationController
 
     # @time_now = Time.now.to_f
     # filename = Rails.root+"public/csv/圖靈#{date_str}-MYDAY未註冊會員報表.xls"
-    book.write(filename)
+    book.write(Rails.root+"public/xls/#{filename}")
   end
 
   def write_csv
