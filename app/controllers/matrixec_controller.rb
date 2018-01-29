@@ -5,7 +5,15 @@ class MatrixecController < ApplicationController
 
     @reports = -> {
       # (1..20).to_a.map {|n| {tag: "_#{n}", name: "_#{n}"}}
-      [{tag: "_11", name: "小時熱點"}]
+      [
+        {tag: "_11", name: "小時熱點"},
+        {tag: "01", name: "網站基本概覽"},
+        {tag: "_02_1", name: "裝置使用比較"},
+        {tag: "_02_2", name: "裝置作業系統"},
+        {tag: "_03", name: "性別年齡層比較"},
+        {tag: "_03_2", name: "年齡層比 "},
+        {tag: "_03_1", name: "性別比"},
+      ]
     }.call
   end
 
@@ -14,19 +22,25 @@ class MatrixecController < ApplicationController
     @analytics = AnalyticsMatrixec.new current_user
 
     filenames = []
+    byebug
     params[:matrixec][:report].each{|k, v|
       next if v==0
+      next if k!="_11"
 
-      # _11_filename = "report_11#{Time.now.to_f}.xls"
-      # _11(_11_filename)
-      filenames << "report#{k.to_s}#{Time.now.to_f}.xls"
+      # filenames << "report#{k.to_s}#{Time.now.to_f}.xls"
 
       # puts "#{k}: #{v}"
+
+      _11_filename = "report_11#{Time.now.to_f}.xls"
+      _11(_11_filename)
+      redirect_to "/xls/#{_11_filename}"
+      break
     }
+
 
     # byebug
     # redirect_to "/xls/#{_11_filename}"
-    redirect_to methods: index
+    # redirect_to methods: index
   end
 
   def _11 filename
