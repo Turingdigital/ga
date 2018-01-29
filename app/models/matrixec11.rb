@@ -46,14 +46,6 @@ class Matrixec11 < ActiveRecord::Base
     return result
   end
 
-
-
-
-
-
-
-
-
   def self.sum_date_revenue profileid, date, age=nil
     if age.nil?
       where(profileid: profileid, date: date).inject(0) {|sum, row| sum+row.revenue}
