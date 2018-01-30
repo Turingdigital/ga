@@ -123,7 +123,7 @@ class AnalyticsMatrixec #< BaseCli
     metrics = %w( ga:sessions ga:percentNewSessions ga:newUsers ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration ga:transactions ga:transactionRevenue ga:transactionsPerSession )
 
     dimensions = %w( ga:operatingSystem )
-    sort = %w( -ga:sessions ga:userAgeBracket )
+    sort = %w( -ga:sessions )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
     segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
     # start_index = 1 if start_index.nil?
