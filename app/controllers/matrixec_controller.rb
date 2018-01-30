@@ -6,13 +6,14 @@ class MatrixecController < ApplicationController
     @reports = -> {
       # (1..20).to_a.map {|n| {tag: "_#{n}", name: "_#{n}"}}
       [
-        {tag: "_11", name: "小時熱點"},
-        {tag: "01", name: "網站基本概覽"},
+        {tag: "_01", name: "網站基本概覽"},
         {tag: "_02_1", name: "裝置使用比較"},
         {tag: "_02_2", name: "裝置作業系統"},
         {tag: "_03", name: "性別年齡層比較"},
         {tag: "_03_2", name: "年齡層比 "},
         {tag: "_03_1", name: "性別比"},
+        {tag: "_11", name: "小時熱點"},
+        {tag: "_12", name: "波士頓矩陣"},
       ]
     }.call
   end
@@ -22,32 +23,160 @@ class MatrixecController < ApplicationController
     @analytics = AnalyticsMatrixec.new current_user
 
     filenames = []
-    byebug
-    params[:matrixec][:report].each{|k, v|
-      next if v==0
-      next if k!="_11"
+    # byebug
+    params[:matrixec][:report].each{|tag, v|
+      next if v=="0"
+      # next if tag!="_11" && tag!="_02_1" && tag!="_02_2"
+      # byebug
+      filename = "report_#{tag.to_s}_#{Time.now.to_f}.xls"
+      filenames << filename
 
-      # filenames << "report#{k.to_s}#{Time.now.to_f}.xls"
-
+      tag_dispatch tag, filename
       # puts "#{k}: #{v}"
 
-      _11_filename = "report_11#{Time.now.to_f}.xls"
-      _11(_11_filename)
-      redirect_to "/xls/#{_11_filename}"
-      break
+      # _11_filename = "report_11#{Time.now.to_f}.xls"
+      # _11(_11_filename)
+      # redirect_to "/xls/#{_11_filename}"
+      # break
     }
 
+    # book.write(Rails.root+"public/xls/#{filename}")
+    zip_filename = "compressed_#{Time.now.to_f}.zip"
+    `zip -j #{Rails.root+"public/xls/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
+    redirect_to "/xls/#{zip_filename}"
 
     # byebug
     # redirect_to "/xls/#{_11_filename}"
     # redirect_to methods: index
   end
 
-  def _11 filename
-    profile_id = params[:matrixec][:profile_id]
-    profileid = profile_id
+  def tag_dispatch tag, filename
+    profileid = params[:matrixec][:profile_id]
     _start = params[:matrixec][:start_date]
     _end = params[:matrixec][:end_date]
+
+    case tag
+    when "_02_1"
+      _02_1 filename, profileid, _start, _end
+    when "_02_2"
+      _02_2 filename, profileid, _start, _end
+    when "_03_1"
+      _03_1 filename, profileid, _start, _end
+    when "_03_2"
+      _03_2 filename, profileid, _start, _end
+    when "_03"
+      _03 filename, profileid, _start, _end
+    when "_11"
+      _11 filename, profileid, _start, _end
+    end
+  end
+
+  def parse_02_data ana_data
+    data = {
+      "裝置使用比較" => -> {
+        result = ana_data["rows"]
+        result << [
+          "",
+          ana_data["totals_for_all_results"]["ga:sessions"],
+          ana_data["totals_for_all_results"]["ga:percentNewSessions"],
+          ana_data["totals_for_all_results"]["ga:newUsers"],
+          ana_data["totals_for_all_results"]["ga:bounceRate"],
+          ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+          ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+          ana_data["totals_for_all_results"]["ga:transactions"],
+          ana_data["totals_for_all_results"]["ga:transactionRevenue"],
+          ana_data["totals_for_all_results"]["ga:transactionsPerSession"],
+        ]
+        result.each {|rst|
+          [2,4,5,6,9].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [2,4,9].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+          [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+          # rst[2] = "#{"%.2f" % result[idx][2]}%"
+          # rst[4] = "#{"%.2f" % result[idx][4]}%"
+        }
+        result.unshift %w(裝置類別	工作階段	%新工作階段	新使用者	跳出率	單次工作階段頁數 平均工作階段時間長度	交易次數	收益	電子商務轉換率)
+        return result
+      }.call
+    }
+  end
+  def _02_1 filename, profileid, _start, _end
+    ana_data = @analytics._02_1(profileid, _start, _end)
+    data = parse_02_data ana_data
+    write_xls filename, data
+  end
+  def _02_2 filename, profileid, _start, _end
+    ana_data = @analytics._02_2(profileid, _start, _end)
+    data = parse_02_data ana_data
+    write_xls filename, data
+  end
+
+  def parse_03_data ana_data
+    data = {
+      "性別年齡層比較" => -> {
+        result = ana_data["rows"]
+        result << [
+          "",
+          ana_data["totals_for_all_results"]["ga:users"],
+          ana_data["totals_for_all_results"]["ga:newUsers"],
+          ana_data["totals_for_all_results"]["ga:sessions"],
+          ana_data["totals_for_all_results"]["ga:bounceRate"],
+          ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+          ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+        ]
+        result.each {|rst|
+          [4,5,6].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [4].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+          [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+          # rst[2] = "#{"%.2f" % result[idx][2]}%"
+          # rst[4] = "#{"%.2f" % result[idx][4]}%"
+        }
+        result.unshift %w(性別	使用者	新使用者	工作階段	跳出率	單次工作階段頁數	平均工作階段時間長度	圖靈_預訂步驟(目標5轉換率)	圖靈_預訂步驟(目標5達成)	圖靈_預訂步驟(目標5價值))
+        return result
+      }.call
+    }
+  end
+  def _03_1 filename, profileid, _start, _end
+    ana_data = @analytics._03_1(profileid, _start, _end)
+    data = parse_03_data ana_data
+    write_xls filename, data
+  end
+  def _03_2 filename, profileid, _start, _end
+    ana_data = @analytics._03_2(profileid, _start, _end)
+    data = parse_03_data ana_data
+    write_xls filename, data
+  end
+  def _03 filename, profileid, _start, _end
+    ana_data = @analytics._03(profileid, _start, _end)
+    data = {
+      "性別年齡層比較" => -> {
+        result = ana_data["rows"]
+        # result << [
+        #   "",
+        #   ana_data["totals_for_all_results"]["ga:sessions"],
+        #   ana_data["totals_for_all_results"]["ga:bounceRate"],
+        #   ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+        #   ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+        # ]
+        # byebug
+        result.each {|rst|
+          [4,6].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [4].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+          [5].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+
+        }
+        result.unshift %w(年齡層	性別	使用者類型	工作階段	跳出率	平均工作階段時間長度	單次工作階段頁數)
+        return result
+      }.call
+    }
+    write_xls filename, data
+  end
+
+  def _11 filename, profileid, _start, _end
+    # profile_id = params[:matrixec][:profile_id]
+    # profileid = profile_id
+    profile_id = profileid
+    # _start = params[:matrixec][:start_date]
+    # _end = params[:matrixec][:end_date]
     results = []
     result = @analytics._11(profile_id, _start, _end)
     # file_name = "/xls/11.xlsx"

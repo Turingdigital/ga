@@ -11,7 +11,15 @@
   <hr>
   <label>產生哪些報表</label><br>
   <% @reports.each.with_index do |report, idx| %>
-    <%= check_box("matrixec[report]", "#{report[:tag]}", checked: true) %>
+    <%
+      options = {
+        # disabled: report[:tag] != "_11",
+        # checked: report[:tag] == "_11"
+        disabled: false,
+        checked: false
+      }
+    %>
+    <%= check_box("matrixec[report]", "#{report[:tag]}", options) %>
     <label><%= report[:name] %></label>
     <% if (idx+1)%5==0 %>
       <br/>

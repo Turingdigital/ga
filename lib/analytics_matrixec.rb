@@ -107,6 +107,63 @@ class AnalyticsMatrixec #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  # 02_1. 裝置使用比較
+  def _02_1 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:sessions ga:percentNewSessions ga:newUsers ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration ga:transactions ga:transactionRevenue ga:transactionsPerSession )
+
+    dimensions = %w( ga:deviceCategory )
+    sort = %w( -ga:sessions )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+  # 02_2. 裝置作業系統使用比較
+  def _02_2 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:sessions ga:percentNewSessions ga:newUsers ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration ga:transactions ga:transactionRevenue ga:transactionsPerSession )
+
+    dimensions = %w( ga:operatingSystem )
+    sort = %w( -ga:sessions ga:userAgeBracket )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
+  # 03. 性別年齡層比較
+  def _03 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:sessions ga:bounceRate ga:avgSessionDuration ga:pageviewsPerSession )
+
+    dimensions = %w( ga:userAgeBracket ga:userGender ga:userType )
+    sort = %w( ga:userGender ga:userType ga:userAgeBracket )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+  # 03_1. 性別比
+  def _03_1 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:users ga:newUsers ga:sessions ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration )
+
+    dimensions = %w( ga:userGender )
+    sort = nil # %w( -ga:sessions )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+  # 03_2. 年齡層
+  def _03_2 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:users ga:newUsers ga:sessions ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration )
+
+    dimensions = %w( ga:userAgeBracket )
+    sort = nil # %w( -ga:sessions )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   # 11. 小時年齡熱點
   def _11 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
     metrics = %w( ga:sessions ga:transactions ga:transactionRevenue )
@@ -135,7 +192,7 @@ class AnalyticsMatrixec #< BaseCli
     arg[:filters] = filters if filters # 假流量篩sessions
     arg[:segment] = segment if segment
     arg[:start_index] = start_index if start_index
-    
+
     result = @analytics.get_ga_data( "ga:#{profile_id}", _start, _end, metrics.join(','), arg)
 
     set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
