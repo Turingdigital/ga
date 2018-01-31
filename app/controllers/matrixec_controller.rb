@@ -12,6 +12,7 @@ class MatrixecController < ApplicationController
         {tag: "_03", name: "性別年齡層比較"},
         {tag: "_03_2", name: "年齡層比 "},
         {tag: "_03_1", name: "性別比"},
+        {tag: "_05", name: "來源/媒介帶來的轉換比較"},
         {tag: "_11", name: "小時熱點"},
         {tag: "_12", name: "波士頓矩陣"},
       ]
@@ -66,6 +67,8 @@ class MatrixecController < ApplicationController
       _03_2 filename, profileid, _start, _end
     when "_03"
       _03 filename, profileid, _start, _end
+    when "_05"
+      _05 filename, profileid, _start, _end
     when "_11"
       _11 filename, profileid, _start, _end
     end
@@ -88,7 +91,7 @@ class MatrixecController < ApplicationController
           ana_data["totals_for_all_results"]["ga:transactionsPerSession"],
         ]
         result.each {|rst|
-          [2,4,5,6,9].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [2,4,5,9].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
           [2,4,9].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
           [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
           # rst[2] = "#{"%.2f" % result[idx][2]}%"
@@ -124,7 +127,7 @@ class MatrixecController < ApplicationController
           ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
         ]
         result.each {|rst|
-          [4,5,6].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [4,5].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
           [4].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
           [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
           # rst[2] = "#{"%.2f" % result[idx][2]}%"
@@ -165,6 +168,37 @@ class MatrixecController < ApplicationController
 
         }
         result.unshift %w(年齡層	性別	使用者類型	工作階段	跳出率	平均工作階段時間長度	單次工作階段頁數)
+        return result
+      }.call
+    }
+    write_xls filename, data
+  end
+
+  def _05 filename, profileid, _start, _end
+    ana_data = @analytics._05(profileid, _start, _end)
+    data = {
+      "來源_媒介帶來的轉換比較" => -> {
+        result = ana_data["rows"]
+        result << [
+          "",
+          ana_data["totals_for_all_results"]["ga:sessions"],
+          ana_data["totals_for_all_results"]["ga:percentNewSessions"],
+          ana_data["totals_for_all_results"]["ga:newUsers"],
+          ana_data["totals_for_all_results"]["ga:bounceRate"],
+          ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+          ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+          ana_data["totals_for_all_results"]["ga:transactions"],
+          ana_data["totals_for_all_results"]["ga:transactionRevenue"],
+        ]
+        byebug
+        result.each {|rst|
+          rst.insert(7, 0.0)
+          [2,4,5,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [2,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+          [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+
+        }
+        result.unshift %w( 來源/媒介	工作階段	%新工作階段	新使用者	跳出率	單次工作階段頁數	平均工作階段時間長度	電子商務轉換率	交易次數	收益)
         return result
       }.call
     }

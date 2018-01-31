@@ -164,6 +164,19 @@ class AnalyticsMatrixec #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  # 05. 來源/媒介帶來的轉換比較
+  def _05 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    metrics = %w( ga:sessions ga:percentNewSessions ga:newUsers ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration ga:transactions ga:transactionRevenue )
+
+    dimensions = %w( ga:sourceMedium )
+    sort = %w( -ga:sessions )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
+
   # 11. 小時年齡熱點
   def _11 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
     metrics = %w( ga:sessions ga:transactions ga:transactionRevenue )

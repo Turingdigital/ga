@@ -21,7 +21,7 @@
     %>
     <%= check_box("matrixec[report]", "#{report[:tag]}", options) %>
     <label><%= report[:name] %></label>
-    <% if (idx+1)%5==0 %>
+    <% if (idx+1)%3==0 %>
       <br/>
     <% end %>
   <% end %>
