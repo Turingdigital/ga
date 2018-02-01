@@ -14,6 +14,7 @@
 
 require 'google/apis/analytics_v3'
 # require 'google/apis/servicemanagement_v1'
+# https://github.com/google/google-api-ruby-client/blob/master/generated/google/apis/analytics_v3.rb
 require 'googleauth'
 
 # require Rails.env.development? ? 'googleauth/stores/file_token_store' : 'googleauth/stores/redis_token_store'
@@ -210,6 +211,11 @@ class AnalyticsMatrixec #< BaseCli
 
     set_cached(result, profile_id, _start, _end, caller_method_name, start_index)
     return get_cached(profile_id, _start, _end, caller_method_name, start_index)
+  end
+
+  def list_segments
+    result = @analytics.list_segments
+    return result
   end
 
   private
