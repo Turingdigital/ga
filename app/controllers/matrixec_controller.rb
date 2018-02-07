@@ -23,13 +23,17 @@ class MatrixecController < ApplicationController
     sign_in(User.find(4)) if Rails.env.development? && !user_signed_in?
     @analytics = AnalyticsMatrixec.new current_user
 
+    _start = params[:matrixec][:start_date]
+    _end = params[:matrixec][:end_date]
+
     filenames = []
     # byebug
     params[:matrixec][:report].each{|tag, v|
       next if v=="0"
       # next if tag!="_11" && tag!="_02_1" && tag!="_02_2"
       # byebug
-      filename = "report_#{tag.to_s}_#{Time.now.to_f}.xls"
+
+      filename = "report_#{tag.to_s}__#{_start}_to_#{_end}_#{Time.now.to_f}.xls"
       filenames << filename
 
       tag_dispatch tag, filename
@@ -44,11 +48,21 @@ class MatrixecController < ApplicationController
     # book.write(Rails.root+"public/xls/#{filename}")
     zip_filename = "compressed_#{Time.now.to_f}.zip"
     `zip -j #{Rails.root+"public/xls/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
-    redirect_to "/xls/#{zip_filename}"
+
+    com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
+    drive = Drive.instance
+    filenames.each {|s|
+      if( _start.include?('-'))
+        drive.add(s, com_name, _start.match(/(\d+)-/)[1], _start.match(/-(\d+)-/)[1])
+      else
+        drive.add(s, com_name, _start[0..3], _start[4..5])
+      end
+    }
+
+    # redirect_to "/xls/#{zip_filename}"
 
     # byebug
-    # redirect_to "/xls/#{_11_filename}"
-    # redirect_to methods: index
+    redirect_to methods: index
   end
 
   def tag_dispatch tag, filename

@@ -24,12 +24,12 @@ GA_DATA_REDIS_EXPIRE_TIME = 60*60*8
 module Authorizer
   CALLBACK_URI = 'http://localhost:3000/oauth/ga_callback'
   CLIENT_ID = Google::Auth::ClientId.new('782362301580-bnlu7s7gmjv9htlh65837ufjes6ptd37.apps.googleusercontent.com', '2dZLlxRKmeSqT5QmAl6tOPXC')
-  SCOPE = Google::Apis::AnalyticsV3::AUTH_ANALYTICS
+  # SCOPE = [Google::Apis::DriveV3::AUTH_DRIVE, Google::Apis::AnalyticsV3::AUTH_ANALYTICS]
+  SCOPE = [Google::Apis::AnalyticsV3::AUTH_ANALYTICS]
+  # SCOPE = Google::Apis::DriveV3::AUTH_DRIVE
   # ref https://github.com/redis/redis-rb
   # redis = Redis.new(:host => "10.0.1.1", :port => 6380, :db => 0, :path => "/tmp/redis.sock", :password => "mysecret")
-
   TOKEN_STORE = Google::Auth::Stores::FileTokenStore.new(:file => Rails.root+"google_auth_stores")
-
   AUTHORIZER = Google::Auth::UserAuthorizer.new(CLIENT_ID, SCOPE, TOKEN_STORE, CALLBACK_URI)
 
   def self.credentials user_id

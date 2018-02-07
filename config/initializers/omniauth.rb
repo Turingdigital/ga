@@ -3,8 +3,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            {
              :name => "google",
              access_type: 'offline',
-            #  scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
-            scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/analytics.edit https://www.googleapis.com/auth/drive',
+             scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly',
+            # scope: 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/analytics.edit',
 
 
             #  scope: 'email profile https://www.googleapis.com/auth/analytics.readonly',

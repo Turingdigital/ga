@@ -14,6 +14,52 @@ class AccountSummary < ActiveRecord::Base
 
   class << self
 
+    def find_com_name_by_profile profile_id, user=User.where(email: "analytics@turingdigital.com.tw").first
+      result = nil
+      # cnt = 0
+      begin
+        AccountSummary.where(user: user).each {|as|
+          (JSON.parse as.jsonString)["items"].each {|it|
+              it["web_properties"].each {|wp|
+                next if wp["profiles"].nil?
+                # byebug if cnt == 0
+                # cnt += 1
+                result = wp["profiles"].find {|o| profile_id == o["id"]}
+                # byebug if Rails.env=="development" && wp["id"]=="UA-54830988-1"
+                unless result.nil?
+                  # byebug if Rails.env=="development"
+                  return "#{it['id']}.#{it['name']}"
+                end
+                # wp["profiles"].each {|prof|  }
+            } if it["web_properties"]
+          } if (JSON.parse as.jsonString)["items"]
+        }
+
+        AccountSummary.where(user: user).not(user: user).each {|as|
+          (JSON.parse as.jsonString)["items"].each {|it|
+              it["web_properties"].each {|wp|
+                result = wp["profiles"].find {|o| profile_id == o["id"]}
+                unless result.nil?
+                  # byebug if Rails.env=="development"
+                  return "#{it['id']}.#{it['name']}"
+                end
+                # wp["profiles"].each {|prof|  }
+            } if it["web_properties"]
+          } if (JSON.parse as.jsonString)["items"]
+        }
+      rescue
+        byebug if Rails.env=="development"
+      end
+
+      # AccountSummary.where.not(user: user).each {|as|
+      #   result = (JSON.parse as.jsonString)["items"].find {|o| profile_id == o["id"]}
+      # } if result.nil?
+      # byebug if Rails.env=="development"
+      # (result.nil? ? nil : result["name"])
+      byebug if Rails.env=="development"
+      false
+    end
+
     def re_fetch user
       analytics = Analytics.new user
       result = analytics.accountSummaries

@@ -83,3 +83,5 @@ gem "roo", "~> 2.7.0"
 gem 'roo-xls'
 
 gem 'activerecord-session_store'
+
+gem 'google_drive'
