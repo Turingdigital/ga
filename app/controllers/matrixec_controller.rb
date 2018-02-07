@@ -204,7 +204,6 @@ class MatrixecController < ApplicationController
           ana_data["totals_for_all_results"]["ga:transactions"],
           ana_data["totals_for_all_results"]["ga:transactionRevenue"],
         ]
-        byebug
         result.each {|rst|
           rst.insert(7, 0.0)
           [2,4,5,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}

@@ -13,10 +13,10 @@
   <% @reports.each.with_index do |report, idx| %>
     <%
       options = {
-        # disabled: report[:tag] != "_11",
-        # checked: report[:tag] == "_11"
-        disabled: false,
-        checked: false
+        disabled: ["_01", "_12"].include?(report[:tag]),
+        checked: !["_01", "_12"].include?(report[:tag])
+        # disabled: false,
+        # checked: false
       }
     %>
     <%= check_box("matrixec[report]", "#{report[:tag]}", options) %>
@@ -28,5 +28,12 @@
   <hr>
   <%= submit_tag "載載" %>
 <% end %>
+
+<script>
+  $('input[type="submit"]').click( ()=>{
+    $('input[type="submit"]').attr('disabled', true);
+    $('input[type="submit"]').val('處理中...');
+  })
+</script>
 
 <%= image_tag("penguin.jpg") %>
