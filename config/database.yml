@@ -33,3 +33,44 @@ production:
   pool: 25
   host: localhost # ENV["MYSQL_PORT_3306_TCP_ADDR"] %>
   port: 3306 # ENV["MYSQL_PORT_3306_TCP_PORT"] %>
+
+# 進入mysql做一個唯獨帳號給google_datastudio, 帳號密碼自己改掉
+# mysql -uroot -p
+# grant select on mysql_production.* to 'datastudio'@'%' identified by '4dddecf03da4850347';
+# flush privileges;
+# quit;
+
+# 回到系統編輯mysql的config檔
+# vi /etc/mysql/my.cnf
+# 註解或移除這一行
+# bind-address          = 127.0.0.1
+# 儲存後離開回到系統
+
+
+# 此時3306 port後門大開，設定iptables允許這些google datastudio的網域可以連線，其他都拒絕
+# iptables -F;
+# iptables -X;
+# iptables -Z;
+# # 下面這行允許本機連線
+# iptables -A INPUT -i lo -j ACCEPT;
+# # 接著是google datastudio的網域
+# iptables -A INPUT -p tcp --dport 3306 -s 64.18.0.0/20     -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 64.233.160.0/19  -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 66.102.0.0/20    -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 66.249.80.0/20   -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 72.14.192.0/18   -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 74.125.0.0/16    -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 108.177.8.0/21   -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 173.194.0.0/16   -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 207.126.144.0/20 -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 209.85.128.0/17 -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 216.58.192.0/19 -d 139.162.96.164 -j ACCEPT;
+# iptables -A INPUT -p tcp --dport 3306 -s 216.239.32.0/19 -d 139.162.96.164 -j ACCEPT;
+# # 最後這行將其他連線都REJECT
+# iptables -A INPUT -p tcp --dport 3306 -j REJECT;
+# # 垃圾流量
+# iptables -A INPUT -p tcp -s 42.7.26.61 -j REJECT;
+# iptables -A OUTPUT -p tcp -d 42.7.26.61 -j DROP;
+# iptables -A INPUT -p tcp -s 185.222.209.51 -j REJECT;
+# iptables -A INPUT -p tcp -s 5.188.11.188 -j REJECT;
+# iptables -A OUTPUT -p tcp -d 5.188.11.188 -j DROP;
