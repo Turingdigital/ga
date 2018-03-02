@@ -1,5 +1,6 @@
 class MatrixecController < ApplicationController
   def index
+    # byebug if Rails.env == "development"
     @account_summaries = AccountSummary.select(:id, :default_web_property).where(user: current_user)
     sign_in(User.find(4)) if Rails.env.development? && !user_signed_in?
 
@@ -20,6 +21,7 @@ class MatrixecController < ApplicationController
   end
 
   def post
+    # byebug if Rails.env == "development"
     sign_in(User.find(4)) if Rails.env.development? && !user_signed_in?
     @analytics = AnalyticsMatrixec.new current_user
 
@@ -45,21 +47,25 @@ class MatrixecController < ApplicationController
       # break
     }
 
-    # book.write(Rails.root+"public/xls/#{filename}")
-    zip_filename = "compressed_#{Time.now.to_f}.zip"
-    `zip -j #{Rails.root+"public/xls/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
+    # 本機測試不用上傳Google Drive
+    unless Rails.env == "development"
 
-    com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
-    drive = Drive.instance
-    filenames.each {|s|
-      if( _start.include?('-'))
-        drive.add(s, com_name, _start.match(/(\d+)-/)[1], _start.match(/-(\d+)-/)[1])
-      else
-        drive.add(s, com_name, _start[0..3], _start[4..5])
-      end
-    }
+      # book.write(Rails.root+"public/xls/#{filename}")
+      zip_filename = "compressed_#{Time.now.to_f}.zip"
+      `zip -j #{Rails.root+"public/xls/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
 
-    # redirect_to "/xls/#{zip_filename}"
+      com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
+      drive = Drive.instance
+      filenames.each {|s|
+        if( _start.include?('-'))
+          drive.add(s, com_name, _start.match(/(\d+)-/)[1], _start.match(/-(\d+)-/)[1])
+        else
+          drive.add(s, com_name, _start[0..3], _start[4..5])
+        end
+      }
+
+      # redirect_to "/xls/#{zip_filename}"
+    end
 
     # byebug
     redirect_to methods: index
@@ -85,6 +91,8 @@ class MatrixecController < ApplicationController
       _05 filename, profileid, _start, _end
     when "_11"
       _11 filename, profileid, _start, _end
+    when "_12"
+      _12 filename, profileid, _start, _end
     end
   end
 
@@ -343,8 +351,61 @@ class MatrixecController < ApplicationController
     write_xls filename, data
   end
 
+
+
+  # TODO: 新增 取商品的類別
+  def _12 filename, profileid, _start, _end
+    ana_data = @analytics._12(profileid, _start, _end)
+    data = {
+      "波士頓矩陣" => -> {
+        return [["", "曝光數", "產品成交數"]] if ana_data["rows"].nil?
+
+        # byebug if Rails.env == "development"
+
+        result = []
+        ana_data["rows"].each {|row|
+          result << [row[0], row[1].to_i+row[2].to_i, row[3]]
+        }
+        # result << [
+        #   "",
+        #   ana_data["totals_for_all_results"]["ga:sessions"],
+        #   ana_data["totals_for_all_results"]["ga:bounceRate"],
+        #   ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+        #   ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+        # ]
+        # byebug
+        # result.each {|rst|
+        #   [4,6].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+        #   [4].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+        #   [5].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+        #
+        # }
+        result.unshift ["", "曝光數", "產品成交數"]
+        return result
+      }.call
+    }
+    session[:report_12] = data
+    write_xls filename, data
+
+    # 畫圖用
+    # byebug if Rails.env == "development"
+
+    # byebug if Rails.env == "development"
+    csv_data = [["label","x","y","value","color"]]
+    # byebug if Rails.env == "development"
+    report = data["波士頓矩陣"][1..-1]
+    report.each {|ay|
+      # csv_data << [ay.first, rand*2-1, rand*2-1, rand(99), "%06x" % (rand * 0xffffff)]
+      csv_data << [ay.first, ay[1], ay[2], rand(99), "%06x" % (rand * 0xffffff)]
+    }
+    # write_csv "demo_bcg_matrix_#{Time.now.to_i}.csv", csv_data
+    write_csv "demo_bcg_matrix.csv", csv_data
+    # session[:report_12]
+  end
+
   def write_xls filename, data #{sheet_name_1: [rows...], sheet_name_2: [rows...], ...}
     book = Spreadsheet::Workbook.new
+    byebug if Rails.env == "development"
     data.each do |k, ary|
       sheet = book.create_worksheet(name: k)
       i = 0
@@ -356,10 +417,12 @@ class MatrixecController < ApplicationController
     book.write(Rails.root+"public/xls/#{filename}")
   end
 
-  def write_csv
-    CSV.open(Rails.root+"public#{file_name}", "wb") do |csv|
-      csv << ["Date", "Hour", "Age", "Sessions","Transactions", "Revenue", "CustomerTransaction"]
-      rows.each {|row| csv << row}
+  def write_csv file_name, data
+    CSV.open(Rails.root+"public/#{file_name}", "wb") do |csv|
+      # csv << ["Date", "Hour", "Age", "Sessions","Transactions", "Revenue", "CustomerTransaction"]
+      data.each {|row|
+        csv << row
+      }
       # results.each do |result|
       #   result["rows"].each {|row|
       #     # row[1] = "'#{row[1]}"

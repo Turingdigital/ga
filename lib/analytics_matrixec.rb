@@ -190,6 +190,20 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  # 12. 波士頓矩陣
+  def _12 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    # metrics = %w( ga:productListViews ga:uniquePurchases ga:productDetailViews)
+    # dimensions = %w( ga:productName ga:productCategory )
+    metrics = %w( ga:productListViews ga:productDetailViews ga:uniquePurchases )
+    dimensions = %w( ga:productCategory )
+    
+    sort = nil # %w( -ga:pageviews )
+    filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1 if start_index.nil?
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
     caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
