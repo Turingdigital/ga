@@ -55,12 +55,13 @@ class MatrixecController < ApplicationController
     # @bcg_matrix_file_name = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
 
     # 本機測試不用上傳Google Drive
+
+
+    # book.write(Rails.root+"public/xls/#{filename}")
+    zip_filename = "compressed_#{Time.now.to_f}.zip"
+    `zip -j #{Rails.root+"public/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
+
     if Rails.env != "development"
-
-      # book.write(Rails.root+"public/xls/#{filename}")
-      zip_filename = "compressed_#{Time.now.to_f}.zip"
-      `zip -j #{Rails.root+"public/xls/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
-
       com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
       drive = Drive.instance
       filenames.each {|s|
@@ -75,7 +76,8 @@ class MatrixecController < ApplicationController
     end
 
     # byebug
-    redirect_to methods: index
+    redirect_to "/#{zip_filename}"
+    # redirect_to methods: index
   end
 
   def tag_dispatch tag, filename

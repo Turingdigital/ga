@@ -212,7 +212,7 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     # byebug
     # byebug if Rails.env == "development"
     result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
-    # return result if result && !(caller_method_name =~ /page1|sstainan/)
+    return result if result && !(caller_method_name =~ /page1|sstainan/)
 
     authorize
 
