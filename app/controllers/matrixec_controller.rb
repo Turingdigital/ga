@@ -61,19 +61,24 @@ class MatrixecController < ApplicationController
     zip_filename = "compressed_#{Time.now.to_f}.zip"
     `zip -j #{Rails.root+"public/#{zip_filename}"} #{filenames.map{|s| Rails.root+"public/xls/#{s}"}.join(' ')}`
 
-    if Rails.env != "development"
-      com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
-      drive = Drive.instance
-      filenames.each {|s|
-        if( _start.include?('-'))
-          drive.add(s, com_name, _start.match(/(\d+)-/)[1], _start.match(/-(\d+)-/)[1])
-        else
-          drive.add(s, com_name, _start[0..3], _start[4..5])
-        end
-      }
 
-      # redirect_to "/xls/#{zip_filename}"
-    end
+
+
+    # if Rails.env != "development"
+    #   com_name = AccountSummary.find_com_name_by_profile(params[:matrixec][:profile_id], current_user)
+    #   drive = Drive.instance
+    #   filenames.each {|s|
+    #     if( _start.include?('-'))
+    #       drive.add(s, com_name, _start.match(/(\d+)-/)[1], _start.match(/-(\d+)-/)[1])
+    #     else
+    #       drive.add(s, com_name, _start[0..3], _start[4..5])
+    #     end
+    #   }
+    #
+    #   # redirect_to "/xls/#{zip_filename}"
+    # end
+
+
 
     # byebug
     redirect_to "/#{zip_filename}"

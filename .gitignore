@@ -10,6 +10,7 @@ capybara-*.html
 /public/system
 /public/csv
 /public/*.csv
+/public/*.zip
 /public/xls
 /coverage/
 /spec/tmp
