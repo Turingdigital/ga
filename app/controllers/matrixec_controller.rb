@@ -55,7 +55,7 @@ class MatrixecController < ApplicationController
     # @bcg_matrix_file_name = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
 
     # 本機測試不用上傳Google Drive
-    unless Rails.env == "development"
+    if Rails.env != "development"
 
       # book.write(Rails.root+"public/xls/#{filename}")
       zip_filename = "compressed_#{Time.now.to_f}.zip"
@@ -402,9 +402,14 @@ class MatrixecController < ApplicationController
     csv_data = [["label","x","y","value","color"]]
     # byebug if Rails.env == "development"
     report = data["波士頓矩陣"][1..-1]
+    x_ary = report.map {|ay| ay[1].to_i}
+    y_ary = report.map {|ay| ay[2].to_i}
+    x_max = x_ary.max
+    x_max = x_ary.max
+    byebug
     report.each {|ay|
       # csv_data << [ay.first, rand*2-1, rand*2-1, rand(99), "%06x" % (rand * 0xffffff)]
-      csv_data << [ay.first, ay[1], ay[2], rand(99), "%06x" % (rand * 0xffffff)]
+      csv_data << [ay.first, ay[1], ay[2], 1, "%06x" % (rand * 0xffffff)]
     }
     # write_csv "demo_bcg_matrix_#{Time.now.to_i}.csv", csv_data
     # @bcg_matrix_file_name = "#{filename}_demo_bcg_matrix.csv"
