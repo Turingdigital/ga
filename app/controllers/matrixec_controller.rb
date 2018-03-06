@@ -18,6 +18,9 @@ class MatrixecController < ApplicationController
         {tag: "_12", name: "波士頓矩陣"},
       ]
     }.call
+
+    @bcg_matrix_file_name = session[:bcg_matrix_file_name]# = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
+    # @bcg_matrix_file_name = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
   end
 
   def post
@@ -30,6 +33,9 @@ class MatrixecController < ApplicationController
 
     filenames = []
     # byebug
+    @bcg_matrix_file_name = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
+    session[:bcg_matrix_file_name] = @bcg_matrix_file_name
+
     params[:matrixec][:report].each{|tag, v|
       next if v=="0"
       # next if tag!="_11" && tag!="_02_1" && tag!="_02_2"
@@ -46,6 +52,7 @@ class MatrixecController < ApplicationController
       # redirect_to "/xls/#{_11_filename}"
       # break
     }
+    # @bcg_matrix_file_name = "report_12__#{_start}_to_#{_end}_#{Time.now.to_f}.csv"
 
     # 本機測試不用上傳Google Drive
     unless Rails.env == "development"
@@ -355,7 +362,7 @@ class MatrixecController < ApplicationController
 
   # TODO: 新增 取商品的類別
   def _12 filename, profileid, _start, _end
-    byebug if Rails.env == "development"
+    # byebug if Rails.env == "development"
     ana_data = @analytics._12(profileid, _start, _end)
     data = {
       "波士頓矩陣" => -> {
@@ -400,7 +407,8 @@ class MatrixecController < ApplicationController
       csv_data << [ay.first, ay[1], ay[2], rand(99), "%06x" % (rand * 0xffffff)]
     }
     # write_csv "demo_bcg_matrix_#{Time.now.to_i}.csv", csv_data
-    write_csv "demo_bcg_matrix.csv", csv_data
+    # @bcg_matrix_file_name = "#{filename}_demo_bcg_matrix.csv"
+    write_csv @bcg_matrix_file_name, csv_data
     # session[:report_12]
   end
 

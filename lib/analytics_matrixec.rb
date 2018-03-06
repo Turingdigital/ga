@@ -194,10 +194,10 @@ class AnalyticsMatrixec < Analytics #< BaseCli
   def _12 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
     # byebug if Rails.env == "development"
     # metrics = %w( ga:productListViews ga:uniquePurchases ga:productDetailViews)
-    # dimensions = %w( ga:productName ga:productCategory )
+    # dimensions = %w( ga:productName ga:productCategory ga:productCategoryHierarchy )
 
     metrics = %w( ga:productListViews ga:productDetailViews ga:uniquePurchases )
-    dimensions = %w( ga:productCategory )
+    dimensions = %w( ga:productCategoryHierarchy )
 
     sort = nil # %w( -ga:pageviews )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
@@ -212,7 +212,7 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     # byebug
     # byebug if Rails.env == "development"
     result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
-    return result if result && !(caller_method_name =~ /page1|sstainan/)
+    # return result if result && !(caller_method_name =~ /page1|sstainan/)
 
     authorize
 
