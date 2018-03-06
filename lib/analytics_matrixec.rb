@@ -192,11 +192,13 @@ class AnalyticsMatrixec < Analytics #< BaseCli
 
   # 12. 波士頓矩陣
   def _12 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
+    # byebug if Rails.env == "development"
     # metrics = %w( ga:productListViews ga:uniquePurchases ga:productDetailViews)
     # dimensions = %w( ga:productName ga:productCategory )
+
     metrics = %w( ga:productListViews ga:productDetailViews ga:uniquePurchases )
     dimensions = %w( ga:productCategory )
-    
+
     sort = nil # %w( -ga:pageviews )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
     segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
@@ -208,7 +210,7 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
 
     # byebug
-
+    # byebug if Rails.env == "development"
     result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
     return result if result && !(caller_method_name =~ /page1|sstainan/)
 

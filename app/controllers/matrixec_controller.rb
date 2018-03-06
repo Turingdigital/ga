@@ -75,7 +75,7 @@ class MatrixecController < ApplicationController
     profileid = params[:matrixec][:profile_id]
     _start = params[:matrixec][:start_date]
     _end = params[:matrixec][:end_date]
-
+    # byebug if Rails.env == "development"
     case tag
     when "_02_1"
       _02_1 filename, profileid, _start, _end
@@ -277,27 +277,27 @@ class MatrixecController < ApplicationController
     # end
 
     # 為了在資料庫裡面搜尋
-    _start.gsub!('-', '')
-    _end.gsub!('-', '')
+    __start = _start.gsub('-', '')
+    __end = _end.gsub('-', '')
 
 # rails g migration add_column_profileid_to_matrixec profileid:string:index
     data = {
       "小時熱點年齡" => -> {
-        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
-        Matrixec11.ages(profileid, _start, _end).each do |age|
+        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, __start, __end), "總計"].flatten]
+        Matrixec11.ages(profileid, __start, __end).each do |age|
           result << [age]
 
           age_total = 0
           [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
             "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
-              transactions_array = Matrixec11.transactions_array(profileid, _start, _end, hour, age)
+              transactions_array = Matrixec11.transactions_array(profileid, __start, __end, hour, age)
               transactions_array_sum = transactions_array.sum
               result << [hour, transactions_array, transactions_array.sum].flatten
               age_total += transactions_array_sum
           end
 
           result << ["#{age} 合計"]
-          Matrixec11.dates(profileid, _start, _end).each do |date|
+          Matrixec11.dates(profileid, __start, __end).each do |date|
             result.last << Matrixec11.sum_date_transactions(profileid, date, age)
           end
           result.last << age_total
@@ -305,19 +305,19 @@ class MatrixecController < ApplicationController
         return result
       }.call,
       "小時熱點交易數" => -> {
-        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
+        result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, __start, __end), "總計"].flatten]
 
         total = 0
         [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
           "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
-            transactions_array = Matrixec11.transactions_array(profileid, _start, _end, hour)
+            transactions_array = Matrixec11.transactions_array(profileid, __start, __end, hour)
             transactions_array_sum = transactions_array.sum
             result << [hour, transactions_array, transactions_array.sum].flatten
             total += transactions_array_sum
         end
 
         result << ["總計"]
-        Matrixec11.dates(profileid, _start, _end).each do |date|
+        Matrixec11.dates(profileid, __start, __end).each do |date|
           result.last << Matrixec11.sum_date_transactions(profileid, date)
         end
         result.last << total
@@ -325,20 +325,20 @@ class MatrixecController < ApplicationController
         return result
       }.call,
       "小時熱點交易金額" => -> {
-        result = [["加總 - 產品收益"],["列標籤", Matrixec11.dates(profileid, _start, _end), "總計"].flatten]
+        result = [["加總 - 產品收益"],["列標籤", Matrixec11.dates(profileid, __start, __end), "總計"].flatten]
 
         total = 0
         [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
           "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
           # ["17"].each do |hour|
-            revenue_array = Matrixec11.revenue_array(profileid, _start, _end, hour)
+            revenue_array = Matrixec11.revenue_array(profileid, __start, __end, hour)
             revenue_array_sum = revenue_array.sum
             result << [hour, revenue_array, revenue_array.sum].flatten
             total += revenue_array_sum
         end
 
         result << ["總計"]
-        Matrixec11.dates(profileid, _start, _end).each do |date|
+        Matrixec11.dates(profileid, __start, __end).each do |date|
           result.last << Matrixec11.sum_date_revenue(profileid, date)
         end
         result.last << total
@@ -355,6 +355,7 @@ class MatrixecController < ApplicationController
 
   # TODO: 新增 取商品的類別
   def _12 filename, profileid, _start, _end
+    byebug if Rails.env == "development"
     ana_data = @analytics._12(profileid, _start, _end)
     data = {
       "波士頓矩陣" => -> {
@@ -405,7 +406,7 @@ class MatrixecController < ApplicationController
 
   def write_xls filename, data #{sheet_name_1: [rows...], sheet_name_2: [rows...], ...}
     book = Spreadsheet::Workbook.new
-    byebug if Rails.env == "development"
+    # byebug if Rails.env == "development"
     data.each do |k, ary|
       sheet = book.create_worksheet(name: k)
       i = 0
