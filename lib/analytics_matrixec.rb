@@ -155,9 +155,9 @@ class AnalyticsMatrixec < Analytics #< BaseCli
   end
   # 03_2. 年齡層
   def _03_2 profile_id, _start="7daysAgo", _end="yesterday", start_index=1
-    metrics = %w( ga:users ga:newUsers ga:sessions ga:bounceRate ga:pageviewsPerSession ga:avgSessionDuration )
+    metrics = %w( ga:sessions ga:bounceRate ga:avgSessionDuration ga:pageviewsPerSession )
 
-    dimensions = %w( ga:userAgeBracket )
+    dimensions = %w( ga:userAgeBracket ga:userGender ga:userType )
     sort = nil # %w( -ga:sessions )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
     segment = nil # "sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
@@ -212,7 +212,7 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     # byebug
     # byebug if Rails.env == "development"
     result = get_cached(profile_id, _start, _end, caller_method_name, start_index)
-    return result if result && !(caller_method_name =~ /page1|sstainan/)
+    # return result if result && !(caller_method_name =~ /page1|sstainan/)
 
     authorize
 

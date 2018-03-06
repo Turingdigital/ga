@@ -181,7 +181,30 @@ class MatrixecController < ApplicationController
   end
   def _03_2 filename, profileid, _start, _end
     ana_data = @analytics._03_2(profileid, _start, _end)
-    data = parse_03_data ana_data
+    data = {
+      "性別年齡層比較" => -> {
+        result = ana_data["rows"]
+        result << [
+          "",
+          ana_data["totals_for_all_results"]["ga:users"],
+          ana_data["totals_for_all_results"]["ga:newUsers"],
+          ana_data["totals_for_all_results"]["ga:sessions"],
+          ana_data["totals_for_all_results"]["ga:bounceRate"],
+          ana_data["totals_for_all_results"]["ga:pageviewsPerSession"],
+          ana_data["totals_for_all_results"]["ga:avgSessionDuration"],
+        ]
+        result.each {|rst|
+          [4,5].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
+          [4].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
+          [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
+          # rst[2] = "#{"%.2f" % result[idx][2]}%"
+          # rst[4] = "#{"%.2f" % result[idx][4]}%"
+        }
+        result.unshift %w(年齡層 性別	使用者類型	工作階段	跳出率	平均工作階段時間長度 單次工作階段頁數	圖靈_預訂步驟(目標5轉換率)	圖靈_預訂步驟(目標5達成)	圖靈_預訂步驟(目標5價值))
+        return result
+      }.call
+    }
+    # data = parse_03_data ana_data
     write_xls filename, data
   end
   def _03 filename, profileid, _start, _end
