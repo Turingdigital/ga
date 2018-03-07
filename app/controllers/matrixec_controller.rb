@@ -271,6 +271,7 @@ class MatrixecController < ApplicationController
     # _end = params[:matrixec][:end_date]
     results = []
     result = @analytics._11(profile_id, _start, _end)
+
     # file_name = "/xls/11.xlsx"
 
     # result = @analytics.myday_sitemap(profile_id, _start, _end, 1)
@@ -285,6 +286,36 @@ class MatrixecController < ApplicationController
       end
     end
 
+    Matrixec11.transaction{
+      # Matrixec11.destroy_all
+      results.each do |result|
+        result["rows"].each do|row|
+          Matrixec11.create(
+            date:row[0],
+            hour:row[1],
+            age:row[2],
+            sessions:row[3].to_i,
+            transactions:row[4].to_i,
+            revenue:row[5].to_f,
+            ct:(row[-2].to_f==0 ? 0 : row[-1].to_f/row[-2].to_f),
+            profileid:profileid
+          )
+        end unless result["rows"].nil?
+      end
+    }
+
+    results_noAge = []
+    result_noAge = @analytics._11_1(profile_id, _start, _end)
+    total_results_noAge = result_noAge['total_results']
+    results_noAge << result_noAge
+    if total_results_noAge > 1000
+      1001.step(total_results_noAge, 1000) do |n|
+        results_noAge <<  @analytics._11_1(profile_id, _start, _end, n)
+      end
+    end
+
+    # byebug if Rails.env = 'development'
+
     # date:string
     # hour:string
     # age:string
@@ -296,12 +327,12 @@ class MatrixecController < ApplicationController
     # if false
       Matrixec11.transaction{
         # Matrixec11.destroy_all
-        results.each do |result|
+        results_noAge.each do |result|
           result["rows"].each do|row|
             Matrixec11.create(
               date:row[0],
               hour:row[1],
-              age:row[2],
+              age:'0',
               sessions:row[3].to_i,
               transactions:row[4].to_i,
               revenue:row[5].to_f,
@@ -322,6 +353,7 @@ class MatrixecController < ApplicationController
       "小時熱點年齡" => -> {
         result = [["加總 - 交易次數"],["列標籤", Matrixec11.dates(profileid, __start, __end), "總計"].flatten]
         Matrixec11.ages(profileid, __start, __end).each do |age|
+          next if age=='0'
           result << [age]
 
           age_total = 0
@@ -347,7 +379,7 @@ class MatrixecController < ApplicationController
         total = 0
         [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
           "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
-            transactions_array = Matrixec11.transactions_array(profileid, __start, __end, hour)
+            transactions_array = Matrixec11.transactions_array(profileid, __start, __end, hour, '0')
             transactions_array_sum = transactions_array.sum
             result << [hour, transactions_array, transactions_array.sum].flatten
             total += transactions_array_sum
@@ -368,7 +400,7 @@ class MatrixecController < ApplicationController
         [ "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12",
           "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ].each do |hour|
           # ["17"].each do |hour|
-            revenue_array = Matrixec11.revenue_array(profileid, __start, __end, hour)
+            revenue_array = Matrixec11.revenue_array(profileid, __start, __end, hour, '0')
             revenue_array_sum = revenue_array.sum
             result << [hour, revenue_array, revenue_array.sum].flatten
             total += revenue_array_sum
