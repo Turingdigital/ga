@@ -41,9 +41,9 @@
   <% @reports.each.with_index do |report, idx| %>
     <%
       options = {
-        disabled: ["_01", "_12"].include?(report[:tag]),
+        disabled: ["_01"].include?(report[:tag]),
         # disabled: ["_01"].include?(report[:tag]),
-        checked: !["_01", "_12"].include?(report[:tag])
+        checked: !["_01"].include?(report[:tag])
         # checked: ["_12"].include?(report[:tag])
         # disabled: false,
         # checked: false
@@ -68,4 +68,5 @@
 </script>
 <hr>
 <br><br>
+<%#= image_tag("penguin.jpg") %>
 <%= image_tag("1600.jpg", width: "100%") %>

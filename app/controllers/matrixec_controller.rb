@@ -468,7 +468,6 @@ class MatrixecController < ApplicationController
     y_ary = report.map {|ay| ay[2].to_i}
     x_max = x_ary.max
     x_max = x_ary.max
-    byebug
     report.each {|ay|
       # csv_data << [ay.first, rand*2-1, rand*2-1, rand(99), "%06x" % (rand * 0xffffff)]
       csv_data << [ay.first, ay[1], ay[2], 1, "%06x" % (rand * 0xffffff)]
