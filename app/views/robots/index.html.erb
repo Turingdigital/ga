@@ -13,9 +13,9 @@
       <th>Cn</th>
       <th>Ul</th>
       <th>Geoid</th>
-      <th>Sr</th>
+      <!-- <th>Sr</th>
       <th>Vp</th>
-      <th>Ua</th>
+      <th>Ua</th> -->
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -31,9 +31,9 @@
         <td><%= robot.cn %></td>
         <td><%= robot.ul %></td>
         <td><%= robot.geoid %></td>
-        <td><%= robot.sr %></td>
-        <td><%= robot.vp %></td>
-        <td><%= robot.ua %></td>
+        <td><%#= robot.sr %></td>
+        <td><%#= robot.vp %></td>
+        <td><%#= robot.ua %></td>
         <td><%= link_to 'Show', robot %></td>
         <td><%= link_to 'Edit', edit_robot_path(robot) %></td>
         <td><%= link_to 'Destroy', robot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
