@@ -434,7 +434,8 @@ class MatrixecController < ApplicationController
 
         result = []
         ana_data["rows"].each {|row|
-          result << [row[0], row[1].to_i+row[2].to_i, row[3]]
+          # result << [row[0], row[1].to_i+row[2].to_i, row[3]]
+          result << [row[0], row[1], row[2]]
         }
         # result << [
         #   "",
@@ -450,7 +451,7 @@ class MatrixecController < ApplicationController
         #   [5].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
         #
         # }
-        result.unshift ["", "曝光數", "產品成交數"]
+        result.unshift ["", "產品類別點擊數", "產品成交數"]
         return result
       }.call
     }

@@ -209,8 +209,11 @@ class AnalyticsMatrixec < Analytics #< BaseCli
     # metrics = %w( ga:productListViews ga:uniquePurchases ga:productDetailViews)
     # dimensions = %w( ga:productName ga:productCategory ga:productCategoryHierarchy )
 
-    metrics = %w( ga:productListViews ga:productDetailViews ga:uniquePurchases )
-    dimensions = %w( ga:productCategoryHierarchy )
+    # metrics = %w( ga:productListViews ga:productDetailViews ga:uniquePurchases )
+    # dimensions = %w( ga:productCategoryHierarchy )
+
+    metrics = %w( ga:productListClicks ga:uniquePurchases )
+    dimensions = %w( ga:productName )
 
     sort = nil # %w( -ga:pageviews )
     filters = nil # "ga:eventCategory==會員註冊頁" # nil #"ga:eventCategory==滾軸事件"
