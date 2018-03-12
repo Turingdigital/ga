@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :robots do
+    collection do
+      get 'run'
+    end
+  end
   resources :filters do
     collection do
       post 'setup'

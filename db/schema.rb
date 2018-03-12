@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131081343) do
+ActiveRecord::Schema.define(version: 20180312080557) do
 
   create_table "account_summaries", force: :cascade do |t|
     t.integer  "user_id"
@@ -208,6 +208,23 @@ ActiveRecord::Schema.define(version: 20180131081343) do
 
   add_index "pages", ["checkga_id"], name: "index_pages_on_checkga_id"
   add_index "pages", ["url"], name: "index_pages_on_url"
+
+  create_table "robots", force: :cascade do |t|
+    t.integer  "count"
+    t.text     "target"
+    t.string   "title"
+    t.string   "cs"
+    t.string   "cm"
+    t.string   "cn"
+    t.string   "ul"
+    t.string   "geoid"
+    t.string   "sr"
+    t.string   "vp"
+    t.text     "ua"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "tid"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false

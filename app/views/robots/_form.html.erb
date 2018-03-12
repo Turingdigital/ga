@@ -1,0 +1,65 @@
+<%= form_for(@robot) do |f| %>
+  <% if @robot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@robot.errors.count, "error") %> prohibited this robot from being saved:</h2>
+
+      <ul>
+      <% @robot.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%#= f.label :count %>必填 UA編號(預設我們的內部測試 UA-66441042-1)<br>
+    <%= f.text_field :tid, value: "UA-66441042-1", required: true %>
+  </div>
+  <div class="field">
+    <%#= f.label :count %>必填 跑幾筆？(預設50)(設為0代表暫停)<br>
+    <%= f.number_field :count, value: 50 %>
+  </div>
+  <div class="field">
+    <%#= f.label :target %>必填 目標網址:(https://www.xxx.com/ok?id=3&else=100)<br>
+    <%= f.text_area :target, rows: 2, cols: 60, required: true %>
+  </div>
+  <div class="field">
+    <%#= f.label :title %>該網頁標題(例: 測試網-首頁)<br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%#= f.label :cs %>Campaign Source<br>
+    <%= f.text_field :cs %>
+  </div>
+  <div class="field">
+    <%#= f.label :cm %>Campaign Medium<br>
+    <%= f.text_field :cm %>
+  </div>
+  <div class="field">
+    <%#= f.label :cn %>Campaign Name<br>
+    <%= f.text_field :cn %>
+  </div>
+  <div class="field">
+    <%#= f.label :ul %>使用者語言(預設 zh-tw)<br>
+    <%= f.text_field :ul, value: "zh-tw" %>
+  </div>
+  <div class="field">
+    <%#= f.label :geoid %>使用者位置(預設 TW) 可查表: https://www.google.com/fusiontables/DataSource?docid=1we7kkYgP9CDZECm3HsiLqqTsEm1ZqQ7EP8yUmgWp<br>
+    <%= f.text_field :geoid, value: "TW" %>
+  </div>
+  <div class="field">
+    <%#= f.label :sr %>使用者螢幕寬度(預設 1920x1080)<br>
+    <%= f.text_field :sr, value: "1920x1080" %>
+  </div>
+  <div class="field">
+    <%#= f.label :vp %><br>
+    <%= f.text_field :vp, value: "1920x980" %>
+  </div>
+  <div class="field">
+    <%#= f.label :ua %>使用者瀏覽器版本(預設 Chrome 41.0.2228.0)<br>
+    <%= f.text_area :ua, rows: 2, cols: 60, value: "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

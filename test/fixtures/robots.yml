@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  count: 1
+  target: MyText
+  title: MyString
+  cs: MyString
+  cm: MyString
+  cn: MyString
+  ul: MyString
+  geoid: MyString
+  sr: MyString
+  vp: MyString
+  ua: MyText
+
+two:
+  count: 1
+  target: MyText
+  title: MyString
+  cs: MyString
+  cm: MyString
+  cn: MyString
+  ul: MyString
+  geoid: MyString
+  sr: MyString
+  vp: MyString
+  ua: MyText
