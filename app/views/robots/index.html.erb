@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>UA編號</th>
       <th>Count</th>
       <th>Target</th>
       <th>Title</th>
@@ -23,6 +24,7 @@
   <tbody>
     <% @robots.each do |robot| %>
       <tr>
+        <td><%= robot.tid %></td>
         <td><%= robot.count %></td>
         <td><%= robot.target %></td>
         <td><%= robot.title %></td>
