@@ -19,7 +19,6 @@ class RobotsController < ApplicationController
       dl = URI::encode(target)
       url = "https://www.google-analytics.com/collect?v=1&tid=#{tid}&cid=#{cid}&t=pageview&dh=#{dh}&dp=#{dp}&dt=#{dt}&dl=#{dl}&ul=#{robot.ul}&geoid=#{robot.geoid}&sr=#{robot.sr}&vp=#{robot.vp}&ua=#{robot.ua}&sd=32-bits&fl=23.0 r0"
       url = URI::encode(url)
-      byebug
       begin
         robot.count.times {
           open(url)
