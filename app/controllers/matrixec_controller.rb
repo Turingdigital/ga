@@ -249,8 +249,11 @@ class MatrixecController < ApplicationController
           ana_data["totals_for_all_results"]["ga:transactions"],
           ana_data["totals_for_all_results"]["ga:transactionRevenue"],
         ]
+        # op = true if Rails.env == "development"
         result.each {|rst|
-          rst.insert(7, ana_data["totals_for_all_results"]["ga:sessions"].to_i.to_f/ana_data["totals_for_all_results"]["ga:transactions"].to_i)
+          # byebug if op && Rails.env == "development"
+          # op = false if Rails.env == "development"
+          rst.insert(7, rst[7].to_f/rst[1].to_f*100)
           [2,4,5,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
           [2,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
           [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
