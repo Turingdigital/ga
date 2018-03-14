@@ -16,8 +16,8 @@
     <%= f.text_field :tid, required: true %>
   </div>
   <div class="field">
-    <%#= f.label :count %>必填 跑幾筆？(預設50)(設為0代表暫停)<br>
-    <%= f.number_field :count, value: 50 %>
+    <%#= f.label :count %>必填 跑幾筆？(設為0代表暫停)<br>
+    <%= f.number_field :count, required: true %>
   </div>
   <div class="field">
     <%#= f.label :target %>必填 目標網址:(https://www.xxx.com/ok?id=3&else=100)<br>
