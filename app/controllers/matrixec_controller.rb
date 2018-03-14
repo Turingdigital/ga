@@ -250,7 +250,7 @@ class MatrixecController < ApplicationController
           ana_data["totals_for_all_results"]["ga:transactionRevenue"],
         ]
         result.each {|rst|
-          rst.insert(7, ana_data["totals_for_all_results"]["ga:sessions"].to_f/ana_data["totals_for_all_results"]["ga:transactions"])
+          rst.insert(7, ana_data["totals_for_all_results"]["ga:sessions"].to_i.to_f/ana_data["totals_for_all_results"]["ga:transactions"].to_i)
           [2,4,5,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}"}
           [2,7].each {|idx| rst[idx] = "#{"%.2f" % rst[idx]}%"}
           [6].each {|idx| rst[idx] = Time.at(rst[idx].to_f).utc.strftime("%H:%M:%S")}
