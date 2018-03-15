@@ -58,7 +58,7 @@ class GetGaDataController < ActionController::Base
         params[:end],
         params[:metrics].split(','),
         (params[:dimensions].nil? || params[:dimensions].empty?) ? nil : params[:dimensions].split(','),
-        params[:sort],
+        params[:sort].nil? || params[:sort].empty? ? nil : params[:sort].split(','),
         params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
         params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
         params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
@@ -71,7 +71,7 @@ class GetGaDataController < ActionController::Base
         params[:query_json][:end],
         params[:query_json][:metrics].split(','),
         params[:query_json][:dimensions].nil? || params[:query_json][:dimensions].empty? ? nil : params[:query_json][:dimensions].split(','),
-        params[:query_json][:sort],
+        params[:query_json][:sort].nil? || params[:query_json][:sort].empty? ? nil : params[:query_json][:sort].split(','),
         params[:query_json][:filters].nil? || params[:query_json][:filters].empty? ? nil : params[:query_json][:filters],
         params[:query_json][:segment].nil? || params[:query_json][:segment].empty? ? nil : params[:query_json][:segment],
         params[:query_json][:start_index].nil? || params[:query_json][:start_index].empty? ? nil : params[:query_json][:start_index]
