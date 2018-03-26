@@ -6,6 +6,86 @@ class WelcomeController < ApplicationController
        #.account_summary if current_user.account_summary
   end
 
+  # 志光
+  def jr_guang
+    u = User.where(email: 'analytics@turingdigital.com.tw').first
+    ana = Analytics.new u
+    profile_id = '170698515'
+    start_date, end_date = "yesterday", "yesterday" # "2018-02-01", "2018-03-21"
+    result = ana.jr_guang(profile_id , start_date, end_date)
+
+    all_data = []
+    start_index = 1
+    loop do
+      break if result["rows"].nil?
+
+      all_data.concat(result["rows"])
+      break if result["rows"].size < 1000
+
+      start_index += 1000
+      result = ana.jr_guang(profile_id, start_date, end_date, start_index)
+    end
+    cookies = {}
+    all_data.each {|ck|
+      cookies[ck[3]] = {form_name: []} if cookies[ck[3]].nil?
+      cookies[ck[3]][:form_name] << ck[0] # = [] if cookies[ck[3]][ck[0]].nil?
+      cookies[ck[3]][ck[1]] = [] if cookies[ck[3]][ck[1]].nil?
+      cookies[ck[3]][ck[1]] << ck[2]
+
+      cookies[ck[3]][:form_name].uniq!
+      cookies[ck[3]][ck[1]].uniq!
+    }
+
+    excel_array = [["ClientId","表單名稱","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
+      "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
+      "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"]]
+    cookies.each{|k, v|
+      _end = false
+      row_cnt = 0
+      until _end
+        _end = true
+        row = [k]
+        [:form_name, "中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
+          "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
+          "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"].each{|field|
+          
+          if v[field].nil?
+            row << ""
+          elsif v[field][row_cnt]
+            row << v[field][row_cnt]
+            _end = false
+          else
+            row << ""
+          end
+        }
+        row_cnt += 1
+        excel_array << row unless _end
+      end
+    }
+
+    write_xls "失敗表單.xls", {"失敗表單"=>excel_array}
+
+
+    # ary = mj["rows"]
+    # ary.find_all {|ay|
+    #   ay[0]=="確認點擊"
+    # }.map {|ay| ay[2]}.each{|_id|
+    #   ary.delete_if {|ay| ay[2]==_id||ay[0]=="設定密碼輸入"}}
+    # # ary.each {|ay| puts "#{ay[2]},會員註冊,#{ay[0]},#{ay[1]},#{ay[3]}"}
+    #
+    # ic = Iconv.new("big5", "utf-8")
+    # date_str = (Date.today-1).to_s
+    # filename = "myjapan_#{date_str}"
+    # CSV.open(Rails.root+"public/csv/#{filename}.csv", "wb", encoding: 'BIG5') do |csv|
+    #   csv << ["Client ID", "事件類別", "事件動作", "活動標籤", "事件總數"].map {|str| ic.iconv(str)}
+    #   ary.each {|ay|
+    #     csv << [ay[2],ic.iconv("會員註冊"),ic.iconv(ay[0]),ic.iconv(ay[1]),ay[3]]
+    #   }
+    # end
+
+    # UserMailer.notify_comment(filename, date_str).deliver_now!
+  end
+
   def myjapan_auto
     u = User.where(email: 'analytics@turingdigital.com.tw').first
     ana = Analytics.new u
@@ -151,6 +231,20 @@ class WelcomeController < ApplicationController
     filename = Rails.root+"public/csv/圖靈#{date_str}-MYDAY未註冊會員報表.xls"
     book.write(filename)
     return "圖靈#{date_str}-MYDAY未註冊會員報表"
+  end
+
+  def write_xls filename, data #{sheet_name_1: [rows...], sheet_name_2: [rows...], ...}
+    book = Spreadsheet::Workbook.new
+    # byebug if Rails.env == "development"
+    data.each do |k, ary|
+      sheet = book.create_worksheet(name: k)
+      i = 0
+      ary.each do |row|
+        sheet.row(i).replace(row)
+        i += 1
+      end
+    end
+    book.write(Rails.root+"public/xls/#{filename}")
   end
 
   private

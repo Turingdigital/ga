@@ -866,6 +866,16 @@ class Analytics #< BaseCli
     return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
   end
 
+  def jr_guang(profile_id='170698515', _start="yesterday", _end="yesterday", start_index=nil)
+    metrics = %w( ga:totalEvents ga:uniqueEvents )
+    dimensions = %w( ga:eventCategory ga:eventAction ga:eventLabel ga:dimension1 )
+    sort = nil # %w( -ga:pageviews )
+    filters = "ga:eventCategory=~表單$" # nil #"ga:eventCategory==滾軸事件"
+    segment = nil #{}"sessions::condition::ga:pagePath=@a_myday/login_start.php;ga:pagePath!@a_myday/member_form.php"
+    # start_index = 1001
+    return get_ga_data(profile_id, _start, _end, metrics, dimensions, sort, filters, segment, start_index)
+  end
+
   def get_ga_data profile_id, _start, _end, metrics, dimensions=nil, sort=nil, filters=nil, segment=nil, start_index=nil
 
     caller_method_name ||= (caller[0][/`.*'/][1..-2]+(filters.nil? ? "nofilter" : filters.to_s))
