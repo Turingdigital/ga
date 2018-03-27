@@ -35,7 +35,7 @@ class WelcomeController < ApplicationController
       cookies[ck[3]][:form_name].uniq!
       cookies[ck[3]][ck[1]].uniq!
     }
-
+# https://eye-www.amego.tw/cart_success.php?oid=1118032600011
     excel_array = [["ClientId","表單名稱","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
       "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
       "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"]]
@@ -48,7 +48,7 @@ class WelcomeController < ApplicationController
         [:form_name, "中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
           "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
           "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"].each{|field|
-          
+
           if v[field].nil?
             row << ""
           elsif v[field][row_cnt]

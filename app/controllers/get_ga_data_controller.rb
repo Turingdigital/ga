@@ -1,4 +1,39 @@
 class GetGaDataController < ActionController::Base
+
+  def joey_get_ga_data
+    u = User.where(email: "analytics@turingdigital.com.tw").first
+    ana = Analytics.new(u)
+    logger.debug(params)
+    if params[:query_json].nil?
+      result = ana.joey_get_ga_data(
+        params[:profile_id],
+        params[:start],
+        params[:end],
+        params[:metrics].split(','),
+        (params[:dimensions].nil? || params[:dimensions].empty?) ? nil : params[:dimensions].split(','),
+        params[:sort].nil? || params[:sort].empty? ? nil : params[:sort].split(','),
+        params[:filters].nil? || params[:filters].empty? ? nil : params[:filters],
+        params[:segment].nil? || params[:segment].empty? ? nil : params[:segment],
+        params[:start_index].nil? || params[:start_index].empty? ? nil : params[:start_index]
+      )
+      render json: result.to_json
+    else
+      result = ana.joey_get_ga_data(
+        params[:query_json][:profile_id],
+        params[:query_json][:start],
+        params[:query_json][:end],
+        params[:query_json][:metrics].split(','),
+        params[:query_json][:dimensions].nil? || params[:query_json][:dimensions].empty? ? nil : params[:query_json][:dimensions].split(','),
+        params[:query_json][:sort].nil? || params[:query_json][:sort].empty? ? nil : params[:query_json][:sort].split(','),
+        params[:query_json][:filters].nil? || params[:query_json][:filters].empty? ? nil : params[:query_json][:filters],
+        params[:query_json][:segment].nil? || params[:query_json][:segment].empty? ? nil : params[:query_json][:segment],
+        params[:query_json][:start_index].nil? || params[:query_json][:start_index].empty? ? nil : params[:query_json][:start_index]
+      )
+
+      render json: result.to_json
+    end
+  end
+
   def get_ga_data
     # profile_id=params[:profile_id],
     # _start=params[:start],
