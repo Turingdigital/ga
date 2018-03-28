@@ -70,6 +70,7 @@ class WelcomeController < ApplicationController
       "表單列表" => [["列標籤","資訊表單","USER_ID","班別","狀態"]]
     }
     cookies.each{|k, v|
+      next if v["表單送出檢查"] && v["表單送出檢查"].include?("成功")
       _end = false
       row_cnt = 0
       until _end
@@ -79,7 +80,9 @@ class WelcomeController < ApplicationController
         [:form_name, "UserID", "inclass", "state","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
           "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
           "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"].each{|field|
+          # 表單送出檢查
 
+          # byebug if Rails.env == 'development'
           # if ["UserID", "inclass", "state"].include?(field)
           #   row << v[field]
           #   next
@@ -101,6 +104,7 @@ class WelcomeController < ApplicationController
     }
 
     cookies.each{|k, v|
+      next if v["表單送出檢查"] && v["表單送出檢查"].include?("成功")
       _end = false
       row_cnt = 0
       until _end
