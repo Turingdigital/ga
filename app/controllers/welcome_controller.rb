@@ -35,19 +35,55 @@ class WelcomeController < ApplicationController
       cookies[ck[3]][:form_name].uniq!
       cookies[ck[3]][ck[1]].uniq!
     }
+
+    client_ids = cookies.keys
+    client_ids.delete("false")
+    user_infos = {}
+    client_ids.each_slice(3) {|arr|
+      break if arr.nil? || arr.empty?
+      rr = ana.jr_guang_client_id(arr)
+      begin
+        rr["rows"].each {|usifo|
+          user_infos[usifo[3]] = {} if user_infos[usifo[3]].nil?
+          user_infos[usifo[3]][usifo[1]] = [] if user_infos[usifo[3]][usifo[1]].nil?
+          user_infos[usifo[3]][usifo[1]] << usifo[2]
+        } unless rr["rows"].nil?
+      rescue
+        byebug if Rails.env == "development"
+      end
+
+    }
+    user_infos.each {|k, v|
+      v.each {|k2, v2|
+        cookies[k][k2] = v2
+      }
+    }
+
+    # byebug if Rails.env == "development"
+    # cookies.keys.delete # 所有的client_ids
+
 # https://eye-www.amego.tw/cart_success.php?oid=1118032600011
-    excel_array = [["ClientId","表單名稱","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
+    excel_array = {
+      "失敗表單"=>[["ClientId","表單名稱","USER_ID","班別","狀態","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
       "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
-      "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"]]
+      "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"]],
+      "表單列表" => [["列標籤","資訊表單","USER_ID","班別","狀態"]]
+    }
     cookies.each{|k, v|
       _end = false
       row_cnt = 0
       until _end
         _end = true
         row = [k]
-        [:form_name, "中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
+        # row2 = [k]
+        [:form_name, "UserID", "inclass", "state","中文姓名(必填)_輸入", "行動電話(必填)_輸入", "Email(必填)_輸入",
           "居住縣市_輸入", "居住地區_輸入", "地址_輸入", "可連絡時間_輸入", "洽詢班級_輸入",
           "洽詢細節說明(必填)_輸入", "個資保護聲明點擊", "立即提交點擊"].each{|field|
+
+          # if ["UserID", "inclass", "state"].include?(field)
+          #   row << v[field]
+          #   next
+          # end
 
           if v[field].nil?
             row << ""
@@ -59,13 +95,37 @@ class WelcomeController < ApplicationController
           end
         }
         row_cnt += 1
-        excel_array << row unless _end
+        excel_array["失敗表單"] << row unless _end
+        # excel_array["表單列表"] << row2 if k!='false'
       end
     }
 
-    write_xls "失敗表單.xls", {"失敗表單"=>excel_array}
+    cookies.each{|k, v|
+      _end = false
+      row_cnt = 0
+      until _end
+        _end = true
+        row = [k]
+        [:form_name, "UserID", "inclass", "state"].each{|field|
+          if v[field].nil?
+            row << ""
+          elsif v[field][row_cnt]
+            row << v[field][row_cnt]
+            _end = false
+          else
+            row << ""
+          end
+        }
+        row_cnt += 1
+        excel_array["表單列表"] << row unless _end
+        # excel_array["表單列表"] << row2 if k!='false'
+      end
+    }
 
-
+    filename = "public_#{DateTime.now.to_i}.xls"
+    write_xls filename, excel_array
+    redirect_to "/xls/#{filename}"
+    # @excel_array = excel_array
     # ary = mj["rows"]
     # ary.find_all {|ay|
     #   ay[0]=="確認點擊"
